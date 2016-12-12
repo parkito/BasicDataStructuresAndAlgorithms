@@ -1,8 +1,4 @@
-import deck.Deck;
-import dobleSearchTree.SearchTree;
-import stack.Stack;
-
-import java.util.Random;
+import doubleSearchTree.SearchTree;
 
 /**
  * Created by Artyom Karnov on 15.11.16.

@@ -1,4 +1,4 @@
-package dobleSearchTree;
+package doubleSearchTree;
 
 import exceptions.MistakenIndex;
 import java.util.ArrayList;
@@ -16,16 +16,10 @@ public class SearchTree<T> {
         return 0;
     }
 
-    private List<T> root;
-
     public SearchTree() {
         root = null;
     }
 
-    public void add(T element) {
-    }
-
-    public void find(T element) {
     // TODO: 12.12.2016   I hate my code
     // TODO: 12.12.2016 Although i wrote more effective code than Lafore (without addidion Note variable)
     public void add(long key, T element) {
