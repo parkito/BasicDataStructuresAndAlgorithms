@@ -1,5 +1,8 @@
 import deck.Deck;
+import dobleSearchTree.SearchTree;
 import stack.Stack;
+
+import java.util.Random;
 
 /**
  * Created by Artyom Karnov on 15.11.16.
@@ -47,10 +50,30 @@ public class Main {
 //        doubleLinkedList.displayFromStarch();
 //        System.out.println();
 //        doubleLinkedList.displayFromEnd();
-        Deck<Integer> deck = new Deck<Integer>();
-        deck.push(1);
-        deck.push(2);
-        System.out.println(deck.pop());
-        System.out.println(deck.pop());
+//        Deck<Integer> deck = new Deck<Integer>();
+//        deck.push(1);
+//        deck.push(2);
+//        System.out.println(deck.pop());
+//        System.out.println(deck.pop());
+//        Random  tree
+//        Random random = new Random();
+//        SearchTree<Integer> tree = new SearchTree<Integer>();
+//        for (int i = 0; i < 12; i++) {
+//            tree.add(random.nextInt(10), null);
+//        }
+//        tree.showTree();
+//          My tree
+        SearchTree<Integer> tree = new SearchTree<Integer>();
+        tree.add(7, 1);
+        tree.add(5, 2);
+        tree.add(8, 3);
+        tree.add(2, 4);
+        tree.add(6, 5);
+        tree.add(7, 6);
+        tree.add(9, 7);
+        tree.showTree();
+        System.out.println(tree.find(7)); //1
+        System.out.println(tree.find(2)); //4
+        System.out.println(tree.find(10)); //null
     }
 }
