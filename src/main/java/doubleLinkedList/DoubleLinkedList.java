@@ -113,12 +113,12 @@ public class DoubleLinkedList<T> {
      */
 
      /*
-        * There are 3 situations when need remove list from  linkedList
-        * 1 - only one element in linkedList of needed element is first - checking by first if
+        * There are 3 situations when is needed to remove list from doubleLinkedList
+        * 1 - needed element is first - checking by "if"
         * ([X][][][][])
-        * 2 - need to remove last element - checking by second if
+        * 2 - is needed to remove last element - checking by "else if"
         * ([][][][][X])
-        * 3 - need to remove element "surrounded" by others - on last else
+        * 3 - is needed to remove element which "surrounded" by others - on last "else"
         * ([][][X][][])
      */
     public void remove(int index) {
