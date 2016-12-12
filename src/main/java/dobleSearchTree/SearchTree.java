@@ -1,7 +1,6 @@
 package dobleSearchTree;
 
 import exceptions.MistakenIndex;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +15,8 @@ public class SearchTree<T> {
     public int compareTo(T o) {
         return 0;
     }
+
+    private List<T> root;
 
     public SearchTree() {
         root = null;
@@ -69,6 +70,10 @@ public class SearchTree<T> {
             }
         }
         return null;
+    public void add(T element) {
+    }
+
+    public void find(T element) {
     }
 
     public T get(Long index) throws MistakenIndex {
