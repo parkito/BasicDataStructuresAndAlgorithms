@@ -1,6 +1,7 @@
 package doubleSearchTree;
 
-import exceptions.MistakenIndex;
+import exceptions.MistakenSearchTreeSize;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class SearchTree<T> {
         root = null;
     }
 
+    // TODO: 13.12.16 dublecate problem
     // TODO: 12.12.2016   I hate my code
     // TODO: 12.12.2016 Although i wrote more effective code than Lafore (without addidion Note variable)
     public void add(long key, T element) {
@@ -29,7 +31,7 @@ public class SearchTree<T> {
             TreeList currentList = root;
             while (true) {
                 //choosing the branch of the tree (new key > current key -> we go to right branch )
-                if (key >= currentList.getKey()) {
+                if (key > currentList.getKey()) {
                     if (currentList.getRightChildren() == null) {
                         //we come to end of the right branch
                         //we add element and finish this operation
@@ -39,7 +41,7 @@ public class SearchTree<T> {
                     //it isn't end of the branch, so move on
                     currentList = currentList.getRightChildren();
 
-                } else {
+                } else if (key < currentList.getKey()) {
                     if (currentList.getLeftChildren() == null) {
                         //we come to end of the left branch
                         //we add element and finish this operation
@@ -49,6 +51,8 @@ public class SearchTree<T> {
                     //it isn't end of the branch, so move on
                     currentList = currentList.getLeftChildren();
 
+                } else {
+                    throw new MistakenSearchTreeSize("Element with key=" + key + " already exists!");
                 }
             }
 
@@ -70,15 +74,44 @@ public class SearchTree<T> {
         return null;
     }
 
-    public T get(Long index) throws MistakenIndex {
-        return null;
-    }
-
     public Long indexOf(T element) {
         return null;
     }
 
-    public void remove(T element) {
+    public void remove(long key) {
+        TreeList currentList = root, parent;
+        parent = currentList;
+        boolean isElementFound = false;
+        while (currentList != null) {
+            if (currentList.getKey() == key) {
+                isElementFound = true;
+                break;
+            } else if (key > currentList.getKey()) {
+                parent = currentList;
+                currentList = currentList.getRightChildren();
+            } else if (key < currentList.getKey()) {
+                parent = currentList;
+                currentList = currentList.getLeftChildren();
+            }
+        }
+        if (!isElementFound) {
+            throw new MistakenSearchTreeSize("Element with key=" + key + " wasn't found");
+        } else {
+            // TODO: 13.12.16 all logic for removing
+            if (currentList == root) {
+                root = null;
+            }
+//            else if ()
+        }
+    }
+
+    // TODO: 13.12.2016 @Vlad if you see it: it would be super if can test private method! 
+    private short numberOfChildren(TreeList list) {
+        if (list.getLeftChildren() == null && list.getRightChildren() == null)
+            return 0;
+        else if (list.getLeftChildren() == null ^ list.getRightChildren() == null) {
+            return 1;
+        } else return 2;
     }
 
     public void showTree() {
