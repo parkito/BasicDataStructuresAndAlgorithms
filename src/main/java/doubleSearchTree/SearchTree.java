@@ -21,6 +21,7 @@ public class SearchTree<T> {
         root = null;
     }
 
+    // TODO: 13.12.2016 Generic problem (any key and any data) 
     // TODO: 13.12.16 dublecate problem
     // TODO: 12.12.2016   I hate my code
     // TODO: 12.12.2016 Although i wrote more effective code than Lafore (without addidion Note variable)
@@ -98,17 +99,31 @@ public class SearchTree<T> {
             throw new MistakenSearchTreeSize("Element with key=" + key + " wasn't found");
         } else {
             // TODO: 13.12.16 all logic for removing
+            // TODO: 13.12.2016 fuck this shit! Rewrite the method 
             if (currentList == root) {
                 root = null;
+            } else if (numberOfChildren(currentList) == 0) {
+                currentList = null;
+            } else if (numberOfChildren(currentList) == 1) {
+                TreeList tempList = null;
+                if (currentList.getLeftChildren() != null)
+                    tempList = currentList.getLeftChildren();
+                else currentList.getRightChildren();
+
+                if (parent.getLeftChildren() == currentList)
+                    parent.setLeftChildren(tempList);
+                else parent.setRightChildren(tempList);
+            } else if (numberOfChildren(currentList) == 2) {
+                
             }
-//            else if ()
         }
     }
 
-    // TODO: 13.12.2016 @Vlad if you see it: it would be super if can test private method! 
+    // TODO: 13.12.2016 @Vlad if you see it: it would be super if you can test private method like this! 
     private short numberOfChildren(TreeList list) {
         if (list.getLeftChildren() == null && list.getRightChildren() == null)
             return 0;
+            //if only one children (XOR)
         else if (list.getLeftChildren() == null ^ list.getRightChildren() == null) {
             return 1;
         } else return 2;
