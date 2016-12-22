@@ -6,25 +6,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Artem Tarnov @date 08.12.16.
+ * @author Artem Karnov @date 08.12.16.
  *         artem.karnov@t-systems.com
  **/
 public class SearchTree<T> {
     private TreeList<T> root;
-    private static long generationNumber;
-
-    public int compareTo(T o) {
-        return 0;
-    }
+    private static long numberGenerator;
 
     public SearchTree() {
         root = null;
     }
 
     // TODO: 13.12.2016 Generic problem (any key and any data) 
-    // TODO: 13.12.16 dublecate problem
     // TODO: 12.12.2016   I hate my code
-    // TODO: 12.12.2016 Although i wrote more effective code than Lafore (without addidion Note variable)
+    // TODO: 12.12.2016 Although i wrote more effective code than Lafore (without addition Note
+    // variable)
+
+    /**
+     * Addition list after max element
+     *
+     * @param element element for adding
+     */
+    public void add(T element) {
+        TreeList current = root, parent = root;
+        while (current != null) {
+            parent = current;
+            current = current.getRightChildren();
+        }
+        parent.setRightChildren(new TreeList(parent.getKey() + 1, element));
+    }
+
+    /**
+     * Addition list to the tree by part tree traversal
+     *
+     * @param key     key of element
+     * @param element element for adding
+     */
     public void add(long key, T element) {
         if (root == null) {
             root = new TreeList<T>(key, element);
@@ -56,11 +73,15 @@ public class SearchTree<T> {
                     throw new MistakenSearchTreeSize("Element with key=" + key + " already exists!");
                 }
             }
-
         }
-
     }
 
+    /**
+     * Searching list's data by key
+     *
+     * @param key list's key for searching
+     * @return list's data if element exists, null if doesn't
+     */
     public T find(long key) {
         TreeList currentList = root;
         while (currentList != null) {
@@ -75,14 +96,30 @@ public class SearchTree<T> {
         return null;
     }
 
+    /**
+     * Searching list's key by full tree traversal
+     *
+     * @param element element for adding
+     * @return key of list if element exists in the tree, null if doesn't
+     */
     public Long indexOf(T element) {
+        TreeList currentList = root;
+        while (currentList != null) {
+            if (currentList.getData() == element)
+                return null;
+        }
         return null;
     }
 
+    /**
+     * Removing element by key
+     *
+     * @param key for element removing
+     */
     public void remove(long key) {
-        TreeList currentList = root, parent;
-        parent = currentList;
+        TreeList currentList = root, parent = root;
         boolean isElementFound = false;
+        //Searching emelemt for deleting
         while (currentList != null) {
             if (currentList.getKey() == key) {
                 isElementFound = true;
@@ -99,11 +136,18 @@ public class SearchTree<T> {
             throw new MistakenSearchTreeSize("Element with key=" + key + " wasn't found");
         } else {
             // TODO: 13.12.16 all logic for removing
-            // TODO: 13.12.2016 fuck this shit! Rewrite the method 
+            // TODO: 13.12.2016 fuck this shit! Rewrite the method
+            //Element for deleting is found.
+            // Element is the root
             if (currentList == root) {
                 root = null;
-            } else if (numberOfChildren(currentList) == 0) {
-                currentList = null;
+            }
+            //Element has no childrenk
+            else if (numberOfChildren(currentList) == 0) {
+                if (parent.getLeftChildren() == currentList)
+                    parent.setLeftChildren(null);
+                else parent.setRightChildren(null);
+                //Element has only one children
             } else if (numberOfChildren(currentList) == 1) {
                 TreeList tempList = null;
                 if (currentList.getLeftChildren() != null)
@@ -113,13 +157,57 @@ public class SearchTree<T> {
                 if (parent.getLeftChildren() == currentList)
                     parent.setLeftChildren(tempList);
                 else parent.setRightChildren(tempList);
-            } else if (numberOfChildren(currentList) == 2) {
-                
+            }
+            // TODO: 21.12.2016 Lafore cussed out whole sub tree!
+            //Element has 2 children
+            else if (numberOfChildren(currentList) == 2) {
+                TreeList successor = getSuccessor(currentList);
+                TreeList rightChildren = currentList.getRightChildren();
+                TreeList leftChildren = currentList.getLeftChildren();
+                if (successor == leftChildren) {
+                    successor.setRightChildren(rightChildren);
+                } else if (successor == rightChildren) {
+                    successor.setLeftChildren(leftChildren);
+                } else {
+                    successor.setLeftChildren(leftChildren);
+                    successor.setRightChildren(rightChildren);
+                }
+
+                if (parent.getKey() < currentList.getKey())
+                    parent.setRightChildren(successor);
+                else parent.setLeftChildren(successor);
             }
         }
     }
 
-    // TODO: 13.12.2016 @Vlad if you see it: it would be super if you can test private method like this! 
+    /**
+     * Getting successor for deleting list with two children
+     *
+     * @param listForDeleting list for getting
+     * @return successor
+     */
+    private TreeList getSuccessor(TreeList listForDeleting) {
+        TreeList successorParent = listForDeleting;
+        TreeList successor = listForDeleting;
+        TreeList current = listForDeleting.getRightChildren();
+        while (current != null) {
+            successorParent = successor;
+            successor = current;
+            current = current.getLeftChildren();
+        }
+        if (successorParent != successor && successor != listForDeleting.getRightChildren())
+            successorParent.setLeftChildren(null);
+        return successor;
+    }
+
+    // TODO: 13.12.2016 @Vlad if you see it: it would be super if you can test private method like this!
+
+    /**
+     * Getting mount of list children
+     *
+     * @param list list for researching
+     * @return mount of children
+     */
     private short numberOfChildren(TreeList list) {
         if (list.getLeftChildren() == null && list.getRightChildren() == null)
             return 0;
@@ -129,8 +217,11 @@ public class SearchTree<T> {
         } else return 2;
     }
 
+    /**
+     * Displaying full tree
+     */
     public void showTree() {
-        generationNumber = 0;
+        numberGenerator = 0;
         List<TreeList> rootOfTheTree = new ArrayList<TreeList>();
         rootOfTheTree.add(root);
         System.out.println("Root " + rootOfTheTree);
@@ -139,6 +230,13 @@ public class SearchTree<T> {
     }
 
     // TODO: 12.12.2016 to remove last  empty level
+
+    /**
+     * Getting children of lists
+     *
+     * @param parentLevel array of lists
+     * @return array of children for adjusted lists
+     */
     public List<TreeList> getChildrenLevel(List<TreeList> parentLevel) {
         List<TreeList> childrenLevel = new ArrayList<TreeList>();
         for (TreeList currentList : parentLevel) {
@@ -149,16 +247,81 @@ public class SearchTree<T> {
                 childrenLevel.add(currentList.getRightChildren());
             }
         }
-        System.out.println("Gen " + ++generationNumber + "  " + childrenLevel);
+        System.out.println("Gen " + ++numberGenerator + "  " + childrenLevel);
         System.out.println("----------------------------------------------");
         if (childrenLevel.size() > 0)
             return getChildrenLevel(childrenLevel);
         else return null;
     }
 
+    /**
+     * Displaying information of adjusted list
+     *
+     * @param list list for displaying
+     */
     public void showListInfo(TreeList list) {
         System.out.println(list);
         System.out.println("Children " + list.getLeftChildren() + "   " + list.getRightChildren());
     }
-}
 
+    /**
+     * Tree traversal in order
+     */
+    public void inOrderFullTraversal() {
+        inOrderTraversal(root);
+    }
+
+    /**
+     * Tree traversal in pre order
+     */
+    public void preOrderFullTraversal() {
+        preOrderTraversal(root);
+    }
+
+    /**
+     * Tree traversal in post order
+     */
+    public void postOrderFullTraversal() {
+        postOrderTraversal(root);
+    }
+
+    /**
+     * Recurrent mechanism for in order tree traversal
+     *
+     * @param currentList local root
+     */
+    private void inOrderTraversal(TreeList currentList) {
+        if (currentList != null) {
+            inOrderTraversal(currentList.getLeftChildren());
+            System.out.println(currentList);
+            inOrderTraversal(currentList.getRightChildren());
+        }
+    }
+
+    /**
+     * Recurrent mechanism for pre order tree traversal
+     *
+     * @param currentList local root
+     */
+    private void preOrderTraversal(TreeList currentList) {
+        if (currentList != null) {
+            System.out.println(currentList);
+            preOrderTraversal(currentList.getLeftChildren());
+            preOrderTraversal(currentList.getRightChildren());
+        }
+    }
+
+    /**
+     * Recurrent mechanism for post order tree traversal
+     *
+     * @param currentList local root
+     */
+    private void postOrderTraversal(TreeList currentList) {
+        if (currentList != null) {
+            postOrderTraversal(currentList.getLeftChildren());
+            postOrderTraversal(currentList.getRightChildren());
+            System.out.println(currentList);
+        }
+    }
+
+}

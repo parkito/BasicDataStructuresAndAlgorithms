@@ -1,5 +1,4 @@
 import doubleSearchTree.SearchTree;
-import doubleSearchTree.TreeList;
 
 /**
  * Created by Artyom Karnov on 15.11.16.
@@ -61,21 +60,27 @@ public class Main {
 //        tree.showTree();
 //          My tree
         SearchTree<Integer> tree = new SearchTree<Integer>();
-//        tree.add(7, 1);
-//        tree.add(5, 2);
-//        tree.add(8, 3);
-//        tree.add(2, 4);
-//        tree.add(6, 5);
-//        tree.add(7, 6);
-//        tree.add(9, 7);
-//        tree.showTree();
+        tree.add(7, 1);
+        tree.add(5, 2);
+        tree.add(15, 3);
+        tree.add(18, 4);
+        tree.add(20, 4);
+        tree.add(8, 5);
+        tree.add(2, 6);
+        tree.add(6, 7);
+        tree.add(16, 8);
+        tree.remove(15);
+        tree.add(100);
+        tree.showTree();
 //        System.out.println(tree.find(7)); //1
 //        System.out.println(tree.find(2)); //4
 //        System.out.println(tree.find(10)); //null
+        tree.inOrderFullTraversal();
+        System.out.println();
+        tree.preOrderFullTraversal();
+        System.out.println();
+        tree.postOrderFullTraversal();
 
-//        TreeList<Integer> list = new TreeList<Integer>(1, null);
-//        list.setLeftChildren(new TreeList<Integer>(2, null));
-//        list.setRightChildren(new TreeList<Integer>(3, null));
-//        System.out.println(tree.numberOfChildrens(list));
+//
     }
 }
