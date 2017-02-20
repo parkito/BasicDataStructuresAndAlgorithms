@@ -2,30 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d67d4039-ade3-427a-982a-9bfc950e7064" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/doubleSearchTree/SearchTree.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/exceptions/MistakenTreeListKey.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/dobleSearchTree/List.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/Main.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/deck/Deck.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/doubleLinkedList/DoubleLinkedList$List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/doubleLinkedList/DoubleLinkedList.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/dynamicArray/DynamicArray.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/exceptions/MistakenArraySize.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/exceptions/MistakenDeckSize.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/exceptions/MistakenIndex.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/fixArray/FixArray.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/simpleLinkedList/LinkedList$List.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/simpleLinkedList/LinkedList.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/deck/DeckTest.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/dobleSearchTree/TreeList.java" afterPath="$PROJECT_DIR$/src/main/java/doubleSearchTree/TreeList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MyStructures.iml" afterPath="$PROJECT_DIR$/MyStructures.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Main.java" afterPath="$PROJECT_DIR$/src/main/java/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/dobleSearchTree/SearchTree.java" afterPath="$PROJECT_DIR$/src/main/java/dobleSearchTree/SearchTree.java" />
     </list>
+    <list id="ed69473c-7173-4b9c-aef9-e42de745495b" name="Failed commit: Default" comment="Merge branch 'develop'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/dobleSearchTree/SearchTree.java&#10;" />
     <ignored path="MyStructures.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -49,8 +28,8 @@
       <file leaf-file-name="SearchTree.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/doubleSearchTree/SearchTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="16" />
+            <state relative-caret-position="-5734">
+              <caret line="28" column="29" lean-forward="false" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -341,6 +320,7 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="js.eslint.eslintPackage" value="" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -731,12 +711,12 @@
       <workItem from="1482512943282" duration="582000" />
       <workItem from="1482742434774" duration="591000" />
       <workItem from="1482744970583" duration="1509000" />
-      <workItem from="1487616191583" duration="324000" />
+      <workItem from="1487616191583" duration="532000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9733000" />
+    <option name="totallyTimeSpent" value="9941000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
@@ -806,6 +786,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'develop'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/dobleSearchTree/SearchTree.java&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'develop'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/dobleSearchTree/SearchTree.java&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1197,8 +1181,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/doubleSearchTree/SearchTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="16" />
+        <state relative-caret-position="-5734">
+          <caret line="28" column="29" lean-forward="false" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
