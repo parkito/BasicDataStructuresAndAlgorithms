@@ -1,4 +1,4 @@
-package dobleSearchTree;
+package doubleSearchTree;
 
 /**
  * @author Artem Tarnov @date 08.12.16.
