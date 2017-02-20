@@ -80,6 +80,7 @@ public class Main {
         tree.preOrderFullTraversal();
         System.out.println();
         tree.postOrderFullTraversal();
+        tree.displayTree();
 
 //
     }
