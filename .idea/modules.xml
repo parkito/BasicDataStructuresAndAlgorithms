@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MyStructures.iml" filepath="$PROJECT_DIR$/MyStructures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BasicDataStructuresAndAlgorithms.iml" filepath="$PROJECT_DIR$/BasicDataStructuresAndAlgorithms.iml" />
     </modules>
   </component>
 </project>
