@@ -1,6 +1,6 @@
 package com.saiu;
 
-import com.saiu.dataStructures.doubleSearchTree.SearchTree;
+import com.saiu.dataStructures.deck.Deck;
 
 /**
  * Created by Artyom Karnov on 15.11.16.
@@ -61,29 +61,39 @@ public class Main {
 //        }
 //        tree.showTree();
 //          My tree
-        SearchTree<Integer> tree = new SearchTree<Integer>();
-        tree.add(7, 1);
-        tree.add(5, 2);
-        tree.add(15, 3);
-        tree.add(18, 4);
-        tree.add(20, 4);
-        tree.add(8, 5);
-        tree.add(2, 6);
-        tree.add(6, 7);
-        tree.add(16, 8);
-        tree.remove(15);
-        tree.add(100);
-        tree.showTree();
+//        SearchTree<Integer> tree = new SearchTree<Integer>();
+//        tree.add(7, 1);
+//        tree.add(5, 2);
+//        tree.add(15, 3);
+//        tree.add(18, 4);
+//        tree.add(20, 4);
+//        tree.add(8, 5);
+//        tree.add(2, 6);
+//        tree.add(6, 7);
+//        tree.add(16, 8);
+//        tree.remove(15);
+//        tree.add(100);
+//        tree.showTree();
 //        System.out.println(tree.find(7)); //1
 //        System.out.println(tree.find(2)); //4
 //        System.out.println(tree.find(10)); //null
-        tree.inOrderFullTraversal();
-        System.out.println();
-        tree.preOrderFullTraversal();
-        System.out.println();
-        tree.postOrderFullTraversal();
-        tree.displayTree();
+//        tree.inOrderFullTraversal();
+//        System.out.println();
+//        tree.preOrderFullTraversal();
+//        System.out.println();
+//        tree.postOrderFullTraversal();
+//        tree.displayTree();
+//        Collection coll = new LinkedList();
+        Deck<Integer> deck = new Deck<Integer>();
+        deck.push(1);
+        deck.push(2);
+        deck.push(3);
+        deck.push(4);
 
-//
+        System.out.println(deck.back());
+        System.out.println(deck.back());
+        System.out.println(deck.back());
+        System.out.println(deck.back());
+        System.out.println(deck.back());
     }
 }
