@@ -1,3 +1,4 @@
-Structure                    insertion           finding           access        sorting
+Structure            insertion           finding           access
 
-DoubleSearchTree
+DoubleSearchTree       o(log n)           o(log n)         o(log n)
+
