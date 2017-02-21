@@ -1,18 +1,14 @@
 package com.saiu.dataStructures.queue;
 
+
+import com.saiu.dataStructures.dynamicArray.DynamicArray;
+import com.saiu.dataStructures.exceptions.MistakenDeckSize;
+import com.saiu.dataStructures.exceptions.MistakenStackSize;
 /**
  * @author Artem Karnov @date 21.02.17.
  * artem.karnov@t-systems.com
  */
 
-import com.saiu.dataStructures.dynamicArray.DynamicArray;
-import com.saiu.dataStructures.exceptions.MistakenDeckSize;
-import com.saiu.dataStructures.exceptions.MistakenStackSize;
-
-/**
- * @author Artem Karnov @date 02.12.16.
- * artem.karnov@t-systems.com
- **/
 
 /**
  * Queue built on dynamic array
