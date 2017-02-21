@@ -27,11 +27,11 @@ public class Deck<T> {
     }
 
     /**
-     * Pushing element into com.saiu.dataStructures.deck
+     * Pushing element into begin of deck
      *
      * @param element element for pushing
      */
-    public void push(T element) {
+    public void pushIntoEnd(T element) {
         if (size < Integer.MAX_VALUE) {
             dynamicArray.add(element);
             size++;
@@ -41,11 +41,30 @@ public class Deck<T> {
     }
 
     /**
-     * Extraction first element from com.saiu.dataStructures.deck
+     * Pushing element into end of deck
+     *
+     * @param element element for pushing
+     */
+    public void pushIntoBegin(T element) {
+        if (size < Integer.MAX_VALUE) {
+            DynamicArray<T> newArray = new DynamicArray<T>();
+            newArray.add(element);
+            for (int i = 0; i < size; i++) {
+                newArray.add(dynamicArray.get(i));
+            }
+            dynamicArray = newArray;
+            size++;
+        } else {
+            throw new MistakenStackSize("Size is too big for storing");
+        }
+    }
+
+    /**
+     * Extraction first element from deck
      *
      * @return extracted element
      */
-    public T pop() {
+    public T popBegin() {
         if (size > 0) {
             T element = dynamicArray.get(0);
             dynamicArray.remove(0);
@@ -57,9 +76,25 @@ public class Deck<T> {
     }
 
     /**
+     * Extraction last element from deck
+     *
+     * @return extracted element
+     */
+    public T popBack() {
+        if (size > 0) {
+            T element = dynamicArray.get(size - 1);
+            dynamicArray.remove(size - 1);
+            size--;
+            return element;
+        } else {
+            throw new MistakenDeckSize("Deck is empty");
+        }
+    }
+
+    /**
      * Checking com.saiu.dataStructures.deck on elements presence
      *
-     * @return true - if com.saiu.dataStructures.deck has elements, false - if com.saiu.dataStructures.deck is empty
+     * @return true - if deck has elements, false - if deck is empty
      */
     public boolean isEmpty() {
         if (size() > 0) {
@@ -70,7 +105,7 @@ public class Deck<T> {
     }
 
     /**
-     * Getting com.saiu.dataStructures.deck size
+     * Getting deck size
      *
      * @return size of array
      */
@@ -82,7 +117,7 @@ public class Deck<T> {
      * Checking elements storing in array
      *
      * @param element element for checking
-     * @return true - if com.saiu.dataStructures.deck contain adjusted element, false - if doesn't
+     * @return true - if deck contain adjusted element, false - if doesn't
      */
     public boolean contain(T element) {
         return dynamicArray.contains(element) ? true : false;
