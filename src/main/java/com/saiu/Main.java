@@ -1,7 +1,5 @@
 package com.saiu;
 
-import com.saiu.dataStructures.deck.Deck;
-
 /**
  * Created by Artyom Karnov on 15.11.16.
  * artyom-karnov@yandex.ru
@@ -84,16 +82,5 @@ public class Main {
 //        tree.postOrderFullTraversal();
 //        tree.displayTree();
 //        Collection coll = new LinkedList();
-        Deck<Integer> deck = new Deck<Integer>();
-        deck.push(1);
-        deck.push(2);
-        deck.push(3);
-        deck.push(4);
-
-        System.out.println(deck.back());
-        System.out.println(deck.back());
-        System.out.println(deck.back());
-        System.out.println(deck.back());
-        System.out.println(deck.back());
     }
 }
