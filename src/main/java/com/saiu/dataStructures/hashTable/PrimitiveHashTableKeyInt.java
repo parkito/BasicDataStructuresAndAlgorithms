@@ -82,7 +82,7 @@ public class PrimitiveHashTableKeyInt<T> {
      * @param data data of row
      */
     @Deprecated
-    public int add(T data) {
+    public int simpleAdd(T data) {
         int key = random.nextInt(size);
         int hashedKey = getHash(key);
         while (true) {
@@ -100,10 +100,26 @@ public class PrimitiveHashTableKeyInt<T> {
     }
 
     /**
+     * Optimal addition row to table with key generation and linear hashing
+     *
+     * @param data data of row
+     */
+    public void add(T data) {
+        int key = random.nextInt(size);
+        int hashVal = getHash(key);
+        while (array[hashVal] != null) {
+            ++hashVal;
+            hashVal %= size;
+        }
+        array[hashVal] = data;
+    }
+
+    /**
      * Removing data by key
      *
      * @param key key for removing
      */
+// TODO: 22.02.2017 make smarter deletion
     public void remove(int key) {
         array[getHash(key)] = null;
     }
