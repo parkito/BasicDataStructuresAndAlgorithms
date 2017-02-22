@@ -8,7 +8,10 @@ package com.saiu.dataStructures.hashTable;
 import java.util.Random;
 
 /**
- * Implementation of simple hash table with mod hash function
+ * Implementation of simple hash table with mod hash function.
+ * Realization of hash table very dump and ineffective.
+ * 1)Dump collision solver with randomize sub-element
+ * 2)Dump size allocator
  *
  * @param <T> object type for storing in hash table
  */
@@ -75,6 +78,7 @@ public class PrimitiveHashTableKeyInt<T> {
     /**
      * Addition row to table with key generation and linear hashing
      * Required more effective method for collision solving
+     *
      * @param data data of row
      */
     @Deprecated
