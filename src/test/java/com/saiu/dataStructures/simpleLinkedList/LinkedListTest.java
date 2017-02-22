@@ -37,11 +37,6 @@ public class LinkedListTest {
 
     }
 
-    @Test
-    @Ignore
-    public void displayAll() throws Exception {
-
-    }
 
     @Test
     public void removeFirst() throws Exception {
