@@ -5,6 +5,8 @@ package com.saiu.dataStructures.hashTable;
  * artem.karnov@t-systems.com
  */
 
+import java.util.Random;
+
 /**
  * Implementation of simple hash table with mod hash function
  *
@@ -13,6 +15,8 @@ package com.saiu.dataStructures.hashTable;
 public class PrimitiveHashTableKeyInt<T> {
     private T array[];
     private int size;
+    private Random random;
+
 
     /**
      * Constructor with size initialization
@@ -22,6 +26,7 @@ public class PrimitiveHashTableKeyInt<T> {
     public PrimitiveHashTableKeyInt(int size) {
         this.size = size;
         this.array = (T[]) new Object[size];
+        random = new Random();
     }
 
     /**
@@ -45,15 +50,6 @@ public class PrimitiveHashTableKeyInt<T> {
     }
 
     /**
-     * Removing data by key
-     *
-     * @param key key for removing
-     */
-    public void remove(int key) {
-        array[getHash(key)] = null;
-    }
-
-    /**
      * Addition row to table
      *
      * @param key  key of row
@@ -65,6 +61,7 @@ public class PrimitiveHashTableKeyInt<T> {
             if (array[hashedKey] == null) {
                 array[hashedKey] = data;
                 return;
+                //if key already has data
             } else {
                 if (hashedKey < size - 1)
                     hashedKey++;
@@ -73,6 +70,38 @@ public class PrimitiveHashTableKeyInt<T> {
                 }
             }
         }
+    }
+
+    /**
+     * Addition row to table with key generation and linear hashing
+     * Required more effective method for collision solving
+     * @param data data of row
+     */
+    @Deprecated
+    public int add(T data) {
+        int key = random.nextInt(size);
+        int hashedKey = getHash(key);
+        while (true) {
+            if (array[hashedKey] == null) {
+                array[hashedKey] = data;
+                return hashedKey;
+            } else {
+                if (hashedKey < size - 1)
+                    hashedKey++;
+                else {
+                    return -1;
+                }
+            }
+        }
+    }
+
+    /**
+     * Removing data by key
+     *
+     * @param key key for removing
+     */
+    public void remove(int key) {
+        array[getHash(key)] = null;
     }
 
     /**
@@ -88,6 +117,7 @@ public class PrimitiveHashTableKeyInt<T> {
 
     /**
      * Showing row with adjusted data
+     *
      * @param data
      */
     public void showRow(T data) {
@@ -101,8 +131,9 @@ public class PrimitiveHashTableKeyInt<T> {
 
     /**
      * Getting key by first met data member
+     *
      * @param data data for getting
-     * @return -1 if data doesn't exist, key of row if data exists
+     * @return @warning -1 if data doesn't exist, key of row if data exists
      */
     public int getDataKey(T data) {
         for (int i = 0; i < size; i++) {
