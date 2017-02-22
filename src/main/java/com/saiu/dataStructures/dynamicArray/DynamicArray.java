@@ -18,7 +18,7 @@ public class DynamicArray<T> {
     private Object dynamicArray[];
 
     /**
-     * Constructor without parametrs
+     * Constructor without parameters
      */
     public DynamicArray() {
     }

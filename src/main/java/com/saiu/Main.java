@@ -85,7 +85,7 @@ public class Main {
 //        tree.displayTree();
 //        Collection coll = new LinkedList();
 
-        PrimitiveHashTableKeyInt<String> primitiveHashTableKeyInt = new PrimitiveHashTableKeyInt<String>(50);
+        PrimitiveHashTableKeyInt<String> primitiveHashTableKeyInt = new PrimitiveHashTableKeyInt<String>(5);
         primitiveHashTableKeyInt.add(1001,"1001");
         primitiveHashTableKeyInt.add(100,"100");
         primitiveHashTableKeyInt.add(90,"90");
