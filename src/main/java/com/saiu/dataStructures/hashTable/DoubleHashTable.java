@@ -41,6 +41,20 @@ public class DoubleHashTable<T> {
         return key % size;
     }
 
+    private boolean isPrimeNumber(int number) {
+        int i = 2, j = 0;
+        while (i * i < number && j != 1) {
+            if (number % i == 0)
+                j = 1;
+            i++;
+        }
+        return j == 1 ? false : true;
+    }
+
+    private int getPrimeNumberMoreThan(int number) {
+        return 1;
+    }
+
     /**
      * Simple primary hash function. Mod operation is using for getting hash
      *

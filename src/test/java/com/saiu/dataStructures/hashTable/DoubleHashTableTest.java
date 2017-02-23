@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import testSupport.TestUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -46,5 +48,13 @@ public class DoubleHashTableTest {
         }
 
         Assert.assertEquals(-1, hashTable.getDataKey("232"));
+    }
+
+    @Test
+    public void isPrimeNumberTesting() throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
+        Class doubleHashTableClass = Class.forName("com.saiu.dataStructures.hashTable.DoubleHashTable");
+        Object doubleHashTableObject = (DoubleHashTable<String>) doubleHashTableClass.newInstance();
+        Method method = doubleHashTableClass.getDeclaredMethod("isPrimaryNumber", Integer.TYPE);
+        Assert.assertEquals(true, method.invoke(doubleHashTableObject, 1));
     }
 }
