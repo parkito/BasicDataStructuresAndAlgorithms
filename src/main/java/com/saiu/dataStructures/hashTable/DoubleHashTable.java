@@ -18,6 +18,8 @@ public class DoubleHashTable<T> {
     private int SECONDARY_HASH_CONSTANT;
     private Random random;
 
+    public DoubleHashTable() {
+    }
 
     /**
      * Constructor with size initialization

@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import testSupport.TestUtils;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -50,11 +50,18 @@ public class DoubleHashTableTest {
         Assert.assertEquals(-1, hashTable.getDataKey("232"));
     }
 
+    // TODO: 23.02.2017 Implementation
     @Test
     public void isPrimeNumberTesting() throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         Class doubleHashTableClass = Class.forName("com.saiu.dataStructures.hashTable.DoubleHashTable");
-        Object doubleHashTableObject = (DoubleHashTable<String>) doubleHashTableClass.newInstance();
-        Method method = doubleHashTableClass.getDeclaredMethod("isPrimaryNumber", Integer.TYPE);
-        Assert.assertEquals(true, method.invoke(doubleHashTableObject, 1));
+        Class<String> doubleHashTableClassString = (Class<String>) Class.forName("com.saiu.dataStructures.hashTable.DoubleHashTable");
+        Object object = doubleHashTableClassString.newInstance();
+        for (Field field : doubleHashTableClass.getDeclaredFields()) {
+            System.out.println(field.getName());
+        }
+        //        Object doubleHashTableObject = doubleHashTableClass.newInstance();
+//        Object doubleHashTableObject = doubleHashTableClass.newInstance();
+//        Method method = doubleHashTableClass.getDeclaredMethod("isPrimaryNumber", Integer.TYPE);
+//        Assert.assertEquals(true, method.invoke(doubleHashTableObject, 1));
     }
 }
