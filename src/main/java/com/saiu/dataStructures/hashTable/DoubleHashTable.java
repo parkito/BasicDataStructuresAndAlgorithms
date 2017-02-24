@@ -43,6 +43,12 @@ public class DoubleHashTable<T> {
         return key % size;
     }
 
+    /**
+     * Checking number for primary type
+     *
+     * @param number number for checking
+     * @return true - if number is primary, false - if number is not primary
+     */
     private boolean isPrimeNumber(int number) {
         int i = 2, j = 0;
         while (i * i < number && j != 1) {

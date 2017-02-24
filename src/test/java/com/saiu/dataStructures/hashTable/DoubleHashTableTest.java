@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import testSupport.TestUtils;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -54,14 +54,19 @@ public class DoubleHashTableTest {
     @Test
     public void isPrimeNumberTesting() throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
         Class doubleHashTableClass = Class.forName("com.saiu.dataStructures.hashTable.DoubleHashTable");
-        Class<String> doubleHashTableClassString = (Class<String>) Class.forName("com.saiu.dataStructures.hashTable.DoubleHashTable");
-        Object object = doubleHashTableClassString.newInstance();
-        for (Field field : doubleHashTableClass.getDeclaredFields()) {
-            System.out.println(field.getName());
-        }
-        //        Object doubleHashTableObject = doubleHashTableClass.newInstance();
-//        Object doubleHashTableObject = doubleHashTableClass.newInstance();
-//        Method method = doubleHashTableClass.getDeclaredMethod("isPrimaryNumber", Integer.TYPE);
-//        Assert.assertEquals(true, method.invoke(doubleHashTableObject, 1));
+        Object object = doubleHashTableClass.getConstructor();
+        Method method = doubleHashTableClass.getDeclaredMethod("isPrimeNumber", Integer.TYPE);
+        method.setAccessible(true);
+        Assert.assertEquals(true, method.invoke(object, 1));
+        Assert.assertEquals(true, method.invoke(object, 3));
+        Assert.assertEquals(true, method.invoke(object, 5));
+        Assert.assertEquals(true, method.invoke(object, 7));
+        Assert.assertEquals(true, method.invoke(object, 11));
+        Assert.assertEquals(true, method.invoke(object, 13));
+        Assert.assertEquals(true, method.invoke(object, 17));
+        Assert.assertEquals(true, method.invoke(object, 17));
+        Assert.assertEquals(true, method.invoke(object, 17));
+        Assert.assertEquals(true, method.invoke(object, 17));
+        Assert.assertEquals(true, method.invoke(object, 17));
     }
 }
