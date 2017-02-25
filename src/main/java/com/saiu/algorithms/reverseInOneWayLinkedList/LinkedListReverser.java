@@ -14,19 +14,60 @@ import com.saiu.dataStructures.simpleLinkedList.LinkedList;
  * Without it algorithm doesn't matter as method for self education
  */
 
-// TODO: 25.02.17 I hate my code. Change it!
 public class LinkedListReverser<T> {
     private int linkedListSize;
+
+    /**
+     * Method gets linked list and reverses it
+     * without allocating new memory
+     *
+     * @param sourceList linked list for reversing
+     * @return reversed linked list
+     */
+    public LinkedList<T> reverse(LinkedList<T> sourceList) {
+        List initialList = listUnpacking(sourceList),
+                selfList = initialList,
+                previous = null,
+                resultRoot = initialList,
+                newList = null;
+        boolean isFirstEntryToLoop = true;
+        while (selfList.next != null) {
+            while (selfList.next != null) {
+                previous = selfList;
+                selfList = selfList.next;
+            }
+            if (isFirstEntryToLoop) {
+                selfList.next = null;
+                newList = selfList;
+                resultRoot = newList;
+                newList.next = previous;
+                previous.next = null;
+                newList = newList.next;
+                isFirstEntryToLoop = false;
+            } else {
+                newList.next = previous;
+                newList = newList.next;
+                previous.next = null;
+            }
+            selfList = initialList;
+
+        }
+
+        sourceList = listPacking(resultRoot);
+        return sourceList;
+    }
 
     /**
      * Method gets linked list and reverses it.
      * But it uses addition allocated memory.
      * It's impossible to create method without memory allocation in all.
      * Just manipulating with links in charge to do it.
+     *
      * @param sourceList linked list for reversing
      * @return reversed linked list
      */
-    public LinkedList<T> reverse(LinkedList<T> sourceList) {
+    @Deprecated
+    public LinkedList<T> oldReverseRealizaton(LinkedList<T> sourceList) {
         List currentListRoot = listUnpacking(sourceList),
                 resultRoot = null,
                 previous = null,
@@ -64,14 +105,16 @@ public class LinkedListReverser<T> {
      */
     private List<T> listUnpacking(LinkedList<T> linkedList) {
         List<T> sefList = new List<>();
-        List<T> root = new List<>();
+        List<T> root;
         root = sefList;
         linkedListSize = linkedList.size();
         for (int i = 0; i < linkedListSize; i++) {
             sefList.data = linkedList.get(i);
-            List<T> nextList = new List<>();
-            sefList.next = nextList;
-            sefList = sefList.next;
+            if (i < linkedList.size() - 1) {
+                List<T> nextList = new List<>();
+                sefList.next = nextList;
+                sefList = sefList.next;
+            }
         }
         return root;
     }
@@ -85,6 +128,8 @@ public class LinkedListReverser<T> {
      */
     private LinkedList<T> listPacking(List<T> selfList) {
         LinkedList<T> linkedList = new LinkedList<T>();
+        if (selfList.next == null && selfList.data == null)
+            return linkedList;
         for (int i = 0; selfList != null; i++) {
             linkedList.add(selfList.data);
             selfList = selfList.next;
@@ -105,6 +150,5 @@ public class LinkedListReverser<T> {
             next = null;
         }
     }
-
-
+    
 }
