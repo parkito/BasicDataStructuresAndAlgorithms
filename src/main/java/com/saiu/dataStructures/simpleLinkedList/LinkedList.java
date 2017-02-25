@@ -52,6 +52,7 @@ public class LinkedList<T> {
         while (tempList.next != null) {
             tempList = tempList.next;
         }
+        size++;
         tempList.data = element;
         tempList.next = new List();
     }

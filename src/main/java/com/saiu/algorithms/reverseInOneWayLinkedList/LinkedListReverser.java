@@ -18,27 +18,30 @@ public class LinkedListReverser<T> {
     private int linkedListSize;
 
     public LinkedList<T> reverse(LinkedList<T> sourceList) {
-        List selfList = listUnpacking(sourceList);
-        //todo algorithm
-//        System.out.println(selfList);
-        boolean flag = false;
-        List root = null, previous = null;
-        while (selfList.next != null) {
-            previous = selfList;
-            selfList = selfList.next;
-        }
-        if (flag = false) {
-            root = selfList;
-            previous.next = null;
-            root.next = previous;
-            root = root.next;
-            flag = true;
-        } else {
-            root.next = selfList;
-            root = root.next;
-        }
+        List currentListRoot = listUnpacking(sourceList),
+                resultRoot = null,
+                previous = null,
+                newList = new List(),
+                selfList=currentListRoot;
+        boolean resultRootInitializeMark = true;
 
-        sourceList = listPacking(root);
+        while (selfList.next != null) {
+            while (selfList.next != null) {
+                previous = selfList;
+                selfList = selfList.next;
+            }
+            previous.next = null;
+            newList.data = previous.data;
+            if (resultRootInitializeMark) {
+                resultRoot = newList;
+                resultRootInitializeMark = false;
+            }
+            newList.next = new List();
+            newList = newList.next;
+            selfList = currentListRoot;
+
+        }
+        sourceList = listPacking(resultRoot);
         return sourceList;
     }
 
@@ -51,6 +54,8 @@ public class LinkedListReverser<T> {
      */
     private List<T> listUnpacking(LinkedList<T> linkedList) {
         List<T> sefList = new List<>();
+        List<T> root = new List<>();
+        root = sefList;
         linkedListSize = linkedList.size();
         for (int i = 0; i < linkedListSize; i++) {
             sefList.data = linkedList.get(i);
@@ -58,7 +63,7 @@ public class LinkedListReverser<T> {
             sefList.next = nextList;
             sefList = sefList.next;
         }
-        return sefList;
+        return root;
     }
 
     /**
@@ -70,7 +75,7 @@ public class LinkedListReverser<T> {
      */
     private LinkedList<T> listPacking(List<T> selfList) {
         LinkedList<T> linkedList = new LinkedList<T>();
-        for (int i = 0; i < linkedListSize; i++) {
+        for (int i = 0; selfList != null; i++) {
             linkedList.add(selfList.data);
             selfList = selfList.next;
         }
