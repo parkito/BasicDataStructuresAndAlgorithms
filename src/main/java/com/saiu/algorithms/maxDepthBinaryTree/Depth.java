@@ -26,7 +26,6 @@ public class Depth {
      */
     public int getMaxDepth(TreeList<Integer> tree) {
         finder(tree, 0);
-        System.out.println(globalCounter);
         return globalCounter.stream().max(Integer::compareTo).get();
     }
 

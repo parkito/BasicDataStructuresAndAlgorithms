@@ -16,9 +16,16 @@ import com.saiu.dataStructures.simpleLinkedList.LinkedList;
 
 // TODO: 25.02.17 I hate my code. Change it!
 public class LinkedListReverser<T> {
-
     private int linkedListSize;
 
+    /**
+     * Method gets linked list and reverses it.
+     * But it uses addition allocated memory.
+     * It's impossible to create method without memory allocation in all.
+     * Just manipulating with links in charge to do it.
+     * @param sourceList linked list for reversing
+     * @return reversed linked list
+     */
     public LinkedList<T> reverse(LinkedList<T> sourceList) {
         List currentListRoot = listUnpacking(sourceList),
                 resultRoot = null,
@@ -85,6 +92,11 @@ public class LinkedListReverser<T> {
         return linkedList;
     }
 
+    /**
+     * Class for linking lists
+     *
+     * @param <T>
+     */
     private class List<T> {
         public T data;
         public List next;
