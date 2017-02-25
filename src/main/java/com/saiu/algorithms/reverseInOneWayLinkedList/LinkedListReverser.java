@@ -13,6 +13,8 @@ import com.saiu.dataStructures.simpleLinkedList.LinkedList;
  * LinkedList structure into internal list.
  * Without it algorithm doesn't matter as method for self education
  */
+
+// TODO: 25.02.17 I hate my code. Change it!
 public class LinkedListReverser<T> {
 
     private int linkedListSize;
@@ -22,7 +24,7 @@ public class LinkedListReverser<T> {
                 resultRoot = null,
                 previous = null,
                 newList = new List(),
-                selfList=currentListRoot;
+                selfList = currentListRoot;
         boolean resultRootInitializeMark = true;
 
         while (selfList.next != null) {
@@ -36,10 +38,11 @@ public class LinkedListReverser<T> {
                 resultRoot = newList;
                 resultRootInitializeMark = false;
             }
-            newList.next = new List();
+            if (currentListRoot.next != null) {
+                newList.next = new List();
+            }
             newList = newList.next;
             selfList = currentListRoot;
-
         }
         sourceList = listPacking(resultRoot);
         return sourceList;

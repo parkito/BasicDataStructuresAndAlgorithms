@@ -114,16 +114,7 @@ public class LinkedListReverserTest {
         return true;
 
     }
-
-    @Test
-    public void firstTest() {
-        linkedList=getFirstLinkedList();
-//        linkedList=getFirstInvertedLinkedList();
-        for (int i = 0; i <linkedList.size() ; i++) {
-            System.out.println(linkedList.get(i));
-        }
-    }
-
+    
     @Test
     public void reverseLikedListTestOne() {
         result = listComparator(reverser.reverse(getFirstLinkedList()), getFirstInvertedLinkedList());
