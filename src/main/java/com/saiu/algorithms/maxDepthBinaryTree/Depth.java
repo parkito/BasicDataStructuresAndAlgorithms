@@ -19,12 +19,22 @@ import java.util.List;
 public class Depth {
     private List<Integer> globalCounter = new ArrayList<>();
 
+    /**
+     * Getting max depth of tree
+     * @param tree tree data structure for calculation
+     * @return max depth of tree
+     */
     public int getMaxDepth(TreeList<Integer> tree) {
         finder(tree, 0);
         System.out.println(globalCounter);
         return globalCounter.stream().max(Integer::compareTo).get();
     }
 
+    /**
+     * Recursive method for tree traversal
+     * @param list member of the tree
+     * @param level level of this member
+     */
     private void finder(TreeList<Integer> list, int level) {
         level++;
         if (list.getLeftChildren() != null)
