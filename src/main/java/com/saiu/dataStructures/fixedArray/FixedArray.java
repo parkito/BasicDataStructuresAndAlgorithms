@@ -14,8 +14,8 @@ import com.saiu.dataStructures.exceptions.MistakenIndex;
  * @param <T> object type for storing in array
  */
 public class FixedArray<T> {
-    private int maxSize;
     Object[] fixArray;
+    private int maxSize;
 
     /**
      * Constructor for getting array's size and initialization
@@ -65,7 +65,7 @@ public class FixedArray<T> {
      * @param element  element for adding
      * @param position position of adding
      */
-    public void add(T element, int position) {
+    public void add(int position, T element) {
         if (position < 0) {
             throw new MistakenIndex("Index couldn't be <0");
         } else if (position < maxSize) {
@@ -101,6 +101,7 @@ public class FixedArray<T> {
 
     /**
      * Checking elements storing in array
+     *
      * @param element element for checking
      * @return true - if array contain adjusted element, false - if doesn't
      */

@@ -1,7 +1,5 @@
 package com.saiu;
 
-import com.saiu.dataStructures.hashTable.PrimitiveHashTableKeyInt;
-
 /**
  * Created by Artyom Karnov on 15.11.16.
  * artyom-karnov@yandex.ru
@@ -85,20 +83,26 @@ public class Main {
 //        tree.displayTree();
 //        Collection coll = new LinkedList();
 
-        PrimitiveHashTableKeyInt<String> primitiveHashTableKeyInt = new PrimitiveHashTableKeyInt<String>(5);
-        primitiveHashTableKeyInt.add(1001,"1001");
-        primitiveHashTableKeyInt.add(100,"100");
-        primitiveHashTableKeyInt.add(90,"90");
-        primitiveHashTableKeyInt.add(80,"80");
-        primitiveHashTableKeyInt.add(70,"70");
-        primitiveHashTableKeyInt.add(60,"60");
-        primitiveHashTableKeyInt.add(50,"50");
-        primitiveHashTableKeyInt.add(40,"40");
-        primitiveHashTableKeyInt.add(30,"30");
-        primitiveHashTableKeyInt.add(20,"20");
-        primitiveHashTableKeyInt.add(10,"10");
-        primitiveHashTableKeyInt.add(10,"11");
-        primitiveHashTableKeyInt.add(1,"1");
-        primitiveHashTableKeyInt.showHashTable();
+//        PrimitiveHashTableKeyInt<String> primitiveHashTableKeyInt = new PrimitiveHashTableKeyInt<String>(5);
+//        primitiveHashTableKeyInt.add(1001,"1001");
+//        primitiveHashTableKeyInt.add(100,"100");
+//        primitiveHashTableKeyInt.add(90,"90");
+//        primitiveHashTableKeyInt.add(80,"80");
+//        primitiveHashTableKeyInt.add(70,"70");
+//        primitiveHashTableKeyInt.add(60,"60");
+//        primitiveHashTableKeyInt.add(50,"50");
+//        primitiveHashTableKeyInt.add(40,"40");
+//        primitiveHashTableKeyInt.add(30,"30");
+//        primitiveHashTableKeyInt.add(20,"20");
+//        primitiveHashTableKeyInt.add(10,"10");
+//        primitiveHashTableKeyInt.add(10,"11");
+//        primitiveHashTableKeyInt.add(1,"1");
+//        primitiveHashTableKeyInt.showHashTable();
+        System.out.println(a());
+    }
+
+    public static boolean a(){
+        byte mm=127;
+        return (mm&(mm-1))==0;
     }
 }
