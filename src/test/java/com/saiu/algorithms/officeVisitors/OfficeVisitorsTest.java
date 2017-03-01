@@ -27,7 +27,7 @@ public class OfficeVisitorsTest {
         officeVisitors = new OfficeVisitors();
     }
 
-    public void TimeStampGenerator() {
+    public void timeStampGenerator() {
         //Day two id has most of all visitors
         int workerOne = 1;
         int workerTwo = 2;
@@ -69,7 +69,7 @@ public class OfficeVisitorsTest {
 
     @Test
     public void getMostVisitedDay() throws Exception {
-        TimeStampGenerator();
+        timeStampGenerator();
         officeVisitors.setTimeStamps(stamps);
         Assert.assertEquals(officeVisitors.getMostVisitedDay(), new Date(1493586000000L));
     }

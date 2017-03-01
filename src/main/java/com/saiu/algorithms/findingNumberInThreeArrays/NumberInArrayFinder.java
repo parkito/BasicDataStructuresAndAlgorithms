@@ -14,7 +14,11 @@ import com.saiu.dataStructures.fixedArray.FixedArray;
  * @param <T>
  */
 public class NumberInArrayFinder<T> {
-    private int firstIndex = 0, secondIndex = 0, thirdIndex = 0, localMax = 0, result = 0;
+    private int firstIndex = 0;
+    private int secondIndex = 0;
+    private int thirdIndex = 0;
+    private int localMax = 0;
+    private int result = 0;
 
     /**
      * Recursive method for number finding
@@ -113,10 +117,7 @@ public class NumberInArrayFinder<T> {
      * @return true - if all numbers is equally, false - if doesn't
      */
     private boolean compare(int first, int second, int third) {
-        if (first == second && first == third)
-            return true;
-        else
-            return false;
+        return first == second && first == third;
     }
 
 
