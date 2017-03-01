@@ -25,16 +25,19 @@ public class OfficeVisitors {
 
     private Date customDayParser(Date date) {
         Calendar newDate = new GregorianCalendar();
-        Calendar currentDate = new GregorianCalendar();
-        currentDate.setTime(date);
-        newDate.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_WEEK));
+        newDate.setTime(date);
+        newDate.set(Calendar.HOUR_OF_DAY, 0);
+        newDate.set(Calendar.MINUTE, 0);
+        newDate.set(Calendar.SECOND, 0);
+        newDate.set(Calendar.MILLISECOND, 0);
         return newDate.getTime();
     }
 
     private void plusRecord(Date date) {
         if (result.containsKey(date)) {
             result.replace(date, result.get(date) + 1);
-        } else result.put(date, 0);
+        } else
+            result.put(date, 0);
     }
 
     public Date getMostVisitedDay() {
@@ -43,7 +46,6 @@ public class OfficeVisitors {
         for (Map.Entry<Date, Integer> entry : result.entrySet()) {
             if (maxEntry == null)
                 maxEntry = entry;
-
             if (entry.getValue() > maxEntry.getValue())
                 maxEntry = entry;
         }

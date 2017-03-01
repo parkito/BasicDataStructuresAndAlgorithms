@@ -71,8 +71,7 @@ public class OfficeVisitorsTest {
     public void getMostVisitedDay() throws Exception {
         TimeStampGenerator();
         officeVisitors.setTimeStamps(stamps);
-//        Assert.assertEquals(officeVisitors.getMostVisitedDay().getTime(),1493743728853L);
-        Assert.assertEquals(1, 1);
+        Assert.assertEquals(officeVisitors.getMostVisitedDay(), new Date(1493586000000L));
     }
 
 }
