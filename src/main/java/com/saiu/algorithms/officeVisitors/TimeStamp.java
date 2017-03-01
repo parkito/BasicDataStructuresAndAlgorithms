@@ -9,24 +9,24 @@ import java.util.Date;
 
 public class TimeStamp {
     private int employerId;
-    private Date enterTime;
-    private Date exitTime;
+    private Date arrivalTime;
+    private Date depatureTime;
 
     public TimeStamp(int employerId, Date enterTime, Date exitTime) {
         this.employerId = employerId;
-        this.enterTime = enterTime;
-        this.exitTime = exitTime;
+        this.arrivalTime = enterTime;
+        this.depatureTime = exitTime;
     }
 
     public int getEmployerId() {
         return employerId;
     }
 
-    public Date getEnterTime() {
-        return enterTime;
+    public Date getArrivalTime() {
+        return arrivalTime;
     }
 
-    public Date getExitTime() {
-        return exitTime;
+    public Date getDepatureTime() {
+        return depatureTime;
     }
 }

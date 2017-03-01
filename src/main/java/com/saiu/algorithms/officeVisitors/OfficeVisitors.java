@@ -1,8 +1,11 @@
 package com.saiu.algorithms.officeVisitors;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Artem Karnov @date 26.02.17.
@@ -10,51 +13,44 @@ import java.util.Date;
  */
 
 public class OfficeVisitors {
-    private Collection stamps;
+    private ArrayList<TimeStamp> stamps;
+    private Map<Date, Integer> result = new HashMap<>();
 
-    public OfficeVisitors() {
-        stamps = new ArrayList<TimeStamp>();
+    private void dayToMapConverter() {
+        for (TimeStamp currentTimeStamp : stamps) {
+            plusRecord(customDayParser(currentTimeStamp.getArrivalTime()));
+            plusRecord(customDayParser(currentTimeStamp.getDepatureTime()));
+        }
     }
 
-    public void TimeStampGenerator() {
-        //Day two id has most of all visitors
-        int workerOne = 1;
-        int workerTwo = 2;
-        int workerThree = 2;
-        int workerFour = 3;
-        int workerFive = 4;
-        //firstDay
-        long dayOneFirst = 1485960781;
-        long dayOneSecond = 1485960841;
-        long dayOneThird = 1485960901;
-        long dayOneFourth = 1485960961;
-        long dayOneFiveth = 1485964521;
-        long dayOneSixth = 1485964561;
-        //secondDay
-        long dayTwoFirst = 1488383761;
-        long dayTwoSecond = 1488383881;
-        //thirdDay
-        //the oftenest
-        long dayThreeFirst = 1493654281;
-        long dayThreeSecond = 1493654341;
-        long dayThreeThird = 1493654401;
-        long dayThreeFourth = 1493654461;
-        long dayThreeFiveth = 1493654521;
-        long dayThreeSixth = 1493654701;
+    private Date customDayParser(Date date) {
+        Calendar newDate = new GregorianCalendar();
+        Calendar currentDate = new GregorianCalendar();
+        currentDate.setTime(date);
+        newDate.set(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_WEEK));
+        return newDate.getTime();
+    }
 
-        stamps.add(new TimeStamp(workerOne, new Date(dayOneFirst), new Date(dayOneSecond)));
-        stamps.add(new TimeStamp(workerTwo, new Date(dayOneSecond), new Date(dayOneThird)));
-        stamps.add(new TimeStamp(workerThree, new Date(dayOneFourth), new Date(dayOneFiveth)));
-        stamps.add(new TimeStamp(workerFour, new Date(dayOneSixth), new Date(dayOneSixth)));
+    private void plusRecord(Date date) {
+        if (result.containsKey(date)) {
+            result.replace(date, result.get(date) + 1);
+        } else result.put(date, 0);
+    }
 
-        stamps.add(new TimeStamp(workerOne, new Date(dayTwoFirst), new Date(dayTwoSecond)));
+    public Date getMostVisitedDay() {
+        dayToMapConverter();
+        Map.Entry<Date, Integer> maxEntry = null;
+        for (Map.Entry<Date, Integer> entry : result.entrySet()) {
+            if (maxEntry == null)
+                maxEntry = entry;
 
-        stamps.add(new TimeStamp(workerOne, new Date(dayThreeFirst), new Date(dayThreeSecond)));
-        stamps.add(new TimeStamp(workerTwo, new Date(dayThreeFirst), new Date(dayThreeSecond)));
-        stamps.add(new TimeStamp(workerFour, new Date(dayThreeThird), new Date(dayThreeFourth)));
-        stamps.add(new TimeStamp(workerThree, new Date(dayThreeThird), new Date(dayThreeFourth)));
-        stamps.add(new TimeStamp(workerFive, new Date(dayThreeFiveth), new Date(dayThreeSixth)));
+            if (entry.getValue() > maxEntry.getValue())
+                maxEntry = entry;
+        }
+        return maxEntry.getKey();
+    }
 
-
+    public void setTimeStamps(ArrayList<TimeStamp> stamps) {
+        this.stamps = stamps;
     }
 }
