@@ -28,7 +28,7 @@ public class NumberInArrayFinder<T> {
      * @param thirdArray  third arra
      * @return 0 if number doesn't exist, number which exists in each of arrays
      * todo instead of returning 0 should be exception
-     * @Algorithm Compare elements in 0-s position.
+        * @Algorithm Compare elements in 0-s position.
      * Check their equality
      * if numbers aren't equally we find out maximum of this numbers and move pointers of others
      * to positions with same (max) members. And check equality again.
