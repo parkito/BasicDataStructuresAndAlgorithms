@@ -1,4 +1,4 @@
-package coreservletsExers.less1;
+package com.saiu.language.labmdas.coreservletsExers.less1;
 
 /**
  * @author Artem Karnov @date 17.02.2017.

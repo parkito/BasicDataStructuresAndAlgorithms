@@ -1,4 +1,4 @@
-package warburton.dataForChaptersExers;
+package com.saiu.language.labmdas.warburton.dataForChaptersExers;
 
 import java.util.stream.Stream;
 

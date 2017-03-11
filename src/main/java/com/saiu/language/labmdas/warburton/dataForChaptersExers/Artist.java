@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package warburton.dataForChaptersExers;
+package com.saiu.language.labmdas.warburton.dataForChaptersExers;
 
 import java.util.ArrayList;
 import java.util.Collections;

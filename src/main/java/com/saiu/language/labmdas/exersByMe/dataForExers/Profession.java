@@ -1,4 +1,4 @@
-package exersByMe.dataForExers;
+package com.saiu.language.labmdas.exersByMe.dataForExers;
 
 /**
  * @author Artem Karnov @date 17.02.2017.

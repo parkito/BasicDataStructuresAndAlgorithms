@@ -1,4 +1,4 @@
-package exersByMe;
+package com.saiu.language.labmdas.exersByMe;
 
 /**
  * @author Artem Karnov @date 17.02.2017.

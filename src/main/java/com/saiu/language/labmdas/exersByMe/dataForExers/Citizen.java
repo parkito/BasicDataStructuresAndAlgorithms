@@ -1,4 +1,4 @@
-package exersByMe.dataForExers;
+package com.saiu.language.labmdas.exersByMe.dataForExers;
 
 import java.util.Collection;
 
