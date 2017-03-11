@@ -7,7 +7,8 @@ package com.saiu.language.labmdas.exersByMe.dataForExers;
 
 public class Utils {
     public static Parent makeParent(Citizen person) {
-        Parent result = (Parent) person;
+        // TODO: 11.03.17 finish it
+        Parent result = new Parent(person);
         result.changeParentStatus("GOOD");
         return result;
     }

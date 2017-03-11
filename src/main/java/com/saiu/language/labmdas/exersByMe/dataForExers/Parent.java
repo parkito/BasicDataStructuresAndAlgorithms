@@ -1,18 +1,20 @@
 package com.saiu.language.labmdas.exersByMe.dataForExers;
 
+import javax.persistence.Entity;
 import java.util.Collection;
 
 /**
  * @author Artem Karnov @date 17.02.2017.
  *         artem.karnov@t-systems.com
  */
-
-public class Parent extends Citizen {
+@Entity
+public class Parent  {
+    private Citizen citizen;
     private Collection<Citizen> child;
     private ParentStatus parentStatus;
 
-    public Parent(long id, String name, String secondName, String thirdName, Parent mother, Parent father, int age, Sex sex, Profession profession, Collection<Work> works) {
-        super(id, name, secondName, thirdName, mother, father, age, sex, profession, works);
+    public Parent(Citizen parent) {
+        this.citizen=parent;
     }
 
     public void addChildren(Citizen children) {

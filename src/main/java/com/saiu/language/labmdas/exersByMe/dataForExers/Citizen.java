@@ -26,9 +26,8 @@ public class Citizen {
     private Profession profession;
     private Collection<Work> works;
 
-    public Citizen(long id, String name, String secondName, String thirdName, Parent mother,
-                   Parent father, int age, Sex sex, Profession profession, Collection<Work> works) {
-        this.id = id;
+    public Citizen(String name, String secondName, String thirdName, Citizen mother,
+                   Citizen father, int age, Sex sex, Profession profession, Collection<Work> works) {
         this.name = name;
         this.secondName = secondName;
         this.thirdName = thirdName;
@@ -76,7 +75,7 @@ public class Citizen {
         return mother;
     }
 
-    public void setMother(Parent mother) {
+    public void setMother(Citizen mother) {
         this.mother = mother;
     }
 
@@ -84,7 +83,7 @@ public class Citizen {
         return father;
     }
 
-    public void setFather(Parent father) {
+    public void setFather(Citizen father) {
         this.father = father;
     }
 
