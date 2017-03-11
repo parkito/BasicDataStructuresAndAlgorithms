@@ -1,4 +1,4 @@
-package warburton.secondChapter.exers;
+package com.saiu.language.labmdas.warburton.secondChapter.exers;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
@@ -25,7 +25,7 @@ public class OneA {
 
 class One {
     public static void main(String[] args) {
-        warburton.thirdChapter.exer.One one = new warburton.thirdChapter.exer.One();
+        One one = new One();
         List<Integer> numbers = asList(1, 2, 3);
         System.out.println(one.addUp(numbers.stream()));
     }

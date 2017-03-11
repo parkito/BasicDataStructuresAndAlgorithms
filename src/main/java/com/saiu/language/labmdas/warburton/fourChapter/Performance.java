@@ -1,6 +1,7 @@
-package warburton.fourChapter;
+package com.saiu.language.labmdas.warburton.fourChapter;
 
-import warburton.dataForChaptersExers.Artist;
+
+import com.saiu.language.labmdas.warburton.dataForChaptersExers.Artist;
 
 import java.util.stream.Stream;
 

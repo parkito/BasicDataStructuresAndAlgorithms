@@ -1,4 +1,4 @@
-package warburton.thirdChapter.exer;
+package com.saiu.language.labmdas.warburton.thirdChapter.exer;
 
 import java.util.List;
 import java.util.function.BinaryOperator;

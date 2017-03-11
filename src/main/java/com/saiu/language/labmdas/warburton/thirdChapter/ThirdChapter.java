@@ -1,4 +1,4 @@
-package warburton.thirdChapter;
+package com.saiu.language.labmdas.warburton.thirdChapter;
 
 import java.util.IntSummaryStatistics;
 import java.util.stream.Stream;

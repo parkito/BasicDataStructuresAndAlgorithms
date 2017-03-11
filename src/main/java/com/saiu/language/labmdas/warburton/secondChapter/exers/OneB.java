@@ -1,6 +1,7 @@
-package warburton.secondChapter.exers;
+package com.saiu.language.labmdas.warburton.secondChapter.exers;
 
-import warburton.dataForChaptersExers.SampleData;
+
+import com.saiu.language.labmdas.warburton.dataForChaptersExers.SampleData;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package warburton.firstChapter;
+package com.saiu.language.labmdas.warburton.firstChapter;
 
 import java.util.function.BinaryOperator;
 

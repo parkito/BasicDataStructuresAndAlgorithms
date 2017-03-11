@@ -1,7 +1,8 @@
-package warburton.secondChapter.exers;
+package com.saiu.language.labmdas.warburton.secondChapter.exers;
 
-import warburton.dataForChaptersExers.Artist;
-import warburton.dataForChaptersExers.SampleData;
+
+import com.saiu.language.labmdas.warburton.dataForChaptersExers.Artist;
+import com.saiu.language.labmdas.warburton.dataForChaptersExers.SampleData;
 
 import java.util.List;
 import java.util.stream.Stream;

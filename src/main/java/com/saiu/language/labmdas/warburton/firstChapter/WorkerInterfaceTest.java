@@ -1,4 +1,4 @@
-package warburton.firstChapter;
+package com.saiu.language.labmdas.warburton.firstChapter;
 
 /**
  * Created by Artyom Karnov on 27.11.16.

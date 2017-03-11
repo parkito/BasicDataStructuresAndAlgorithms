@@ -1,7 +1,8 @@
-package warburton.fourChapter;
+package com.saiu.language.labmdas.warburton.fourChapter;
 
-import warburton.dataForChaptersExers.Artist;
-import warburton.dataForChaptersExers.SampleData;
+
+import com.saiu.language.labmdas.warburton.dataForChaptersExers.Artist;
+import com.saiu.language.labmdas.warburton.dataForChaptersExers.SampleData;
 
 import java.util.ArrayList;
 import java.util.List;
