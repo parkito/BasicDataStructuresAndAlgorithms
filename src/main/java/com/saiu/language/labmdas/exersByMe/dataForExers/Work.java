@@ -1,12 +1,13 @@
 package com.saiu.language.labmdas.exersByMe.dataForExers;
 
+import javax.persistence.Entity;
 import java.util.Collection;
 
 /**
  * @author Artem Karnov @date 17.02.2017.
  *         artem.karnov@t-systems.com
  */
-
+@Entity
 public class Work {
     private String company;
     private long employersNumber;

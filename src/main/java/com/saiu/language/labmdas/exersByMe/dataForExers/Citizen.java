@@ -1,13 +1,20 @@
 package com.saiu.language.labmdas.exersByMe.dataForExers;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.Collection;
 
 /**
  * @author Artem Karnov @date 17.02.2017.
  *         artem.karnov@t-systems.com
  */
-
+@Entity
 public class Citizen {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String secondName;
@@ -19,7 +26,8 @@ public class Citizen {
     private Profession profession;
     private Collection<Work> works;
 
-    public Citizen(long id, String name, String secondName, String thirdName, Parent mother, Parent father, int age, Sex sex, Profession profession, Collection<Work> works) {
+    public Citizen(long id, String name, String secondName, String thirdName, Parent mother,
+                   Parent father, int age, Sex sex, Profession profession, Collection<Work> works) {
         this.id = id;
         this.name = name;
         this.secondName = secondName;

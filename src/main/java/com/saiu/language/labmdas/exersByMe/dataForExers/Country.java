@@ -1,12 +1,14 @@
 package com.saiu.language.labmdas.exersByMe.dataForExers;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.Collection;
 
 /**
  * @author Artem Karnov @date 17.02.2017.
  *         artem.karnov@t-systems.com
  */
-
+@Repository
 public class Country {
     private Collection<Citizen> citizensList;
     private Collection<Work> worksList;
