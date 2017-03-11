@@ -42,30 +42,37 @@ public class Abbreviator {
 
     public static void main(String[] args) {
         Abbreviator obj = new Abbreviator();
-//        System.out.println(obj.abbreviate("elephant-rides are really fun!"));
+        System.out.println(obj.abbreviate("elephant-rides are really fun!"));
         System.out.println(obj.abbreviate("internationalization"));
     }
 
     public String abbreviate(String string) {
-        for (int i = 0, j = 0; i < string.length(); i++) {
-            if (string.length() - 1 == i)
-                cutOff(string.substring(j, i + 1), "");
-
-            if (string.charAt(i) == '-' || string.charAt(i) == ' ') {
-                cutOff(string.substring(j, i), String.valueOf(string.charAt(i)));
-                j = i + 1;
+        StringBuilder result = new StringBuilder();
+        int i = 0, j = 0;
+        while (i < string.length()) {
+            int endingWordCorrectionCoefficient = 2;
+            if (string.charAt(i) == ' ' || string.charAt(i) == '-' || i == string.length() - 1) {
+                if (i - j <= 3) {
+                    result.append(string.substring(j, i));
+                    result.append(string.charAt(i));
+                } else {
+                    result.append(string.charAt(j));
+                    if (i == string.length() - 1) {
+                        endingWordCorrectionCoefficient = 1;
+                    } else {
+                        endingWordCorrectionCoefficient = 2;
+                    }
+                    result.append(i - j - endingWordCorrectionCoefficient);
+                    if (i != string.length() - 1)
+                        result.append(string.charAt(i - 1));
+                    result.append(string.charAt(i));
+                }
+                i++;
+                j = i;
+            } else {
+                i++;
             }
         }
-        return result;
-    }
-
-    private void cutOff(String substring, String c) {
-        if (substring.length() <= 3)
-            result += substring + c;
-        else
-            result += substring.charAt(0)
-                    + String.valueOf(substring.length() - 2)
-                    + substring.charAt(substring.length() - 1)
-                    + c;
+        return result.toString();
     }
 }
