@@ -9,7 +9,7 @@ package com.saiu.language.labmdas.warburton.dataForChaptersExers;
  * @author richard
  */
 public final class Track {
-    
+
     private final String name;
     private final int length;
 

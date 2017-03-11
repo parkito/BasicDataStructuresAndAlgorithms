@@ -118,7 +118,7 @@ public class DynamicArray<T> {
      */
     private Object[] offset(int position) {
         Object offsetArray[] = new Object[size - 1];
-        for (int i = 0; i < size-1; i++) {
+        for (int i = 0; i < size - 1; i++) {
             if (i >= position) {
                 offsetArray[i] = dynamicArray[i + 1];
             } else {

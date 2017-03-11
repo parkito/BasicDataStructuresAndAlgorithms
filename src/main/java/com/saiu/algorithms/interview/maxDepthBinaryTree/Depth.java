@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author Artem Karnov @date 25.02.17.
- *         artem.karnov@t-systems.com
+ * artem.karnov@t-systems.com
  */
 
 /**

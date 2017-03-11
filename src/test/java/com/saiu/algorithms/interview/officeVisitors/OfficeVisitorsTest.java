@@ -1,7 +1,5 @@
-package com.saiu.algorithms.officeVisitors;
+package com.saiu.algorithms.interview.officeVisitors;
 
-import com.saiu.algorithms.interview.officeVisitors.OfficeVisitors;
-import com.saiu.algorithms.interview.officeVisitors.TimeStamp;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

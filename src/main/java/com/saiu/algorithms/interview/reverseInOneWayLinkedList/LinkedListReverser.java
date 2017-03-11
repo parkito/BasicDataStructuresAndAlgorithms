@@ -150,5 +150,5 @@ public class LinkedListReverser<T> {
             next = null;
         }
     }
-    
+
 }

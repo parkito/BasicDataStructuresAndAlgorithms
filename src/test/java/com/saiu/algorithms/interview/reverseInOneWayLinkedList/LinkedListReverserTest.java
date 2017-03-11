@@ -1,4 +1,4 @@
-package com.saiu.algorithms.reverseInOneWayLinkedList;
+package com.saiu.algorithms.interview.reverseInOneWayLinkedList;
 
 import com.saiu.dataStructures.simpleLinkedList.LinkedList;
 import org.junit.Assert;
@@ -114,7 +114,7 @@ public class LinkedListReverserTest {
         return true;
 
     }
-    
+
     @Test
     public void reverseLikedListTestOne() {
         result = listComparator(reverser.reverse(getFirstLinkedList()), getFirstInvertedLinkedList());

@@ -12,27 +12,27 @@ public class Country {
     private Collection<Work> worksList;
     private Collection<Profession> professionsList;
 
-    public void setCitizensList(Collection<Citizen> citizensList) {
-        this.citizensList = citizensList;
-    }
-
-    public void setWorksList(Collection<Work> worksList) {
-        this.worksList = worksList;
-    }
-
-    public void setProfessionsList(Collection<Profession> professionsList) {
-        this.professionsList = professionsList;
-    }
-
     public Collection<Citizen> getCitizensList() {
         return citizensList;
+    }
+
+    public void setCitizensList(Collection<Citizen> citizensList) {
+        this.citizensList = citizensList;
     }
 
     public Collection<Work> getWorksList() {
         return worksList;
     }
 
+    public void setWorksList(Collection<Work> worksList) {
+        this.worksList = worksList;
+    }
+
     public Collection<Profession> getProfessionsList() {
         return professionsList;
+    }
+
+    public void setProfessionsList(Collection<Profession> professionsList) {
+        this.professionsList = professionsList;
     }
 }

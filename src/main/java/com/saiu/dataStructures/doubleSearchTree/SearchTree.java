@@ -11,8 +11,8 @@ import java.util.Stack;
  *         artem.karnov@t-systems.com
  **/
 public class SearchTree<T> {
-    private TreeList<T> root;
     private static long numberGenerator;
+    private TreeList<T> root;
 
     public SearchTree() {
         root = null;

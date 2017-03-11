@@ -29,12 +29,12 @@ public class TreeList<T> {
         return leftChildren;
     }
 
-    public TreeList getRightChildren() {
-        return rightChildren;
-    }
-
     public void setLeftChildren(TreeList<T> leftChildren) {
         this.leftChildren = leftChildren;
+    }
+
+    public TreeList getRightChildren() {
+        return rightChildren;
     }
 
     public void setRightChildren(TreeList<T> rightChildren) {

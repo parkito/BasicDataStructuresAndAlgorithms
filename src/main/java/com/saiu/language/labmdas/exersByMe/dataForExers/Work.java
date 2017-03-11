@@ -18,27 +18,27 @@ public class Work {
         this.employersList = employersList;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public void setEmployersNumber(long employersNumber) {
-        this.employersNumber = employersNumber;
-    }
-
-    public void setEmployersList(Collection<Citizen> employersList) {
-        this.employersList = employersList;
-    }
-
     public String getCompany() {
         return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public long getEmployersNumber() {
         return employersNumber;
     }
 
+    public void setEmployersNumber(long employersNumber) {
+        this.employersNumber = employersNumber;
+    }
+
     public Collection<Citizen> getEmployersList() {
         return employersList;
+    }
+
+    public void setEmployersList(Collection<Citizen> employersList) {
+        this.employersList = employersList;
     }
 }

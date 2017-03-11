@@ -14,21 +14,9 @@ import com.saiu.dataStructures.exceptions.MistakenIndex;
  */
 public class DoubleLinkedList<T> {
 
-    private class List<T> {
-        public T data;
-        public List next;
-        public List previous;
-
-        public List(List previous) {
-            next = null;
-            this.previous = previous;
-        }
-    }
-
     private List<T> firstList = new List(null);
     private List<T> tempList;
     private int size;
-
     /**
      * Constructor with begin initialization
      */
@@ -193,5 +181,16 @@ public class DoubleLinkedList<T> {
             tempList = tempList.next;
         }
         return false;
+    }
+
+    private class List<T> {
+        public T data;
+        public List next;
+        public List previous;
+
+        public List(List previous) {
+            next = null;
+            this.previous = previous;
+        }
     }
 }

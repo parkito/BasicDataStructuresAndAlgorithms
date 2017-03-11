@@ -1,14 +1,14 @@
-package com.saiu.algorithms.codeWars;
+package com.saiu.algorithms.interview.codeWars;
 
-/**
- * @author Artem Karnov @date 07.03.17.
- *         artem.karnov@t-systems.com
- */
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * @author Artem Karnov @date 07.03.17.
+ *         artem.karnov@t-systems.com
+ */
 public class AbbreviatorTests {
 
     private Abbreviator abbr = new Abbreviator();

@@ -3,6 +3,7 @@ package com.saiu.language.labmdas.warburton.thirdChapter.exer;
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
+
 import static java.util.Arrays.asList;
 
 /**
@@ -13,7 +14,7 @@ import static java.util.Arrays.asList;
 public class One {
     public static void main(String[] args) {
         One one = new One();
-        List<Integer> numbers = asList(1,2,3);
+        List<Integer> numbers = asList(1, 2, 3);
         System.out.println(one.addUp(numbers.stream()));
     }
 

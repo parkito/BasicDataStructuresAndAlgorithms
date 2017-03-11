@@ -1,4 +1,4 @@
-package com.saiu.algorithms.findingNumberInThreeArrays;
+package com.saiu.algorithms.interview.findingNumberInThreeArrays;
 
 import com.saiu.dataStructures.fixedArray.FixedArray;
 import org.junit.Assert;

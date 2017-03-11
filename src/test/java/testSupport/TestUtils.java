@@ -8,7 +8,7 @@ import java.util.List;
  *         artem.karnov@t-systems.com
  */
 public class TestUtils {
-    public static List<String> getStringsOfNumbers(int from, int to){
+    public static List<String> getStringsOfNumbers(int from, int to) {
         List<String> strings = new ArrayList<String>();
         for (int i = from; i < to; i++) {
             strings.add(String.valueOf(i));

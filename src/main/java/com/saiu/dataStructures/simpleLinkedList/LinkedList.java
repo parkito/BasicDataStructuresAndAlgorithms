@@ -17,24 +17,9 @@ public class LinkedList<T> {
     //// TODO: 24.11.2016 To optimize size operaton (create buffer or like this)
     //// TODO: 26.11.16  static inner class? hmmm
 
-    /**
-     * Class represents list of list
-     *
-     * @param <T> object type for storing in list
-     */
-    private class List<T> {
-        public T data;
-        public List next;
-
-        public List() {
-            next = null;
-        }
-    }
-
     private List<T> firstList = new List();
     private List<T> tempList;
     private int size;
-
     /**
      * Constructor with begin initialization
      */
@@ -199,5 +184,19 @@ public class LinkedList<T> {
             tempList = tempList.next;
         }
         return false;
+    }
+
+    /**
+     * Class represents list of list
+     *
+     * @param <T> object type for storing in list
+     */
+    private class List<T> {
+        public T data;
+        public List next;
+
+        public List() {
+            next = null;
+        }
     }
 }

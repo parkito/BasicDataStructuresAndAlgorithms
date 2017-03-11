@@ -26,16 +26,6 @@ public class PerformanceInfo implements Performance {
         this.name = name;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public Stream<Artist> getMusicians() {
-        return membersOfPerformance.stream().flatMap(artist -> Stream.concat(Stream.of(artist), artist.getMembers()));
-    }
-
     public static void main(String[] args) {
         Performance performance = new PerformanceInfo("Central");
         List<Artist> list = performance.getMusicians().collect(Collectors.toList());
@@ -46,5 +36,15 @@ public class PerformanceInfo implements Performance {
         };
         runnable.run();
 
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Stream<Artist> getMusicians() {
+        return membersOfPerformance.stream().flatMap(artist -> Stream.concat(Stream.of(artist), artist.getMembers()));
     }
 }

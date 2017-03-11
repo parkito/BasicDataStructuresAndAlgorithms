@@ -6,12 +6,9 @@ package com.saiu.language.labmdas.exersByMe.dataForExers;
  */
 
 public class Profession {
-    public enum Level {one, two, three, four}
-
     private String title;
     private double salary;
     private Level level;
-
     public Profession(String title, double salary, Level level) {
         this.title = title;
         this.salary = salary;
@@ -29,4 +26,6 @@ public class Profession {
     public Level getLevel() {
         return level;
     }
+
+    public enum Level {one, two, three, four}
 }

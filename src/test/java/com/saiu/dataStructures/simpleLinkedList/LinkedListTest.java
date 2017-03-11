@@ -2,7 +2,7 @@ package com.saiu.dataStructures.simpleLinkedList;
 
 
 import com.saiu.dataStructures.exceptions.MistakenIndex;
-import org.junit.*;
+import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;

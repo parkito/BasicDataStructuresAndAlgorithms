@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
 
 
 public final class Album implements Performance {
-    
+
     private String name;
     private List<Track> tracks;
     private List<Artist> musicians;

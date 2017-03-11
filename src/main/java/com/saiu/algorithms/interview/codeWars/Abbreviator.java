@@ -1,4 +1,4 @@
-package com.saiu.algorithms.codeWars;
+package com.saiu.algorithms.interview.codeWars;
 
 /**
  * @author Artem Karnov @date 07.03.17.
@@ -49,7 +49,7 @@ public class Abbreviator {
     public String abbreviate(String string) {
         for (int i = 0, j = 0; i < string.length(); i++) {
             if (string.length() - 1 == i)
-                cutOff(string.substring(j, i+1), "");
+                cutOff(string.substring(j, i + 1), "");
 
             if (string.charAt(i) == '-' || string.charAt(i) == ' ') {
                 cutOff(string.substring(j, i), String.valueOf(string.charAt(i)));

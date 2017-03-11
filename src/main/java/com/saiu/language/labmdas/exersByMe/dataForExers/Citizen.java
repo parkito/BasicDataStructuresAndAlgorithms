@@ -32,83 +32,83 @@ public class Citizen {
         this.works = works;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public void setThirdName(String thirdName) {
-        this.thirdName = thirdName;
-    }
-
-    public void setMother(Parent mother) {
-        this.mother = mother;
-    }
-
-    public void setFather(Parent father) {
-        this.father = father;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-
-    public void setProfession(Profession profession) {
-        this.profession = profession;
-    }
-
-    public void setWorks(Collection<Work> works) {
-        this.works = works;
-    }
-
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSecondName() {
         return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getThirdName() {
         return thirdName;
     }
 
+    public void setThirdName(String thirdName) {
+        this.thirdName = thirdName;
+    }
+
     public Citizen getMother() {
         return mother;
+    }
+
+    public void setMother(Parent mother) {
+        this.mother = mother;
     }
 
     public Citizen getFather() {
         return father;
     }
 
+    public void setFather(Parent father) {
+        this.father = father;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Sex getSex() {
         return sex;
     }
 
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
     public Profession getProfession() {
         return profession;
     }
 
+    public void setProfession(Profession profession) {
+        this.profession = profession;
+    }
+
     public Collection<Work> getWorks() {
         return works;
+    }
+
+    public void setWorks(Collection<Work> works) {
+        this.works = works;
     }
 }
