@@ -50,9 +50,9 @@ public class Abbreviator {
         StringBuilder result = new StringBuilder();
         int i = 0, j = 0;
         while (i < string.length()) {
-            int endingWordCorrectionCoefficient = 2;
-            if (string.charAt(i) == ' ' || string.charAt(i) == '-' || i == string.length() - 1) {
-                if (i - j <= 3) {
+            int endingWordCorrectionCoefficient;
+            if (!Character.isAlphabetic(string.charAt(i)) || i == string.length() - 1) {
+                if (i - j < 4) {
                     result.append(string.substring(j, i));
                     result.append(string.charAt(i));
                 } else {

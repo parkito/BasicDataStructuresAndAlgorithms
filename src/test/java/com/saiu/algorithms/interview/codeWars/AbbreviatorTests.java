@@ -37,13 +37,21 @@ public class AbbreviatorTests {
 
     @Test
     public void testThrowTheKitchenSink() {
-        assertEquals("t[he, the. s2s; b5n-on. s2s, d4e-b6d's2s'd4]e-b6d", abbr.abbreviate("m[8c'sat: the: sat: ca]t"));
+        assertEquals("t[he, the. s2s; b5n-on. s2s, d4e-b6d's2s'd4d]e-b6d",
+                abbr.abbreviate("t[he, the. saas; bwedcsn-on. saas, deeeee-bfggthjd'skks'dfdvfd]e-brtteddd"));
     }
 
     @Test
     public void testLongSentence() {
         assertEquals("You n[2d, n2d not w2t, t]o c6e t2s c2e-w2s m5...>",
-                abbr.abbreviate("You n[2d, need not what, t]o cookkeee tees crre-wvvs m5..."));
+                abbr.abbreviate("You n[2d, need not what, t]o cookkeee tees crre-wvvs m5...>"));
+
+    }
+
+    @Test
+    public void throwTheKitchenSinkAtEm() {
+        assertEquals("... a. is: the, a, a: s[it]s",
+                abbr.abbreviate("... a. is: the, a, a: s[it]s"));
 
     }
 }
