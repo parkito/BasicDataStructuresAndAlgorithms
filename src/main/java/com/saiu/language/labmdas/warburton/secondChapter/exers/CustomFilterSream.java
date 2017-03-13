@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 //2. Напишите реализацию метода filter интерфейса Stream, пользу­
 //        ясь только методом reduce и лямбда-выражениями. Как и рань­
 //        ше, можете возвращать List вместо Stream.
-public class Nine {
+public class CustomFilterSream {
     public static <I> List<I> filter(Stream<I> stream, Predicate<I> predicate) {
         List<I> initial = new ArrayList<>();
         return stream.reduce(initial,
@@ -31,7 +31,7 @@ public class Nine {
                         return acc;
                     }
                 },
-                Nine::combineLists);
+                CustomFilterSream::combineLists);
     }
 
     private static <I> List<I> combineLists(List<I> left, List<I> right) {

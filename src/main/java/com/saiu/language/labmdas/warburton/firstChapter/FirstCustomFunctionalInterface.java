@@ -6,13 +6,11 @@ package com.saiu.language.labmdas.warburton.firstChapter;
  **/
 @FunctionalInterface
 interface WorkerInterface {
-
     public void doSomeWork();
-
 }
 
 // TODO: 27.11.16 http://viralpatel.net/blogs/lambda-expressions-java-tutorial/ 
-public class WorkerInterfaceTest {
+public class FirstCustomFunctionalInterface {
 
     public static void execute(WorkerInterface worker) {
         worker.doSomeWork();

@@ -11,11 +11,11 @@ import static java.util.Arrays.asList;
  *         artem.karnov@t-systems.com
  */
 
-public class One {
+public class BinaryOperationSum {
     public static void main(String[] args) {
-        One one = new One();
+        BinaryOperationSum binaryOperationSum = new BinaryOperationSum();
         List<Integer> numbers = asList(1, 2, 3);
-        System.out.println(one.addUp(numbers.stream()));
+        System.out.println(binaryOperationSum.addUp(numbers.stream()));
     }
 
     public int addUp(Stream<Integer> numbers) {

@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * Created by Artyom Karnov on 28.11.16.
  * artyom-karnov@yandex.ru
  **/
-public class Two {
+public class InternalIterator {
     public static void main(String[] args) {
         int totalMembers = 0;
         for (Artist artist : SampleData.getThreeArtists()) {
@@ -19,11 +19,11 @@ public class Two {
             totalMembers += members.count();
         }
         System.out.println(totalMembers);
-        Two two = new Two();
-        System.out.println(two.internalInterator(SampleData.getThreeArtists()));
+        InternalIterator internalIterator = new InternalIterator();
+        System.out.println(internalIterator.internalIterator(SampleData.getThreeArtists()));
     }
 
-    public int internalInterator(List<Artist> artists) {
+    public int internalIterator(List<Artist> artists) {
         int result = 0;
         result = (int) artists.stream().flatMap(artist -> artist.getMembers()).count();
         return result;

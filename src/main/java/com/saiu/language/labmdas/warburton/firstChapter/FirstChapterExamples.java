@@ -8,7 +8,7 @@ import java.util.function.BinaryOperator;
  **/
 
 
-public class FirstChapter {
+public class FirstChapterExamples {
     public static void main(String[] args) {
         Runnable noArguments = () -> System.out.println("Hi");
         noArguments.run();

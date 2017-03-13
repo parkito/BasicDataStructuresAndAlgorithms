@@ -7,10 +7,10 @@ import java.util.stream.Stream;
  * Created by Artyom Karnov on 26.11.16.
  * artyom-karnov@yandex.ru
  **/
-public class ThirdChapter {
+public class ThirdChapterExample {
     public static void main(String[] args) {
-        ThirdChapter thirdChapter = new ThirdChapter();
-        thirdChapter.one();
+        ThirdChapterExample thirdChapterExample = new ThirdChapterExample();
+        thirdChapterExample.one();
     }
 
     public void one() {

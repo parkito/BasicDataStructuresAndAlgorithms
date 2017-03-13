@@ -12,10 +12,10 @@ import static java.util.Arrays.asList;
  * Created by Artyom Karnov on 26.11.16.
  * artyom-karnov@yandex.ru
  **/
-public class SecondChapter {
+public class SecondChapterExamples {
     List<Integer> list = new ArrayList<>();
 
-    public SecondChapter() {
+    public SecondChapterExamples() {
         list.add(0);
         list.add(1);
         list.add(2);
@@ -24,7 +24,7 @@ public class SecondChapter {
     }
 
     public static void main(String[] args) {
-        SecondChapter secondChapter = new SecondChapter();
+        SecondChapterExamples secondChapter = new SecondChapterExamples();
         secondChapter.funkOne();
         secondChapter.funkTwo();
         secondChapter.funkFour();
