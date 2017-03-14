@@ -4,6 +4,7 @@ package com.saiu.language.labmdas.coreservletsExers.less1;
  * @author Artem Karnov @date 17.02.2017.
  *         artem.karnov@t-systems.com
  */
+@FunctionalInterface
 interface BetterLambdas<T> {
     boolean compare(T str1, T str2);
 }
