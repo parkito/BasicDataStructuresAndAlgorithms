@@ -1,4 +1,4 @@
-package com.saiu.algorithms.interview.maxDepthBinaryTree;
+package com.saiu.algorithms.interview.other.maxDepthBinaryTree;
 
 import com.saiu.dataStructures.doubleSearchTree.TreeList;
 

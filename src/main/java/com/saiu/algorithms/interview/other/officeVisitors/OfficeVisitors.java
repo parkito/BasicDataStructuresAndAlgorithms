@@ -1,4 +1,4 @@
-package com.saiu.algorithms.interview.officeVisitors;
+package com.saiu.algorithms.interview.other.officeVisitors;
 
 import java.util.ArrayList;
 import java.util.Calendar;
