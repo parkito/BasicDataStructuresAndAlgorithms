@@ -6,11 +6,15 @@ package com.saiu.algorithms.general.sorts;
  */
 
 public class Sorts {
-    private long array[];
+    private static long[] array;
 
-    public void bubbleSort() {
+    public Sorts(long[] list) {
+        array = list;
+    }
+
+    public static long[] bubbleSort() {
         for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length - 1; j++) {
+            for (int j = 0; j < array.length-1; j++) {
                 if (array[j] > array[j + 1]) {
                     long temp = array[j];
                     array[j] = array[j + 1];
@@ -18,6 +22,8 @@ public class Sorts {
                 }
             }
         }
+        return array;
+
     }
 
 
@@ -51,54 +57,46 @@ public class Sorts {
         int inner, outer;
         long temp;
 
-        int h = 1;                     // find initial value of h
+        int h = 1;
         while (h <= array.length / 3)
-            h = h * 3 + 1;                // (1, 4, 13, 40, 121, ...)
-
-        while (h > 0)                     // decreasing h, until h=1
-        {
-            // h-sort the file
+            h = h * 3 + 1;
+        while (h > 0) {
             for (outer = h; outer < array.length; outer++) {
                 temp = array[outer];
                 inner = outer;
-                // one subpass (eg 0, 4, 8)
                 while (inner > h - 1 && array[inner - h] >= temp) {
                     array[inner] = array[inner - h];
                     inner -= h;
                 }
                 array[inner] = temp;
-            }  // end for
-            h = (h - 1) / 3;              // decrease h
-        }  // end while(h>0)
-    }  // end shellSort()
+            }
+            h = (h - 1) / 3;
+        }
+    }
 
 
     public int partitionIt(int left, int right, long pivot) {
-        int leftPtr = left - 1;           // left    (after ++)
-        int rightPtr = right;           // right-1 (after --)
-        while (true) {                            // find bigger item
-            while (array[++leftPtr] < pivot)
-                ;  // (nop)
-            // find smaller item
-            while (rightPtr > 0 && array[--rightPtr] > pivot)
-                ;  // (nop)
+        int leftPtr = left - 1;
+        int rightPtr = right;
+        while (true) {
+            while (array[++leftPtr] < pivot) ;
+            while (rightPtr > 0 && array[--rightPtr] > pivot) ;
 
-            if (leftPtr >= rightPtr)      // if pointers cross,
-                break;                    //    partition done
-            else                         // not crossed, so
-                swap(leftPtr, rightPtr);  //    swap elements
-        }  // end while(true)
-        swap(leftPtr, right);           // restore pivot
-        return leftPtr;                 // return pivot location
-    }  // end partitionIt()
+            if (leftPtr >= rightPtr)
+                break;
+            else
+                swap(leftPtr, rightPtr);
+        }
+        swap(leftPtr, right);
+        return leftPtr;
+    }
 
-    //--------------------------------------------------------------
-    private void swap(int dex1, int dex2)  // swap two elements
-    {
-        long temp = array[dex1];        // array into temp
-        array[dex1] = array[dex2];   // B into array
-        array[dex2] = temp;             // temp into B
-    }  // end swap(
+
+    private void swap(int dex1, int dex2) {
+        long temp = array[dex1];
+        array[dex1] = array[dex2];
+        array[dex2] = temp;
+    }
 
 
 }
