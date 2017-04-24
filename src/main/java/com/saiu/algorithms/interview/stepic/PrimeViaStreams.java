@@ -17,7 +17,11 @@ public class PrimeViaStreams {
      * @return true if number is prime else false
      */
     public static boolean isPrime(final long number) {
-        return !Stream.iterate(2, n -> n + 1).limit(number - 2).filter(i -> number % i == 0).findFirst().isPresent();
+        return !Stream.iterate(2, n -> n + 1)
+                .limit(number - 2)
+                .filter(i -> number % i == 0)
+                .findFirst()
+                .isPresent();
     }
 
     //shortest solution
