@@ -12,27 +12,27 @@ public class PrimeViaStreamsTest {
 
     @Test
     public void firstTest() {
-        Assert.assertTrue(PrimeViaStreams.isPrime(5));
+        Assert.assertTrue(PrimeNumbersViaStreams.isPrime(5));
     }
 
     @Test
     public void secondTest() {
-        Assert.assertTrue(PrimeViaStreams.isPrime(3));
+        Assert.assertTrue(PrimeNumbersViaStreams.isPrime(3));
     }
 
     @Test
     public void thirdTest() {
-        Assert.assertTrue(PrimeViaStreams.isPrime(7));
+        Assert.assertTrue(PrimeNumbersViaStreams.isPrime(7));
     }
 
     @Test
     public void fourthTest() {
-        Assert.assertTrue(PrimeViaStreams.isPrime(337));
+        Assert.assertTrue(PrimeNumbersViaStreams.isPrime(337));
     }
 
     @Test
     public void fifthTest() {
-        Assert.assertFalse(PrimeViaStreams.isPrime(10));
+        Assert.assertFalse(PrimeNumbersViaStreams.isPrime(10));
     }
 
 }

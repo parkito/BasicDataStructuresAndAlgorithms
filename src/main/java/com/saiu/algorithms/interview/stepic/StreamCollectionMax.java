@@ -61,7 +61,8 @@ public class StreamCollectionMax {
     }
 
     static List<String> changeListOptimal(List<String> list) {
-        return Collections.nCopies(list.size(), Collections.max(list, (x1, x2) -> x1.length() - x2.length()));
+        return Collections
+                .nCopies(list.size(), Collections.max(list, (x1, x2) -> x1.length() - x2.length()));
     }
 
 

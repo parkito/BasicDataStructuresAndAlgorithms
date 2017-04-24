@@ -8,7 +8,7 @@ package com.saiu.algorithms.interview.stepic;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-public class PrimeViaStreams {
+public class PrimeNumbersViaStreams {
 
     /**
      * Checking if a number is prime
