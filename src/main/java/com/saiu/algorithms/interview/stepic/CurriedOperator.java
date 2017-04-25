@@ -7,27 +7,29 @@ import java.util.function.Function;
  *         artem.karnov@t-systems.com
  */
 
-/*
-* Write a curried form of the function f(x,y,z)=x+y∗y+z∗z∗zf(x,y,z)=x+y∗y+z∗z∗z using lambda expressions in Java 8 style. The result and x, y, z must be integer numbers.
 
-You may write the result in any valid formats but with ; on the end.
-
-An example: x -> y -> { };
-
-Sample Input 1:
-1 1 1
-Sample Output 1:
-3
-Sample Input 2:
-2 3 4
-Sample Output 2:
-75
-* */
 interface CustomCurriedOperator {
-    public int operate(int x, int y, int z);
+    int operate(int x, int y, int z);
 }
 
 public class CurriedOperator {
+      /*
+      Write a curried form of the function f(x,y,z)=x+y∗y+z∗z∗zf(x,y,z)=x+y∗y+z∗z∗z
+      using lambda expressions in Java 8 style. The result and x, y, z must be integer numbers.
+
+      You may write the result in any valid formats but with ; on the end.
+
+      An example: x -> y -> { };
+
+      Sample Input 1:
+      1 1 1
+      Sample Output 1:
+      3
+      Sample Input 2:
+      2 3 4
+      Sample Output 2:
+      75
+     */
 
     public static int customIntegerCurried(int x, int y, int z) {
         CustomCurriedOperator myFunctionalInterface = (x1, y1, z1) -> {
@@ -42,7 +44,7 @@ public class CurriedOperator {
                 = x -> y -> z -> x + y * y + z * z * z;
     }
 
-        /*
+    /*
     Write a curried function (using lambdas) that accepts
     four string arguments and concatenated all in one string following the rules:
 

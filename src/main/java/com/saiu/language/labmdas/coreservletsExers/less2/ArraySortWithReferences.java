@@ -50,11 +50,6 @@ public class ArraySortWithReferences {
     public void changeForMethodReference() {
         double a, b, c, x = 0, y = 0;
         method1(x, y, d -> Math.cos(2));
-//        someList.forEach(entry -> System.out.println(entry));
-//        method2(a, b, c, (d1,d2) -> Math.pow(d1,d2));
-//        someStream.reduce(0, (i1,i2) -> Integer.sum(i1, i2));
-//        method3(foo, bar, (a,b,c) -> Utils.doSomethingWith(a,b,c));
-//        method4(() -> Math.random());
     }
 
     public static void method1(double x, double y, DoubleFunction op) {
