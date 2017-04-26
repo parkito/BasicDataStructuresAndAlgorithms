@@ -1,7 +1,6 @@
 package com.saiu.algorithms.interview.stepic;
 
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.stream.Collectors;
 
@@ -11,9 +10,9 @@ import java.util.stream.Collectors;
  */
 
 public class DeckSkipWithStream {
-    public static void main(String[] args) {
-        Deque<Integer> queue = new ArrayDeque<>(Arrays.asList(1, 2, 3, 4));
-        Deque<Integer> queue_2 = queue.stream().skip(2)
+    public static Deque<Integer> skipLastElements(Deque<Integer> deque, int n) {
+        Deque<Integer> queue = deque.stream().skip(2)
                 .collect(Collectors.toCollection(ArrayDeque::new));
+        return queue;
     }
 }
