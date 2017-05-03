@@ -25,7 +25,8 @@ public class Application {
         return (args) -> {
             repository.save(new Citizen("Ivan", "Ivanov", "Ivnovich",
                     null, null, 20,
-                    Sex.MALE, null, null));
+                    Sex.MALE, null, null)
+            );
         };
     }
 }
