@@ -1,5 +1,6 @@
 package com.saiu.algorithms.interview.other.findingNumberInThreeArrays;
 
+import com.saiu.algorithms.interview.other.NumberInArrayFinder;
 import com.saiu.dataStructures.fixedArray.FixedArray;
 import org.junit.Assert;
 import org.junit.Before;

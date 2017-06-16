@@ -1,4 +1,4 @@
-package com.saiu.algorithms.interview.other.findingNumberInThreeArrays;
+package com.saiu.algorithms.interview.other;
 
 import com.saiu.dataStructures.fixedArray.FixedArray;
 

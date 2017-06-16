@@ -1,5 +1,6 @@
 package com.saiu.algorithms.interview.other.maxDepthBinaryTree;
 
+import com.saiu.algorithms.interview.other.MaxDepthBinaryTreeFinder;
 import com.saiu.dataStructures.doubleSearchTree.TreeList;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,13 +11,13 @@ import org.junit.Test;
  *         artem.karnov@t-systems.com
  */
 
-public class DepthTest {
-    private Depth depth;
+public class MaxDepthBinaryTreeFinderTest {
+    private MaxDepthBinaryTreeFinder maxDepthBinaryTreeFinder;
     private TreeList<Integer> tree;
 
     @Before
     public void setUp() {
-        depth = new Depth();
+        maxDepthBinaryTreeFinder = new MaxDepthBinaryTreeFinder();
     }
 
     //                     5
@@ -81,19 +82,19 @@ public class DepthTest {
     @Test
     public void getMaxDepthTestOne() throws Exception {
         tree = generateFirstTree();
-        Assert.assertEquals(2, depth.getMaxDepth(tree));
+        Assert.assertEquals(2, maxDepthBinaryTreeFinder.getMaxDepth(tree));
     }
 
     @Test
     public void getMaxDepthTestTwo() throws Exception {
         tree = generateSecondTree();
-        Assert.assertEquals(4, depth.getMaxDepth(tree));
+        Assert.assertEquals(4, maxDepthBinaryTreeFinder.getMaxDepth(tree));
     }
 
     @Test
     public void getMaxDepthTestThree() throws Exception {
         tree = generateThirdTree();
-        Assert.assertEquals(4, depth.getMaxDepth(tree));
+        Assert.assertEquals(4, maxDepthBinaryTreeFinder.getMaxDepth(tree));
     }
 
 }

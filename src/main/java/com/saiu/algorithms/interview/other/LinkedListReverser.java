@@ -1,4 +1,4 @@
-package com.saiu.algorithms.interview.other.reverseInOneWayLinkedList;
+package com.saiu.algorithms.interview.other;
 
 import com.saiu.dataStructures.simpleLinkedList.LinkedList;
 

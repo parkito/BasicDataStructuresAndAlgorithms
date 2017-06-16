@@ -1,4 +1,4 @@
-package com.saiu.algorithms.interview.other.maxDepthBinaryTree;
+package com.saiu.algorithms.interview.other;
 
 import com.saiu.dataStructures.doubleSearchTree.TreeList;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * if tree has only root and left and right children --> max depth = 2
  * and so on
  */
-public class Depth {
+public class MaxDepthBinaryTreeFinder {
     private List<Integer> globalCounter = new ArrayList<>();
 
     /**
