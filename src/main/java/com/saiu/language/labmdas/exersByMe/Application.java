@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
  * @author Artem Karnov @date 11.03.17.
  *         artem.karnov@t-systems.com
  */
-
 @SpringBootApplication
 public class Application {
 
