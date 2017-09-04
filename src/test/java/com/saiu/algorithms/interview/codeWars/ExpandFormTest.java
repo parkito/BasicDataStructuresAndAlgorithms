@@ -9,26 +9,6 @@ import static org.junit.Assert.assertEquals;
  * artem.karnov@t-systems.com
  */
 public class ExpandFormTest {
-//    @Test
-//    public void firstTest() {
-//        assertEquals("", ExpandForm.calculate(0));
-//    }
-
-    @Test
-    public void secondTest() {
-
-    }
-
-    @Test
-    public void thirdTest() {
-
-    }
-
-    @Test
-    public void fourthTest() {
-
-    }
-
     @Test
     public void testSomething() {
         assertEquals("10 + 2", ExpandForm.calculate(12));
