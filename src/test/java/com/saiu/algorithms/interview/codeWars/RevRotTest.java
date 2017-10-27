@@ -22,7 +22,8 @@ public class RevRotTest {
 
     @Test
     public void test4() {
-        assertEquals(RevRot.revRot("1234", 5), ""); }
+        assertEquals(RevRot.revRot("1234", 5), "");
+    }
 
     @Test
     public void test5() {
@@ -73,7 +74,6 @@ public class RevRotTest {
     public void test14() {
         assertEquals(RevRot.revRot("563000655734469485", 4), "0365065073456944");
     }
-
 
 
 }
