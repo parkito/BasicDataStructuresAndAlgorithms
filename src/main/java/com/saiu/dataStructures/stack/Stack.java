@@ -1,6 +1,6 @@
 package com.saiu.dataStructures.stack;
 
-import com.saiu.dataStructures.dynamicArray.DynamicArray;
+import com.saiu.dataStructures.dynamicArray.Array;
 import com.saiu.dataStructures.exceptions.MistakenStackSize;
 
 /**
@@ -14,7 +14,7 @@ import com.saiu.dataStructures.exceptions.MistakenStackSize;
  * @param <T> object type for storing in com.saiu.dataStructures.stack
  */
 public class Stack<T> {
-    private DynamicArray<T> dynamicArray;
+    private Array<T> array;
     private int size;
 
     /**
@@ -22,7 +22,7 @@ public class Stack<T> {
      */
     public Stack() {
         size = 0;
-        dynamicArray = new DynamicArray<T>();
+        array = new Array<T>();
     }
 
     /**
@@ -32,7 +32,7 @@ public class Stack<T> {
      */
     public void push(T element) {
         if (size < Integer.MAX_VALUE) {
-            dynamicArray.add(element);
+            array.add(element);
             size++;
         } else {
             throw new MistakenStackSize("Size is too big for storing");
@@ -46,7 +46,7 @@ public class Stack<T> {
      */
     public T pop() {
         if (size > 0) {
-            T temp = dynamicArray.get(size - 1);
+            T temp = array.get(size - 1);
             size--;
             return temp;
         } else {
@@ -83,6 +83,6 @@ public class Stack<T> {
      * @return true - if com.saiu.dataStructures.stack contain adjusted element, false - if doesn't
      */
     public boolean contain(T element) {
-        return dynamicArray.contains(element) ? true : false;
+        return array.contains(element) ? true : false;
     }
 }

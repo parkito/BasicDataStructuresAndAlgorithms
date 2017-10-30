@@ -1,7 +1,7 @@
 package com.saiu.dataStructures.fixedArray;
 
-import com.saiu.dataStructures.exceptions.MistakenArraySize;
-import com.saiu.dataStructures.exceptions.MistakenIndex;
+import com.saiu.dataStructures.exceptions.IncorrectArraySizeException;
+import com.saiu.dataStructures.exceptions.IncorrectIndexException;
 
 /**
  * Created by Artyom Karnov on 15.11.16.
@@ -25,12 +25,12 @@ public class FixedArray<T> {
     public FixedArray(int size) {
         this.maxSize = size;
         if (size <= 0) {
-            throw new MistakenArraySize("Size couldn't be <=0");
+            throw new IncorrectArraySizeException("Size couldn't be <=0");
         } else if (size < Integer.MAX_VALUE) {
             fixArray = new Object[size];
             arrayInitialization();
         } else {
-            throw new MistakenArraySize("Array overflow");
+            throw new IncorrectArraySizeException("Array overflow");
         }
     }
 
@@ -51,11 +51,11 @@ public class FixedArray<T> {
      */
     public T get(int position) {
         if (position < 0) {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be <0");
         } else if (position < maxSize) {
             return (T) fixArray[position];
         } else {
-            throw new MistakenArraySize("Index overflow");
+            throw new IncorrectArraySizeException("Index overflow");
         }
     }
 
@@ -67,11 +67,11 @@ public class FixedArray<T> {
      */
     public void add(int position, T element) {
         if (position < 0) {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be <0");
         } else if (position < maxSize) {
             fixArray[position] = element;
         } else {
-            throw new MistakenIndex("Mistaken index");
+            throw new IncorrectIndexException("Mistaken index");
         }
     }
 
@@ -82,11 +82,11 @@ public class FixedArray<T> {
      */
     public void remove(int position) {
         if (position < 0) {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be <0");
         } else if (position < maxSize) {
             fixArray[position] = Integer.valueOf(0);
         } else {
-            throw new MistakenIndex("Incorrect size");
+            throw new IncorrectIndexException("Incorrect size");
         }
     }
 

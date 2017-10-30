@@ -1,7 +1,7 @@
 package com.saiu.dataStructures.queue;
 
 
-import com.saiu.dataStructures.dynamicArray.DynamicArray;
+import com.saiu.dataStructures.dynamicArray.Array;
 import com.saiu.dataStructures.exceptions.MistakenDeckSize;
 import com.saiu.dataStructures.exceptions.MistakenStackSize;
 /**
@@ -16,7 +16,7 @@ import com.saiu.dataStructures.exceptions.MistakenStackSize;
  * @param <T> object type for storing in queue
  */
 public class Queue<T> {
-    private DynamicArray<T> dynamicArray;
+    private Array<T> array;
     private int size;
 
     /**
@@ -24,7 +24,7 @@ public class Queue<T> {
      */
     public Queue() {
         size = 0;
-        dynamicArray = new DynamicArray<T>();
+        array = new Array<T>();
     }
 
     /**
@@ -34,7 +34,7 @@ public class Queue<T> {
      */
     public void push(T element) {
         if (size < Integer.MAX_VALUE) {
-            dynamicArray.add(element);
+            array.add(element);
             size++;
         } else {
             throw new MistakenStackSize("Size is too big for storing");
@@ -48,8 +48,8 @@ public class Queue<T> {
      */
     public T pop() {
         if (size > 0) {
-            T element = dynamicArray.get(0);
-            dynamicArray.remove(0);
+            T element = array.get(0);
+            array.remove(0);
             size--;
             return element;
         } else {
@@ -63,11 +63,7 @@ public class Queue<T> {
      * @return true - if queue has elements, false - if queue is empty
      */
     public boolean isEmpty() {
-        if (size() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return size() == 0;
     }
 
     /**
@@ -86,6 +82,6 @@ public class Queue<T> {
      * @return true - if queue contain adjusted element, false - if doesn't
      */
     public boolean contain(T element) {
-        return dynamicArray.contains(element) ? true : false;
+        return array.contains(element) ? true : false;
     }
 }

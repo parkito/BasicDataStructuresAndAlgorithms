@@ -4,13 +4,13 @@ package com.saiu.dataStructures.exceptions;
  * Created by Artyom Karnov on 15.11.16.
  * artyom-karnov@yandex.ru
  **/
-public class MistakenIndex extends RuntimeException {
+public class IncorrectIndexException extends RuntimeException {
     /**
      * Exception with message for situation when something goes wrong in structure
      *
      * @param message message for exception
      */
-    public MistakenIndex(String message) {
+    public IncorrectIndexException(String message) {
         super(message);
     }
 
@@ -20,7 +20,7 @@ public class MistakenIndex extends RuntimeException {
      * @param message   message for exception
      * @param throwable object for exception
      */
-    public MistakenIndex(String message, Throwable throwable) {
+    public IncorrectIndexException(String message, Throwable throwable) {
         super(message, throwable);
     }
 }

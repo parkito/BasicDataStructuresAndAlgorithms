@@ -1,6 +1,6 @@
 package com.saiu.dataStructures.deck;
 
-import com.saiu.dataStructures.dynamicArray.DynamicArray;
+import com.saiu.dataStructures.dynamicArray.Array;
 import com.saiu.dataStructures.exceptions.MistakenDeckSize;
 import com.saiu.dataStructures.exceptions.MistakenStackSize;
 
@@ -15,7 +15,7 @@ import com.saiu.dataStructures.exceptions.MistakenStackSize;
  * @param <T> object type for storing in com.saiu.dataStructures.stack
  */
 public class Deck<T> {
-    private DynamicArray<T> dynamicArray;
+    private Array<T> array;
     private int size;
 
     /**
@@ -23,7 +23,7 @@ public class Deck<T> {
      */
     public Deck() {
         size = 0;
-        dynamicArray = new DynamicArray<T>();
+        array = new Array<T>();
     }
 
     /**
@@ -33,7 +33,7 @@ public class Deck<T> {
      */
     public void pushIntoEnd(T element) {
         if (size < Integer.MAX_VALUE) {
-            dynamicArray.add(element);
+            array.add(element);
             size++;
         } else {
             throw new MistakenStackSize("Size is too big for storing");
@@ -47,12 +47,12 @@ public class Deck<T> {
      */
     public void pushIntoBegin(T element) {
         if (size < Integer.MAX_VALUE) {
-            DynamicArray<T> newArray = new DynamicArray<T>();
+            Array<T> newArray = new Array<T>();
             newArray.add(element);
             for (int i = 0; i < size; i++) {
-                newArray.add(dynamicArray.get(i));
+                newArray.add(array.get(i));
             }
-            dynamicArray = newArray;
+            array = newArray;
             size++;
         } else {
             throw new MistakenStackSize("Size is too big for storing");
@@ -66,8 +66,8 @@ public class Deck<T> {
      */
     public T popBegin() {
         if (size > 0) {
-            T element = dynamicArray.get(0);
-            dynamicArray.remove(0);
+            T element = array.get(0);
+            array.remove(0);
             size--;
             return element;
         } else {
@@ -82,8 +82,8 @@ public class Deck<T> {
      */
     public T popBack() {
         if (size > 0) {
-            T element = dynamicArray.get(size - 1);
-            dynamicArray.remove(size - 1);
+            T element = array.get(size - 1);
+            array.remove(size - 1);
             size--;
             return element;
         } else {
@@ -97,11 +97,7 @@ public class Deck<T> {
      * @return true - if deck has elements, false - if deck is empty
      */
     public boolean isEmpty() {
-        if (size() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return size() == 0;
     }
 
     /**
@@ -120,6 +116,6 @@ public class Deck<T> {
      * @return true - if deck contain adjusted element, false - if doesn't
      */
     public boolean contain(T element) {
-        return dynamicArray.contains(element) ? true : false;
+        return array.contains(element) ? true : false;
     }
 }

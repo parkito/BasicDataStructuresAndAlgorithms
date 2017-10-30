@@ -6,7 +6,7 @@ import org.junit.Test;
  * @author Artem Karnov @date 29.11.2016.
  *         artem.karnov@t-systems.com
  **/
-public class DynamicArrayTest {
+public class ArrayTest {
     @Test
     public void add() throws Exception {
 

@@ -1,7 +1,7 @@
 package com.saiu.dataStructures.simpleLinkedList;
 
 
-import com.saiu.dataStructures.exceptions.MistakenIndex;
+import com.saiu.dataStructures.exceptions.IncorrectIndexException;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -23,7 +23,7 @@ public class LinkedListTest {
         assertTrue(list.size() > 0);
     }
 
-    @Test(expected = MistakenIndex.class)
+    @Test(expected = IncorrectIndexException.class)
     public void get() throws Exception {
         LinkedList<Integer> linkedList = new LinkedList<Integer>();
         linkedList.add(1);
@@ -60,7 +60,7 @@ public class LinkedListTest {
         assertFalse(linkedList.contains(4));
     }
 
-    @Test(expected = MistakenIndex.class)
+    @Test(expected = IncorrectIndexException.class)
     public void remove() throws Exception {
         LinkedList<Integer> linkedList = new LinkedList<Integer>();
         linkedList.add(1);
