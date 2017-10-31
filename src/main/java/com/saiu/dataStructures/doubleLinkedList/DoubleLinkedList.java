@@ -1,6 +1,6 @@
 package com.saiu.dataStructures.doubleLinkedList;
 
-import com.saiu.dataStructures.exceptions.MistakenIndex;
+import com.saiu.dataStructures.exceptions.IncorrectIndexException;
 
 /**
  * Created by Artyom Karnov on 26.11.16.
@@ -17,6 +17,7 @@ public class DoubleLinkedList<T> {
     private List<T> firstList = new List(null);
     private List<T> tempList;
     private int size;
+
     /**
      * Constructor with begin initialization
      */
@@ -72,7 +73,7 @@ public class DoubleLinkedList<T> {
         if (size() > 0) {
             firstList = firstList.next;
         } else {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be <0");
         }
     }
 
@@ -89,7 +90,7 @@ public class DoubleLinkedList<T> {
         } else if (size() == 1)
             removeFirst();
         else {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be <0");
         }
     }
 
@@ -132,9 +133,9 @@ public class DoubleLinkedList<T> {
     private void checkingIndex(int index) {
         this.size = size();
         if (index < 0) {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be <0");
         } else if (index >= size) {
-            throw new MistakenIndex("Index couldn't be more than list size-1");
+            throw new IncorrectIndexException("Index couldn't be more than list size-1");
         }
     }
 
@@ -144,11 +145,7 @@ public class DoubleLinkedList<T> {
      * @return true - if linkedList has elements, false - if linkedList is empty
      */
     public boolean isEmpty() {
-        if (size() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return size() == 0;
     }
 
     /**

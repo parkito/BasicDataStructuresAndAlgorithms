@@ -1,6 +1,6 @@
 package com.saiu.dataStructures.simpleLinkedList;
 
-import com.saiu.dataStructures.exceptions.MistakenIndex;
+import com.saiu.dataStructures.exceptions.IncorrectIndexException;
 
 /**
  * Created by Artyom Karnov on 23.11.16.
@@ -13,18 +13,18 @@ import com.saiu.dataStructures.exceptions.MistakenIndex;
  * @param <T> object type for storing in linkedList
  */
 public class LinkedList<T> {
-    //// TODO: 24.11.16 add anonimuses and lambdas
     //// TODO: 24.11.2016 To optimize size operaton (create buffer or like this)
-    //// TODO: 26.11.16  static inner class? hmmm
 
-    private List<T> firstList = new List();
+    private List<T> firstList;
     private List<T> tempList;
     private int size;
+
     /**
      * Constructor with begin initialization
      */
     public LinkedList() {
         size = 0;
+        firstList = new List<T>();
     }
 
     /**
@@ -75,7 +75,7 @@ public class LinkedList<T> {
         if (size() > 0) {
             firstList = firstList.next;
         } else {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be less than 0");
         }
     }
 
@@ -92,7 +92,7 @@ public class LinkedList<T> {
         } else if (size() == 1)
             removeFirst();
         else {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be <0");
         }
     }
 
@@ -135,9 +135,9 @@ public class LinkedList<T> {
     private void checkingIndex(int index) {
         this.size = size();
         if (index < 0) {
-            throw new MistakenIndex("Index couldn't be <0");
+            throw new IncorrectIndexException("Index couldn't be less than 0");
         } else if (index >= size) {
-            throw new MistakenIndex("Index couldn't be more than list size-1");
+            throw new IncorrectIndexException("Index couldn't be more than list size-1");
         }
     }
 
@@ -147,11 +147,7 @@ public class LinkedList<T> {
      * @return true - if linkedList has elements, false - if linkedList is empty
      */
     public boolean isEmpty() {
-        if (size() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return size() == 0;
     }
 
     /**
@@ -191,9 +187,9 @@ public class LinkedList<T> {
      *
      * @param <T> object type for storing in list
      */
-    private class List<T> {
-        public T data;
-        public List next;
+    private static class List<T> {
+        private T data;
+        private List next;
 
         public List() {
             next = null;

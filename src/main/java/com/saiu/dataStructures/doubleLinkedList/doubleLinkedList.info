@@ -1,3 +1,3 @@
 Structure            insertion           finding           access
 
-DoubleLinkedList       o(n)               o(n)               o(n)
+DoubleLinkedList       O(n)               O(n)              O(n)

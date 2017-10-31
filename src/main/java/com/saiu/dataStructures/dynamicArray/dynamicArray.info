@@ -1,6 +1,6 @@
-Structure     insertion     finding           access
+Structure      insertion     finding           access
 
-DynamicArray    const        o(n)             const
+DynamicArray     O(1)        O(N)              O(1)
                 (without
                  allocation)
 
