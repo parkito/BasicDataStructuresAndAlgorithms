@@ -4,13 +4,13 @@ package com.saiu.dataStructures.exceptions;
  * Created by Artyom Karnov on 15.11.16.
  * artyom-karnov@yandex.ru
  **/
-public class IncorrectArraySizeException extends RuntimeException {
+public class IncorrectSizeException extends RuntimeException {
     /**
      * Exception with message for situation when something goes wrong in array
      *
      * @param message message for exception
      */
-    public IncorrectArraySizeException(String message) {
+    public IncorrectSizeException(String message) {
         super(message);
     }
 
@@ -20,7 +20,7 @@ public class IncorrectArraySizeException extends RuntimeException {
      * @param message   message for exception
      * @param throwable object for exception
      */
-    public IncorrectArraySizeException(String message, Throwable throwable) {
+    public IncorrectSizeException(String message, Throwable throwable) {
         super(message, throwable);
     }
 }

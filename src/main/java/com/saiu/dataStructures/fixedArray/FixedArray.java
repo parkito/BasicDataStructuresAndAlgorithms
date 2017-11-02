@@ -1,6 +1,6 @@
 package com.saiu.dataStructures.fixedArray;
 
-import com.saiu.dataStructures.exceptions.IncorrectArraySizeException;
+import com.saiu.dataStructures.exceptions.IncorrectSizeException;
 import com.saiu.dataStructures.exceptions.IncorrectIndexException;
 
 /**
@@ -25,12 +25,12 @@ public class FixedArray<T> {
     public FixedArray(int size) {
         this.maxSize = size;
         if (size <= 0) {
-            throw new IncorrectArraySizeException("Size couldn't be <=0");
+            throw new IncorrectSizeException("Size couldn't be <=0");
         } else if (size < Integer.MAX_VALUE) {
             fixArray = new Object[size];
             arrayInitialization();
         } else {
-            throw new IncorrectArraySizeException("Array overflow");
+            throw new IncorrectSizeException("Array overflow");
         }
     }
 
@@ -55,7 +55,7 @@ public class FixedArray<T> {
         } else if (position < maxSize) {
             return (T) fixArray[position];
         } else {
-            throw new IncorrectArraySizeException("Index overflow");
+            throw new IncorrectSizeException("Index overflow");
         }
     }
 

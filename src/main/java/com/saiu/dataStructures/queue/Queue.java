@@ -3,12 +3,13 @@ package com.saiu.dataStructures.queue;
 
 import com.saiu.dataStructures.dynamicArray.Array;
 import com.saiu.dataStructures.exceptions.MistakenDeckSize;
-import com.saiu.dataStructures.exceptions.MistakenStackSize;
+import com.saiu.dataStructures.utils.SystemUtils;
+
+import static com.saiu.dataStructures.utils.SystemUtils.checkDataStructureSize;
 /**
  * @author Artem Karnov @date 21.02.17.
  * artem.karnov@t-systems.com
  */
-
 
 /**
  * Queue built on dynamic array
@@ -20,11 +21,11 @@ public class Queue<T> {
     private int size;
 
     /**
-     * Deck initialization
+     * Queue initialization
      */
     public Queue() {
         size = 0;
-        array = new Array<T>();
+        array = new Array<>();
     }
 
     /**
@@ -33,12 +34,9 @@ public class Queue<T> {
      * @param element element for pushing
      */
     public void push(T element) {
-        if (size < Integer.MAX_VALUE) {
-            array.add(element);
-            size++;
-        } else {
-            throw new MistakenStackSize("Size is too big for storing");
-        }
+        checkDataStructureSize(size);
+        array.add(element);
+        size++;
     }
 
     /**
@@ -58,7 +56,7 @@ public class Queue<T> {
     }
 
     /**
-     * Checking com.saiu.dataStructures.queue on elements presence
+     * Checking queue on elements presence
      *
      * @return true - if queue has elements, false - if queue is empty
      */
@@ -81,7 +79,7 @@ public class Queue<T> {
      * @param element element for checking
      * @return true - if queue contain adjusted element, false - if doesn't
      */
-    public boolean contain(T element) {
-        return array.contains(element) ? true : false;
+    public boolean contains(T element) {
+        return array.contains(element);
     }
 }

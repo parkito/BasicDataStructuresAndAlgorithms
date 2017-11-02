@@ -1,6 +1,6 @@
 package com.saiu.dataStructures.dynamicArray;
 
-import com.saiu.dataStructures.exceptions.IncorrectArraySizeException;
+import com.saiu.dataStructures.exceptions.IncorrectSizeException;
 import com.saiu.dataStructures.exceptions.IncorrectIndexException;
 import com.saiu.dataStructures.utils.SystemUtils;
 
@@ -45,12 +45,12 @@ public class Array<T> {
     public Array(int size) {
         this.size = size;
         if (size <= 0) {
-            throw new IncorrectArraySizeException("Size couldn't be <=0");
+            throw new IncorrectSizeException("Size couldn't be <=0");
         } else if (size < Integer.MAX_VALUE) {
             array = new Object[size];
             arrayInitialization();
         } else {
-            throw new IncorrectArraySizeException("Array overflow");
+            throw new IncorrectSizeException("Array overflow");
         }
     }
 
@@ -71,7 +71,7 @@ public class Array<T> {
             array = arrayCopy(element);
             size++;
         } else {
-            throw new IncorrectArraySizeException("Array overflow");
+            throw new IncorrectSizeException("Array overflow");
         }
     }
 
@@ -83,9 +83,9 @@ public class Array<T> {
      */
     public void add(T element, int position) {
         if (position < 0) {
-            throw new IncorrectArraySizeException("Size couldn't be less than 0");
+            throw new IncorrectSizeException("Size couldn't be less than 0");
         } else if (position >= size) {
-            throw new IncorrectArraySizeException("Index " + position + " is greater than size of array " + size);
+            throw new IncorrectSizeException("Index " + position + " is greater than size of array " + size);
         } else {
             array[position] = element;
         }
@@ -101,7 +101,7 @@ public class Array<T> {
             array = strictArrayCopy(element);
             size++;
         } else {
-            throw new IncorrectArraySizeException("Array overflow");
+            throw new IncorrectSizeException("Array overflow");
         }
     }
 
@@ -113,9 +113,9 @@ public class Array<T> {
      */
     public void strictAdd(T element, int position) {
         if (position < 0) {
-            throw new IncorrectArraySizeException("Size couldn't be less than 0");
+            throw new IncorrectSizeException("Size couldn't be less than 0");
         } else if (position >= size) {
-            throw new IncorrectArraySizeException("Index " + position + " is greater than size of array " + size);
+            throw new IncorrectSizeException("Index " + position + " is greater than size of array " + size);
         } else {
             array[position] = SystemUtils.clone(element);
         }
@@ -163,7 +163,7 @@ public class Array<T> {
         } else if (position < size) {
             return (T) array[position];
         } else {
-            throw new IncorrectArraySizeException("Index overflow");
+            throw new IncorrectSizeException("Index overflow");
         }
     }
 
@@ -174,7 +174,7 @@ public class Array<T> {
      */
     public void remove(int position) {
         if (size <= 0) {
-            throw new IncorrectArraySizeException("Size couldn't be less than 0");
+            throw new IncorrectSizeException("Size couldn't be less than 0");
         } else {
             array = offset(position);
             size--;
@@ -189,7 +189,7 @@ public class Array<T> {
      */
     public void strictRemove(int position) {
         if (size <= 0) {
-            throw new IncorrectArraySizeException("Size couldn't be less than 0");
+            throw new IncorrectSizeException("Size couldn't be less than 0");
         } else {
             array = strictOffset(position);
             size--;
@@ -204,7 +204,7 @@ public class Array<T> {
      */
     public void delete(int position) {
         if (size <= 0) {
-            throw new IncorrectArraySizeException("Size couldn't be less than 0");
+            throw new IncorrectSizeException("Size couldn't be less than 0");
         } else {
             array[position] = null;
         }

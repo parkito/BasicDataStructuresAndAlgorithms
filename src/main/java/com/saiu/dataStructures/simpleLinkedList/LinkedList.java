@@ -1,22 +1,35 @@
 package com.saiu.dataStructures.simpleLinkedList;
 
 import com.saiu.dataStructures.exceptions.IncorrectIndexException;
+import com.saiu.dataStructures.utils.SystemUtils;
+
+import static com.saiu.dataStructures.utils.SystemUtils.checkDataStructureSize;
+import static com.saiu.dataStructures.utils.SystemUtils.checkingIndex;
 
 /**
  * Created by Artyom Karnov on 23.11.16.
  * artyom-karnov@yandex.ru
- **/
-
-/**
+ * <p>
  * Typical linkedList
  *
  * @param <T> object type for storing in linkedList
  */
 public class LinkedList<T> {
-    //// TODO: 24.11.2016 To optimize size operaton (create buffer or like this)
+    /**
+     * Class represents list of list
+     *
+     * @param <T> object type for storing in list
+     */
+    private static class List<T> {
+        private T data;
+        private List next;
+
+        public List() {
+            next = null;
+        }
+    }
 
     private List<T> firstList;
-    private List<T> tempList;
     private int size;
 
     /**
@@ -24,7 +37,7 @@ public class LinkedList<T> {
      */
     public LinkedList() {
         size = 0;
-        firstList = new List<T>();
+        firstList = new List<>();
     }
 
     /**
@@ -33,7 +46,8 @@ public class LinkedList<T> {
      * @param element element for adding
      */
     public void add(T element) {
-        tempList = firstList;
+        checkDataStructureSize(size);
+        List tempList = firstList;
         while (tempList.next != null) {
             tempList = tempList.next;
         }
@@ -49,8 +63,8 @@ public class LinkedList<T> {
      * @return element from adjusted position
      */
     public T get(int index) {
-        checkingIndex(index);
-        tempList = firstList;
+        checkingIndex(index, size);
+        List tempList = firstList;
         for (int i = 0; i < index; i++) {
             tempList = tempList.next;
         }
@@ -60,12 +74,16 @@ public class LinkedList<T> {
     /**
      * Method for displaying all lists of liked list
      */
-    public void displayAll() {
-        tempList = firstList;
+    @SuppressWarnings("Warning")
+    public <T> T[] toArray() {
+        T[] arr = (T[]) new Object[size];
+        List tempList = firstList;
+        int i = 0;
         while (tempList.next != null) {
-            System.out.println(tempList.data);
+            arr[i] = (T) tempList.data;
             tempList = tempList.next;
         }
+        return arr;
     }
 
     /**
@@ -84,7 +102,7 @@ public class LinkedList<T> {
      */
     public void removeLast() {
         if (size() > 1) {
-            tempList = firstList;
+            List tempList = firstList;
             while (tempList.next.next != null) {
                 tempList = tempList.next;
             }
@@ -112,13 +130,13 @@ public class LinkedList<T> {
         * ([][][X][][])
      */
     public void remove(int index) {
-        checkingIndex(index);
+        checkingIndex(index, size);
         if (index == 0) {
             removeFirst();
         } else if (index == size) {
             removeLast();
         } else {
-            tempList = firstList;
+            List tempList = firstList;
             for (int i = 0; i < index - 1; i++) {
                 tempList = tempList.next;
             }
@@ -127,19 +145,6 @@ public class LinkedList<T> {
 
     }
 
-    /**
-     * Checking correctness of index
-     *
-     * @param index index for checking
-     */
-    private void checkingIndex(int index) {
-        this.size = size();
-        if (index < 0) {
-            throw new IncorrectIndexException("Index couldn't be less than 0");
-        } else if (index >= size) {
-            throw new IncorrectIndexException("Index couldn't be more than list size-1");
-        }
-    }
 
     /**
      * Checking linkedList on elements presence
@@ -153,16 +158,10 @@ public class LinkedList<T> {
     /**
      * Getting size of linkedList
      *
-     * @return number of elements
+     * @return number of elements in linked list
      */
     public int size() {
-        int i = 0;
-        tempList = firstList;
-        while (tempList.next != null) {
-            i++;
-            tempList = tempList.next;
-        }
-        return i;
+        return size;
     }
 
     /**
@@ -172,7 +171,7 @@ public class LinkedList<T> {
      * @return true - if array contain adjusted element, false - if doesn't
      */
     public boolean contains(T element) {
-        tempList = firstList;
+        List tempList = firstList;
         while (tempList.next != null) {
             if (tempList.data.equals(element)) {
                 return true;
@@ -182,17 +181,15 @@ public class LinkedList<T> {
         return false;
     }
 
-    /**
-     * Class represents list of list
-     *
-     * @param <T> object type for storing in list
-     */
-    private static class List<T> {
-        private T data;
-        private List next;
-
-        public List() {
-            next = null;
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        List tempList = firstList;
+        while (tempList.next != null) {
+            result.append(tempList.data);
+            result.append(" ");
+            tempList = tempList.next;
         }
+        return "LinkedList{" + result.toString() + "}";
     }
 }

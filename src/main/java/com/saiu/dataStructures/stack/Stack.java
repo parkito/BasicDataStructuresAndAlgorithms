@@ -3,15 +3,17 @@ package com.saiu.dataStructures.stack;
 import com.saiu.dataStructures.dynamicArray.Array;
 import com.saiu.dataStructures.exceptions.MistakenStackSize;
 
+import static com.saiu.dataStructures.utils.SystemUtils.checkDataStructureSize;
+
 /**
  * Created by Artyom Karnov on 18.11.16.
  * artyom-karnov@yandex.ru
- **/
+ */
 
-/**
+/*
  * Stack built on dynamic array
  *
- * @param <T> object type for storing in com.saiu.dataStructures.stack
+ * @param <T> object type for storing in stack
  */
 public class Stack<T> {
     private Array<T> array;
@@ -22,25 +24,22 @@ public class Stack<T> {
      */
     public Stack() {
         size = 0;
-        array = new Array<T>();
+        array = new Array<>();
     }
 
     /**
-     * Pushing element into com.saiu.dataStructures.stack
+     * Pushing element stack
      *
      * @param element element for pushing
      */
     public void push(T element) {
-        if (size < Integer.MAX_VALUE) {
-            array.add(element);
-            size++;
-        } else {
-            throw new MistakenStackSize("Size is too big for storing");
-        }
+        checkDataStructureSize(size);
+        array.add(element);
+        size++;
     }
 
     /**
-     * Extraction upper element from com.saiu.dataStructures.stack
+     * Extraction upper element from stack
      *
      * @return extracted element
      */
@@ -55,20 +54,16 @@ public class Stack<T> {
     }
 
     /**
-     * Checking com.saiu.dataStructures.stack on elements presence
+     * Checking stack on elements presence
      *
-     * @return true - if com.saiu.dataStructures.stack has elements, false - if com.saiu.dataStructures.stack is empty
+     * @return true - if stack has elements, false - if stack is empty
      */
     public boolean isEmpty() {
-        if (size() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return size == 0;
     }
 
     /**
-     * Getting com.saiu.dataStructures.stack size
+     * Getting stack size
      *
      * @return size of array
      */
@@ -80,9 +75,9 @@ public class Stack<T> {
      * Checking elements storing in array
      *
      * @param element element for checking
-     * @return true - if com.saiu.dataStructures.stack contain adjusted element, false - if doesn't
+     * @return true - if stack contain adjusted element, false - if doesn't
      */
-    public boolean contain(T element) {
-        return array.contains(element) ? true : false;
+    public boolean contains(T element) {
+        return array.contains(element);
     }
 }
