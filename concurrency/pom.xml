@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.parkito.basic</groupId>
+        <groupId>ru.siksmfp.basic</groupId>
         <artifactId>app</artifactId>
         <version>1.0</version>
     </parent>
 
-    <groupId>com.parkito.basic</groupId>
+    <groupId>ru.siksmfp.basic</groupId>
     <artifactId>concurrency</artifactId>
     <version>1.0</version>
 
