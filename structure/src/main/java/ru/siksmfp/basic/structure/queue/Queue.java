@@ -1,20 +1,17 @@
 package ru.siksmfp.basic.structure.queue;
 
 
-import com.saiu.dataStructures.dynamicArray.Array;
-import com.saiu.dataStructures.exceptions.MistakenDeckSize;
-import com.saiu.dataStructures.utils.SystemUtils;
+import ru.siksmfp.basic.structure.array.dynamic.Array;
+import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
-import static com.saiu.dataStructures.utils.SystemUtils.checkDataStructureSize;
+import static ru.siksmfp.basic.structure.utils.StructureUtils.checkDataStructureSize;
+
 /**
+ * @param <T> object type for storing in queue
+ *            Queue built on dynamic array
  * @author Artem Karnov @date 21.02.17.
  * artem.karnov@t-systems.com
- */
-
-/**
- * Queue built on dynamic array
- *
- * @param <T> object type for storing in queue
+ * <p>
  */
 public class Queue<T> {
     private Array<T> array;
@@ -51,7 +48,7 @@ public class Queue<T> {
             size--;
             return element;
         } else {
-            throw new MistakenDeckSize("Deck is empty");
+            throw new IncorrectSizeException("Queue is empty");
         }
     }
 

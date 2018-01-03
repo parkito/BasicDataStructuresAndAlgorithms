@@ -1,6 +1,0 @@
-Structure      insertion     finding           access
-
-DynamicArray     O(1)        O(N)              O(1)
-                (without
-                 allocation)
-

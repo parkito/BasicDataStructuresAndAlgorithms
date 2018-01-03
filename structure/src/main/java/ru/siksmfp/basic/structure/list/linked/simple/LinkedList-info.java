@@ -1,0 +1,1 @@
+package ru.siksmfp.basic.structure.list.linked.simple;

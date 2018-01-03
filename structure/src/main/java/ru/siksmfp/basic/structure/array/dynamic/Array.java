@@ -7,9 +7,7 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
 /**
  * Created by Artyom Karnov on 17.11.16.
  * artyom-karnov@yandex.ru
- **/
-
-/**
+ * <p>
  * Array of variable length. Non initialized elements - 0
  *
  * @param <T> object type for storing in array

@@ -1,4 +1,0 @@
-Structure            insertion           finding           access
-
-DoubleSearchTree       o(log n)           o(log n)         o(log n)
-

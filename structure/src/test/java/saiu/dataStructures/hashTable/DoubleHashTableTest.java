@@ -52,7 +52,7 @@ public class DoubleHashTableTest {
     // TODO: 23.02.2017 Implementation
     @Test
     public void isPrimeNumberTesting() throws NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException {
-//        Class doubleHashTableClass = Class.forName("com.saiu.ru.siksmfp.basic.structure.hashTable.DoubleHashTable");
+//        Class doubleHashTableClass = Class.forName("com.saiu.ru.siksmfp.basic.structure.hash.table.doubled.DoubleHashTable");
 //        Object object = doubleHashTableClass.getConstructor();
 //        Method method = doubleHashTableClass.getDeclaredMethod("isPrimeNumber", Integer.TYPE);
 //        method.setAccessible(true);

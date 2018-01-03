@@ -1,18 +1,15 @@
 package ru.siksmfp.basic.structure.deck;
 
-import com.saiu.dataStructures.dynamicArray.Array;
-import com.saiu.dataStructures.exceptions.MistakenDeckSize;
-import com.saiu.dataStructures.exceptions.MistakenStackSize;
+import ru.siksmfp.basic.structure.array.dynamic.Array;
+import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
 /**
  * @author Artem Karnov @date 02.12.16.
  * artem.karnov@t-systems.com
- **/
-
-/**
- * Deck built on dynamic array
  *
- * @param <T> object type for storing in com.saiu.ru.siksmfp.basic.structure.stack
+ * @param <T> object type for storing in deck
+ * <p>
+ * Deck built on dynamic array
  */
 public class Deck<T> {
     private Array<T> array;
@@ -36,7 +33,7 @@ public class Deck<T> {
             array.add(element);
             size++;
         } else {
-            throw new MistakenStackSize("Size is too big for storing");
+            throw new IncorrectSizeException("Size is too big for storing");
         }
     }
 
@@ -55,7 +52,7 @@ public class Deck<T> {
             array = newArray;
             size++;
         } else {
-            throw new MistakenStackSize("Size is too big for storing");
+            throw new IncorrectSizeException("Size is too big for storing");
         }
     }
 
@@ -71,7 +68,7 @@ public class Deck<T> {
             size--;
             return element;
         } else {
-            throw new MistakenDeckSize("Deck is empty");
+            throw new IncorrectSizeException("Deck is empty");
         }
     }
 
@@ -87,7 +84,7 @@ public class Deck<T> {
             size--;
             return element;
         } else {
-            throw new MistakenDeckSize("Deck is empty");
+            throw new IncorrectSizeException("Deck is empty");
         }
     }
 
