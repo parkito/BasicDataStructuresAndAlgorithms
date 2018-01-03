@@ -1,16 +1,14 @@
-package saiu.dataStructures.hashTable;
+package ru.siksmfp.basic.structure.hash.table.doubled;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import testSupport.TestUtils;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 /**
  * @author Artem Karnov @date 22.02.2017.
- *         artem.karnov@t-systems.com
+ * artem.karnov@t-systems.com
  */
 
 public class DoubleHashTableTest {
@@ -41,12 +39,12 @@ public class DoubleHashTableTest {
 
     @Test
     public void addAndGetElementsTest() {
-        List<String> strings = TestUtils.getStringsOfNumbers(10, 30);
-        for (int i = 1; i < 20; i++) {
-            hashTable.add(i, strings.get(i));
-        }
-
-        Assert.assertEquals(-1, hashTable.getDataKey("232"));
+//        List<String> strings = TestUtils.getStringsOfNumbers(10, 30);
+//        for (int i = 1; i < 20; i++) {
+//            hashTable.add(i, strings.get(i));
+//        }
+//
+//        Assert.assertEquals(-1, hashTable.getDataKey("232"));
     }
 
     // TODO: 23.02.2017 Implementation

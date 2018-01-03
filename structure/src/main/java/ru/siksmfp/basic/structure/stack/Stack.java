@@ -2,8 +2,7 @@ package ru.siksmfp.basic.structure.stack;
 
 import ru.siksmfp.basic.structure.array.dynamic.Array;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
-
-import static ru.siksmfp.basic.structure.utils.SystemUtils.checkDataStructureSize;
+import ru.siksmfp.basic.structure.utils.StructureUtils;
 
 /**
  * Created by Artyom Karnov on 18.11.16.
@@ -33,7 +32,7 @@ public class Stack<T> {
      * @param element element for pushing
      */
     public void push(T element) {
-        checkDataStructureSize(size);
+        StructureUtils.checkDataStructureSize(size);
         array.add(element);
         size++;
     }

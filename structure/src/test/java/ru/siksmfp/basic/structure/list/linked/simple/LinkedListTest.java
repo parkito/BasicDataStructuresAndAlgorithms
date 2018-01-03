@@ -1,17 +1,15 @@
-package saiu.dataStructures.simpleLinkedList;
+package ru.siksmfp.basic.structure.list.linked.simple;
 
-
-import com.saiu.dataStructures.exceptions.IncorrectIndexException;
 import org.junit.Test;
+import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
-
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Artem Karnov @date 29.11.2016.
- *         artem.karnov@t-systems.com
+ * artem.karnov@t-systems.com
  **/
 public class LinkedListTest {
 

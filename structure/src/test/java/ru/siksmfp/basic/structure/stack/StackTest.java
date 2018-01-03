@@ -1,9 +1,9 @@
-package saiu.dataStructures.stack;
+package ru.siksmfp.basic.structure.stack;
 
-import com.saiu.dataStructures.exceptions.MistakenStackSize;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
 /**
  * Created by Artyom Karnov on 18.11.16.
@@ -54,7 +54,7 @@ public class StackTest {
         Assert.assertEquals(deck.pop(), Integer.valueOf(0));
     }
 
-    @Test(expected = MistakenStackSize.class)
+    @Test(expected = IncorrectSizeException.class)
     public void popTestTwo() {
         deck.pop();
         deck.pop();
@@ -69,12 +69,12 @@ public class StackTest {
 
     @Test
     public void containTestOne() {
-        Assert.assertTrue(deck.contain(Integer.valueOf(3)));
+        Assert.assertTrue(deck.contains(Integer.valueOf(3)));
     }
 
     @Test
     public void containTestTwo() {
-        Assert.assertFalse(deck.contain(Integer.valueOf(33)));
+        Assert.assertFalse(deck.contains(Integer.valueOf(33)));
     }
 
 }
