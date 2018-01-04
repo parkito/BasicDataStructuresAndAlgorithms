@@ -46,18 +46,8 @@ public class Array<T> {
             throw new IncorrectSizeException("Size couldn't be <=0");
         } else if (size < Integer.MAX_VALUE) {
             array = new Object[size];
-            arrayInitialization();
         } else {
             throw new IncorrectSizeException("Array overflow");
-        }
-    }
-
-    /**
-     * Method for initialization array before work
-     */
-    private void arrayInitialization() {
-        for (int i = 0; i < size; i++) {
-            array[i] = null;
         }
     }
 

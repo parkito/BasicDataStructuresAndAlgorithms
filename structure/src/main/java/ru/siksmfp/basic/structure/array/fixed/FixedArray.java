@@ -1,7 +1,6 @@
 package ru.siksmfp.basic.structure.array.fixed;
 
-import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
-import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
+import ru.siksmfp.basic.structure.utils.StructureUtils;
 
 /**
  * Created by Artyom Karnov on 15.11.16.
@@ -12,8 +11,8 @@ import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
  * @param <T> object type for storing in array
  */
 public class FixedArray<T> {
-    Object[] fixArray;
-    private int maxSize;
+    private final Object[] fixArray;
+    private final int maxSize;
 
     /**
      * Constructor for getting array's size and initialization
@@ -22,70 +21,40 @@ public class FixedArray<T> {
      */
     public FixedArray(int size) {
         this.maxSize = size;
-        if (size <= 0) {
-            throw new IncorrectSizeException("Size couldn't be <=0");
-        } else if (size < Integer.MAX_VALUE) {
-            fixArray = new Object[size];
-            arrayInitialization();
-        } else {
-            throw new IncorrectSizeException("Array overflow");
-        }
+        StructureUtils.checkDataStructureSize(size);
+        fixArray = new Object[size];
     }
 
     /**
-     * Method for initialization array before work
-     */
-    private void arrayInitialization() {
-        for (int i = 0; i < maxSize; i++) {
-            fixArray[i] = Integer.valueOf(0);
-        }
-    }
-
-    /**
-     * Getting element on adjusted position in array
+     * Getting element on adjusted index in array
      *
-     * @param position position of element
-     * @return element on adjusted position
+     * @param index index of element
+     * @return element on adjusted index
      */
-    public T get(int position) {
-        if (position < 0) {
-            throw new IncorrectIndexException("Index couldn't be <0");
-        } else if (position < maxSize) {
-            return (T) fixArray[position];
-        } else {
-            throw new IncorrectSizeException("Index overflow");
-        }
+    public T get(int index) {
+        StructureUtils.checkingIndex(index, size());
+        return (T) fixArray[index];
     }
 
     /**
-     * Addition new element on adjusted position
+     * Addition new element on adjusted index
      *
-     * @param element  element for adding
-     * @param position position of adding
+     * @param element element for adding
+     * @param index   index of adding
      */
-    public void add(int position, T element) {
-        if (position < 0) {
-            throw new IncorrectIndexException("Index couldn't be <0");
-        } else if (position < maxSize) {
-            fixArray[position] = element;
-        } else {
-            throw new IncorrectIndexException("Mistaken index");
-        }
+    public void add(int index, T element) {
+        StructureUtils.checkingIndex(index, size());
+        fixArray[index] = element;
     }
 
     /**
-     * Removing element on adjusted position
+     * Removing element on adjusted index
      *
-     * @param position element's position in array
+     * @param index element's index in array
      */
-    public void remove(int position) {
-        if (position < 0) {
-            throw new IncorrectIndexException("Index couldn't be <0");
-        } else if (position < maxSize) {
-            fixArray[position] = Integer.valueOf(0);
-        } else {
-            throw new IncorrectIndexException("Incorrect size");
-        }
+    public void remove(int index) {
+        StructureUtils.checkingIndex(index, size());
+        leftShift(index);
     }
 
     /**
@@ -109,5 +78,12 @@ public class FixedArray<T> {
                 return true;
         }
         return false;
+    }
+
+    private void leftShift(int startWithIndex) {
+        for (int i = startWithIndex; i < size() - 1; i++) {
+            fixArray[i] = fixArray[i + 1];
+        }
+        fixArray[size() - 1] = null;
     }
 }

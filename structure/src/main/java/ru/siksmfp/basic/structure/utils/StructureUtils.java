@@ -33,8 +33,7 @@ public class StructureUtils {
         if (index < 0) {
             throw new IncorrectIndexException("Index couldn't be less than 0");
         } else if (index >= size) {
-            throw new IncorrectIndexException("Index couldn't be more than list size-1");
+            throw new IncorrectIndexException("Index couldn't be more than size-1");
         }
     }
-
 }
