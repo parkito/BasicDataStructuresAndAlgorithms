@@ -1,47 +1,112 @@
 package ru.siksmfp.basic.algorithm.sort;
 
+import ru.siksmfp.basic.structure.api.ListStructure;
+
 /**
  * @author Artem Karnov @date 21.04.2017.
- *         artem.karnov@t-systems.com
+ * artem.karnov@t-systems.com
  */
-// TODO: 22.04.17 Generics and auto comparable
 public class Sort {
 
-    private static long[] array;
-
-    public Sort(long[] array) {
-        this.array = array;
+    private Sort() {
     }
 
-    public static long[] bubbleSort() {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array.length - 1; j++) {
-                if (array[j] > array[j + 1]) {
-                    swap(j, j + 1);
+    /**
+     * Classic bubble sorting
+     *
+     * @param structure structure for sorting
+     * @param direction sort derection
+     * @param <T>       Type of sort elements
+     */
+    public static <T extends Comparable<T>> void bubbleSort(ListStructure<T> structure, SortDirection direction) {
+        if (direction == SortDirection.ASC) {
+            bubbleAscSort(structure);
+        } else {
+            bubbleDescSort(structure);
+        }
+    }
+
+    /**
+     * Bubble sorting with ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       Type of sort elements
+     */
+    private static <T extends Comparable<T>> void bubbleDescSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            for (int j = i; j < structure.size(); j++) {
+                if (structure.get(i).compareTo(structure.get(j)) < 0) {
+                    swap(structure, i, j);
+
                 }
             }
         }
-        return array;
     }
 
-    public static long[] insertSort() {
-        for (int i = 0; i < array.length; i++) {
-            int j = i;
-            while (j > 0) {
-                if (array[j] < array[j - 1]) {
-                    swap(j, j - 1);
+    /**
+     * Bubble sorting with DESCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       Type of sort elements
+     */
+    private static <T extends Comparable<T>> void bubbleAscSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            for (int j = i; j < structure.size(); j++) {
+                if (structure.get(i).compareTo(structure.get(j)) > 0) {
+                    swap(structure, i, j);
                 }
-                j--;
             }
         }
-        return array;
     }
 
-    private static void swap(int index1, int index2) {
-        long temp = array[index1];
-        array[index1] = array[index2];
-        array[index2] = temp;
+    /**
+     * Classic element swapping
+     *
+     * @structure structure for swapping
+     * @index1 e1 first element
+     * @index2 e2 second element
+     */
+    private static <T extends Comparable<T>> void swap(ListStructure<T> structure, int index1, int index2) {
+        T temp = structure.get(index1);
+        structure.add(index1, structure.get(index2));
+        structure.add(index2, temp);
     }
+
+//    private static long[] array;
+//
+//    public Sort(long[] array) {
+//        this.array = array;
+//    }
+//
+//    public static long[] bubbleSort1() {
+//        for (int i = 0; i < array.length; i++) {
+//            for (int j = 0; j < array.length - 1; j++) {
+//                if (array[j] > array[j + 1]) {
+//                    swap(j, j + 1);
+//                }
+//            }
+//        }
+//        return array;
+//    }
+//
+//    public static long[] insertSort() {
+//        for (int i = 0; i < array.length; i++) {
+//            int j = i;
+//            while (j > 0) {
+//                if (array[j] < array[j - 1]) {
+//                    swap(j, j - 1);
+//                }
+//                j--;
+//            }
+//        }
+//        return array;
+//    }
+//
+//    private static void swap(int index1, int index2) {
+//        long temp = array[index1];
+//        array[index1] = array[index2];
+//        array[index2] = temp;
+//    }
 
 //    public void shellSort(long[] array) {
 //        int inner, outer;

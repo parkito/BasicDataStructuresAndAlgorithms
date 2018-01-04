@@ -21,5 +21,10 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ru.siksmfp.basic</groupId>
+            <artifactId>structure</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

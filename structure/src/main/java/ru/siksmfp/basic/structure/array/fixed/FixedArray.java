@@ -1,5 +1,6 @@
 package ru.siksmfp.basic.structure.array.fixed;
 
+import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 
 /**
@@ -10,7 +11,7 @@ import ru.siksmfp.basic.structure.utils.StructureUtils;
  *
  * @param <T> object type for storing in array
  */
-public class FixedArray<T> {
+public class FixedArray<T> implements ListStructure<T> {
     private final Object[] fixArray;
     private final int maxSize;
 
@@ -37,7 +38,7 @@ public class FixedArray<T> {
     }
 
     /**
-     * Addition new element on adjusted index
+     * Addition new element on specified index
      *
      * @param element element for adding
      * @param index   index of adding
@@ -48,6 +49,43 @@ public class FixedArray<T> {
     }
 
     /**
+     * Add element on first vacant place from beginning
+     * Example [1] [2] [] [] []
+     * Result [1] [2] [NEW] [] []
+     *
+     * @param element element for adding
+     */
+    @Override
+    public void add(T element) {
+
+    }
+
+    /**
+     * Addition new element on specified index strictly
+     * (using deep cloning during array shifting)
+     *
+     * @param index   index for adding
+     * @param element element for adding
+     */
+    @Override
+    public void strictAdd(int index, T element) {
+
+    }
+
+    @Override
+    /**
+     * Add element on first vacant place from beginning strictly
+     * (using deep cloning during array shifting)
+     * Example [1] [2] [] [] []
+     * Result [1] [2] [NEW] [] []
+     *
+     * @param element element for adding
+     */
+    public void strictAdd(T element) {
+
+    }
+
+    /**
      * Removing element on adjusted index
      *
      * @param index element's index in array
@@ -55,6 +93,16 @@ public class FixedArray<T> {
     public void remove(int index) {
         StructureUtils.checkingIndex(index, size());
         leftShift(index);
+    }
+
+    @Override
+    public void strictRemove(int index) {
+
+    }
+
+    @Override
+    public void delete(int index) {
+
     }
 
     /**

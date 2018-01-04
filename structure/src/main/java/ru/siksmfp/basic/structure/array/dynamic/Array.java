@@ -1,7 +1,11 @@
 package ru.siksmfp.basic.structure.array.dynamic;
 
+import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Created by Artyom Karnov on 17.11.16.
@@ -11,7 +15,7 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  *
  * @param <T> object type for storing in array
  */
-public class Array<T> {
+public class Array<T> implements ListStructure<T> {
     private Object[] array;
     private int size;
 
@@ -21,6 +25,15 @@ public class Array<T> {
     public Array() {
         array = new Object[0];
         size = 0;
+    }
+
+    public Array(Object... objects) {
+        size = objects.length;
+        array = new Object[size];
+        for (int i = 0; i < objects.length; i++) {
+            array[i] = SystemUtils.clone(objects[i]);
+        }
+
     }
 
     /**
@@ -44,7 +57,7 @@ public class Array<T> {
     public Array(int size) {
         StructureUtils.checkDataStructureSize(size);
         this.size = size;
-        array = new Object[size * 2];
+        array = new Object[size];
     }
 
     /**
@@ -53,6 +66,7 @@ public class Array<T> {
      * @param element element for adding
      * @param index   index of adding element
      */
+    @Override
     public void add(int index, T element) {
         StructureUtils.checkingIndex(index, size);
         array[index] = element;
@@ -64,11 +78,17 @@ public class Array<T> {
      * @param element element for adding
      * @param index   position of adding element
      */
+    @Override
     public void strictAdd(int index, T element) {
         StructureUtils.checkingIndex(index, size);
         array[index] = SystemUtils.clone(element);
     }
 
+    /**
+     * Add element to array
+     *
+     * @param element element for adding
+     */
     public void add(T element) {
         Object[] extendedArray = new Object[size + 1];
         for (int i = 0; i < size; i++) {
@@ -79,6 +99,12 @@ public class Array<T> {
         size++;
     }
 
+    /**
+     * Add element to array strictly. Using deep cloning
+     *
+     * @param element element for adding
+     */
+    @Override
     public void strictAdd(T element) {
         Object[] extendedArray = new Object[size + 1];
         for (int i = 0; i < size; i++) {
@@ -95,6 +121,7 @@ public class Array<T> {
      * @param index index of element
      * @return element on adjusted index
      */
+    @Override
     public T get(int index) {
         StructureUtils.checkingIndex(index, size);
         return (T) array[index];
@@ -105,6 +132,7 @@ public class Array<T> {
      *
      * @param index element's index in array
      */
+    @Override
     public void remove(int index) {
         StructureUtils.checkingIndex(index, size());
         leftShift(index);
@@ -117,6 +145,7 @@ public class Array<T> {
      *
      * @param index index of removing element
      */
+    @Override
     public void strictRemove(int index) {
         StructureUtils.checkingIndex(index, size());
         strictLeftShift(index);
@@ -129,6 +158,7 @@ public class Array<T> {
      *
      * @param index index of deleting element
      */
+    @Override
     public void delete(int index) {
         StructureUtils.checkingIndex(index, size());
         array[index] = null;
@@ -139,6 +169,7 @@ public class Array<T> {
      *
      * @return size of array
      */
+    @Override
     public int size() {
         return size;
     }
@@ -149,6 +180,7 @@ public class Array<T> {
      * @param element element for checking
      * @return true - if array contain adjusted element, false - if doesn't
      */
+    @Override
     public boolean contains(T element) {
         for (int i = 0; i < size; i++) {
             if (array[i].equals(element))
@@ -162,10 +194,32 @@ public class Array<T> {
      *
      * @return true if size=0, false if size>0
      */
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Array<T> array1 = (Array<T>) o;
+        if (size != array1.size) return false;
+
+        for (int i = 0; i < size; i++) {
+            if (!array[i].equals(array1.array[i]))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        // TODO: 1/4/2018 adapt it without java common library
+        int result = Objects.hash(size);
+        result = 31 * result + Arrays.hashCode(array);
+        return result;
+    }
 
     /**
      * Array left shifting
