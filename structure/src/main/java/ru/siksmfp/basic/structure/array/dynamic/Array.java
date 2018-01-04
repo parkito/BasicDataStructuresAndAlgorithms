@@ -20,7 +20,7 @@ public class Array<T> {
      */
     public Array() {
         array = new Object[0];
-        size=0;
+        size = 0;
     }
 
     /**
@@ -166,45 +166,15 @@ public class Array<T> {
         return size == 0;
     }
 
-    /**
-     * Method for decreasing array after deleting element
-     *
-     * @param position position of deleting element
-     * @return array without adjusted element
-     */
-    private Object[] offset(int position) {
-        Object offsetArray[] = new Object[size - 1];
-        for (int i = 0; i < size - 1; i++) {
-            if (i >= position) {
-                offsetArray[i] = array[i + 1];
-                array[i] = null;
-            } else {
-                offsetArray[i] = array[i];
-            }
-        }
-        return offsetArray;
-    }
 
     /**
-     * Method for strict decreasing array after deleting element
-     * There is deep element's copying during offset
+     * Array left shifting
+     * <p>
+     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
+     * Then we have [1] [3] [4] [NULL]
      *
-     * @param position position of deleting element
-     * @return array without adjusted element
+     * @param startWithIndex first index for shifting
      */
-    private Object[] strictOffset(int position) {
-        Object offsetArray[] = new Object[size - 1];
-        for (int i = 0; i < size - 1; i++) {
-            if (i >= position) {
-                offsetArray[i] = SystemUtils.clone(array[i + 1]);
-                array[i] = null;
-            } else {
-                offsetArray[i] = SystemUtils.clone(array[i]);
-            }
-        }
-        return offsetArray;
-    }
-
     private void leftShift(int startWithIndex) {
         for (int i = startWithIndex; i < size() - 1; i++) {
             array[i] = array[i + 1];
@@ -212,6 +182,16 @@ public class Array<T> {
         array[size() - 1] = null;
     }
 
+    /**
+     * Array left shifting
+     * <p>
+     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
+     * Then we have [1] [3] [4] [NULL]
+     * <p>
+     * Strict means for copying we use deep clone mechanism
+     *
+     * @param startWithIndex first index for shifting
+     */
     private void strictLeftShift(int startWithIndex) {
         for (int i = startWithIndex; i < size() - 1; i++) {
             array[i] = SystemUtils.clone(array[i + 1]);

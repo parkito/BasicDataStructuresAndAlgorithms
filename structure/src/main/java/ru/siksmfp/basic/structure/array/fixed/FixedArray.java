@@ -80,10 +80,23 @@ public class FixedArray<T> {
         return false;
     }
 
+    /**
+     * Checking element's existing in array
+     *
+     * @return true if size=0, false if size>0
+     */
     public boolean isEmpty() {
         return maxSize == 0;
     }
 
+    /**
+     * Array left shifting
+     * <p>
+     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
+     * Then we have [1] [3] [4] [NULL]
+     *
+     * @param startWithIndex first index for shifting
+     */
     private void leftShift(int startWithIndex) {
         for (int i = startWithIndex; i < size() - 1; i++) {
             fixArray[i] = fixArray[i + 1];

@@ -49,7 +49,7 @@ public class FixedArrayTest {
     }
 
     @Test
-    public void successedRemoving() {
+    public void correctRemoving() {
         FixedArray<Integer> array = new FixedArray<>(5);
 
         array.add(0, 0);
