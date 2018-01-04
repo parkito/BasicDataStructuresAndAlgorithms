@@ -3,8 +3,8 @@ package ru.siksmfp.basic.structure.queue;
 
 import ru.siksmfp.basic.structure.array.dynamic.Array;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
+import ru.siksmfp.basic.structure.utils.StructureUtils;
 
-import static ru.siksmfp.basic.structure.utils.StructureUtils.checkDataStructureSize;
 
 /**
  * @param <T> object type for storing in queue
@@ -31,7 +31,7 @@ public class Queue<T> {
      * @param element element for pushing
      */
     public void push(T element) {
-        checkDataStructureSize(size);
+        StructureUtils.checkDataStructureSize(size);
         array.add(element);
         size++;
     }

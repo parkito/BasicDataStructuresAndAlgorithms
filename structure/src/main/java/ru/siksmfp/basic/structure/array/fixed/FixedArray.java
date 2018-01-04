@@ -80,6 +80,10 @@ public class FixedArray<T> {
         return false;
     }
 
+    public boolean isEmpty() {
+        return maxSize == 0;
+    }
+
     private void leftShift(int startWithIndex) {
         for (int i = startWithIndex; i < size() - 1; i++) {
             fixArray[i] = fixArray[i + 1];

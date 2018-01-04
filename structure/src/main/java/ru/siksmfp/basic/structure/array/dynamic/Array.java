@@ -1,7 +1,6 @@
 package ru.siksmfp.basic.structure.array.dynamic;
 
-import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
-import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
+import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
 /**
@@ -13,13 +12,15 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  * @param <T> object type for storing in array
  */
 public class Array<T> {
+    private Object[] array;
     private int size;
-    private Object array[];
 
     /**
      * Constructor without parameters
      */
     public Array() {
+        array = new Object[0];
+        size=0;
     }
 
     /**
@@ -41,161 +42,128 @@ public class Array<T> {
      * @param size array size
      */
     public Array(int size) {
+        StructureUtils.checkDataStructureSize(size);
         this.size = size;
-        if (size <= 0) {
-            throw new IncorrectSizeException("Size couldn't be <=0");
-        } else if (size < Integer.MAX_VALUE) {
-            array = new Object[size];
-        } else {
-            throw new IncorrectSizeException("Array overflow");
-        }
+        array = new Object[size * 2];
     }
 
     /**
-     * Addition new element to array
-     */
-    public void add(T element) {
-        if (size < Integer.MAX_VALUE) {
-            array = arrayCopy(element);
-            size++;
-        } else {
-            throw new IncorrectSizeException("Array overflow");
-        }
-    }
-
-    /**
-     * Add element on given position
-     *
-     * @param element  element for adding
-     * @param position position of adding element
-     */
-    public void add(T element, int position) {
-        if (position < 0) {
-            throw new IncorrectSizeException("Size couldn't be less than 0");
-        } else if (position >= size) {
-            throw new IncorrectSizeException("Index " + position + " is greater than size of array " + size);
-        } else {
-            array[position] = element;
-        }
-    }
-
-    /**
-     * Add element to array by deep copying of element
+     * Add element on given index
      *
      * @param element element for adding
+     * @param index   index of adding element
      */
-    public void strictAdd(T element) {
-        if (size < Integer.MAX_VALUE) {
-            array = strictArrayCopy(element);
-            size++;
-        } else {
-            throw new IncorrectSizeException("Array overflow");
-        }
+    public void add(int index, T element) {
+        StructureUtils.checkingIndex(index, size);
+        array[index] = element;
     }
 
     /**
      * Add element on given position by deep copying of element
      *
-     * @param element  element for adding
-     * @param position position of adding element
+     * @param element element for adding
+     * @param index   position of adding element
      */
-    public void strictAdd(T element, int position) {
-        if (position < 0) {
-            throw new IncorrectSizeException("Size couldn't be less than 0");
-        } else if (position >= size) {
-            throw new IncorrectSizeException("Index " + position + " is greater than size of array " + size);
-        } else {
-            array[position] = SystemUtils.clone(element);
-        }
+    public void strictAdd(int index, T element) {
+        StructureUtils.checkingIndex(index, size);
+        array[index] = SystemUtils.clone(element);
     }
 
-    /**
-     * Support method for element addition
-     *
-     * @param newElement modified array
-     * @return new array with additional element
-     */
-    private Object[] arrayCopy(Object newElement) {
-        Object copyTo[] = new Object[size + 1];
+    public void add(T element) {
+        Object[] extendedArray = new Object[size + 1];
         for (int i = 0; i < size; i++) {
-            copyTo[i] = array[i];
+            extendedArray[i] = array[i];
         }
-        copyTo[size] = newElement;
-        return copyTo;
+        extendedArray[size] = element;
+        array = extendedArray;
+        size++;
     }
 
-    /**
-     * Support method for strict element addition
-     *
-     * @param newElement modified array
-     * @return new array with additional element
-     */
-    private Object[] strictArrayCopy(Object newElement) {
-        Object copyTo[] = new Object[size + 1];
+    public void strictAdd(T element) {
+        Object[] extendedArray = new Object[size + 1];
         for (int i = 0; i < size; i++) {
-            copyTo[i] = SystemUtils.clone(array[i]);
+            extendedArray[i] = SystemUtils.clone(array[i]);
         }
-        copyTo[size] = newElement;
-        return copyTo;
+        extendedArray[size] = SystemUtils.clone(element);
+        array = extendedArray;
+        size++;
     }
 
     /**
-     * Getting element on adjusted position in array
+     * Getting element on adjusted index in array
      *
-     * @param position position of element
-     * @return element on adjusted position
+     * @param index index of element
+     * @return element on adjusted index
      */
-    public T get(int position) {
-        if (position < 0) {
-            throw new IncorrectIndexException("Index of element couldn't be less than 0");
-        } else if (position < size) {
-            return (T) array[position];
-        } else {
-            throw new IncorrectSizeException("Index overflow");
-        }
+    public T get(int index) {
+        StructureUtils.checkingIndex(index, size);
+        return (T) array[index];
     }
 
     /**
-     * Removing element on adjusted position
+     * Removing element on adjusted index
      *
-     * @param position element's position in array
+     * @param index element's index in array
      */
-    public void remove(int position) {
-        if (size <= 0) {
-            throw new IncorrectSizeException("Size couldn't be less than 0");
-        } else {
-            array = offset(position);
-            size--;
-        }
+    public void remove(int index) {
+        StructureUtils.checkingIndex(index, size());
+        leftShift(index);
+        size--;
     }
 
     /**
-     * Strict removing element on given position
+     * Strict removing element on given index
      * There is deep copying during element's offset
      *
-     * @param position position of removing element
+     * @param index index of removing element
      */
-    public void strictRemove(int position) {
-        if (size <= 0) {
-            throw new IncorrectSizeException("Size couldn't be less than 0");
-        } else {
-            array = strictOffset(position);
-            size--;
-        }
+    public void strictRemove(int index) {
+        StructureUtils.checkingIndex(index, size());
+        strictLeftShift(index);
+        size--;
     }
 
     /**
-     * Deleting element on given position form array
-     * NULL-value is being set instead element on given position
+     * Deleting element on given index form array
+     * NULL-value is being set instead element on given index
      *
-     * @param position position of deleting element
+     * @param index index of deleting element
      */
-    public void delete(int position) {
-        if (size <= 0) {
-            throw new IncorrectSizeException("Size couldn't be less than 0");
-        } else {
-            array[position] = null;
+    public void delete(int index) {
+        StructureUtils.checkingIndex(index, size());
+        array[index] = null;
+    }
+
+    /**
+     * Getting array size
+     *
+     * @return size of array
+     */
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Checking elements storing in array
+     *
+     * @param element element for checking
+     * @return true - if array contain adjusted element, false - if doesn't
+     */
+    public boolean contains(T element) {
+        for (int i = 0; i < size; i++) {
+            if (array[i].equals(element))
+                return true;
         }
+        return false;
+    }
+
+    /**
+     * Checking element's existing in array
+     *
+     * @return true if size=0, false if size>0
+     */
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     /**
@@ -237,35 +205,17 @@ public class Array<T> {
         return offsetArray;
     }
 
-    /**
-     * Getting array size
-     *
-     * @return size of array
-     */
-    public int size() {
-        return size;
-    }
-
-    /**
-     * Checking elements storing in array
-     *
-     * @param element element for checking
-     * @return true - if array contain adjusted element, false - if doesn't
-     */
-    public boolean contains(T element) {
-        for (int i = 0; i < size; i++) {
-            if (array[i].equals(element))
-                return true;
+    private void leftShift(int startWithIndex) {
+        for (int i = startWithIndex; i < size() - 1; i++) {
+            array[i] = array[i + 1];
         }
-        return false;
+        array[size() - 1] = null;
     }
 
-    /**
-     * Checking element's existing in array
-     *
-     * @return true if size=0, false if size>0
-     */
-    public boolean isEmpty() {
-        return size == 0;
+    private void strictLeftShift(int startWithIndex) {
+        for (int i = startWithIndex; i < size() - 1; i++) {
+            array[i] = SystemUtils.clone(array[i + 1]);
+        }
+        array[size() - 1] = null;
     }
 }
