@@ -118,6 +118,53 @@ public class Sort {
         }
     }
 
+    public static <T extends Comparable<T>> void insertionSort(ListStructure<T> structure, SortDirection sortDirection) {
+        if (sortDirection == SortDirection.ASC) {
+            insertionAscSort(structure);
+        } else {
+            insertionDescSort(structure);
+        }
+    }
+
+    private static <T extends Comparable<T>> void insertionAscSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            int leftIndex = getLeftBorder(structure, i);
+            rightShift(structure, leftIndex, i);
+        }
+    }
+
+    private static <T extends Comparable<T>> void insertionDescSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            int leftIndex = getRightBorder(structure, i);
+            rightShift(structure, leftIndex, i);
+        }
+    }
+
+    private static <T extends Comparable<T>> void rightShift(ListStructure<T> structure, int leftIndex, int rightIndex) {
+        T localMinValue = structure.get(rightIndex);
+        for (int i = rightIndex; i > leftIndex; i--) {
+            structure.add(i, structure.get(i - 1));
+        }
+        structure.add(leftIndex, localMinValue);
+    }
+
+    private static <T extends Comparable<T>> int getLeftBorder(ListStructure<T> structure, int rightIndex) {
+        for (int i = rightIndex - 1; i >= 0; i--) {
+            if (structure.get(rightIndex).compareTo(structure.get(i)) > 0)
+                return i + 1;
+        }
+        return 0;
+    }
+
+    private static <T extends Comparable<T>> int getRightBorder(ListStructure<T> structure, int rightIndex) {
+        for (int i = rightIndex - 1; i >= 0; i--) {
+            if (structure.get(rightIndex).compareTo(structure.get(i)) < 0)
+                return i + 1;
+        }
+        return 0;
+    }
+
+
     /**
      * Classic element swapping
      *

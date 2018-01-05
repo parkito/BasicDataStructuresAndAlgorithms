@@ -77,4 +77,35 @@ public class SortTest {
         Assert.assertEquals(expected, array);
     }
 
+    @Test
+    public void insertSortTestOne() {
+        Array array = new Array(3, 2, 1, 4, 5);
+        Array expected = new Array(1, 2, 3, 4, 5);
+        Sort.insertionSort(array, SortDirection.ASC);
+        Assert.assertEquals(expected, array);
+    }
+
+    @Test
+    public void insertSortTesTwo() {
+        Array array = new Array(3, 2, 1, 4, 5);
+        Array expected = new Array(5, 4, 3, 2, 1);
+        Sort.insertionSort(array, SortDirection.DESC);
+        Assert.assertEquals(expected, array);
+    }
+
+    @Test
+    public void insertSortTestThree() {
+        Array array = new Array(3, 2, 1, 0, 10000, 4, 5);
+        Array expected = new Array(0, 1, 2, 3, 4, 5, 10000);
+        Sort.insertionSort(array, SortDirection.ASC);
+        Assert.assertEquals(expected, array);
+    }
+
+    @Test
+    public void insertSortTestFour() {
+        Array array = new Array();
+        Array expected = new Array();
+        Sort.insertionSort(array, SortDirection.ASC);
+        Assert.assertEquals(expected, array);
+    }
 }
