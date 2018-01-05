@@ -28,7 +28,7 @@ public class Stack<T> {
     }
 
     public Stack(int size) {
-        this.size = size;
+        this.size = 0;
         array = new Array<>(size);
     }
 
