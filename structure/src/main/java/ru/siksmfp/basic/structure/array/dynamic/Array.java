@@ -5,7 +5,6 @@ import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Created by Artyom Karnov on 17.11.16.
@@ -215,9 +214,11 @@ public class Array<T> implements ListStructure<T> {
 
     @Override
     public int hashCode() {
-        // TODO: 1/4/2018 adapt it without java common library
-        int result = Objects.hash(size);
+        int result = 31 * size;
         result = 31 * result + Arrays.hashCode(array);
+        for (int i = 0; i < size; i++) {
+            result += array[i].hashCode();
+        }
         return result;
     }
 

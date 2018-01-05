@@ -1,7 +1,11 @@
 package ru.siksmfp.basic.structure.array.fixed;
 
 import ru.siksmfp.basic.structure.api.ListStructure;
+import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
+import ru.siksmfp.basic.structure.utils.SystemUtils;
+
+import java.util.Arrays;
 
 /**
  * Created by Artyom Karnov on 15.11.16.
@@ -12,7 +16,7 @@ import ru.siksmfp.basic.structure.utils.StructureUtils;
  * @param <T> object type for storing in array
  */
 public class FixedArray<T> implements ListStructure<T> {
-    private final Object[] fixArray;
+    private final Object[] fixedArray;
     private final int maxSize;
 
     /**
@@ -23,7 +27,7 @@ public class FixedArray<T> implements ListStructure<T> {
     public FixedArray(int size) {
         this.maxSize = size;
         StructureUtils.checkDataStructureSize(size);
-        fixArray = new Object[size];
+        fixedArray = new Object[size];
     }
 
     /**
@@ -34,7 +38,7 @@ public class FixedArray<T> implements ListStructure<T> {
      */
     public T get(int index) {
         StructureUtils.checkingIndex(index, size());
-        return (T) fixArray[index];
+        return (T) fixedArray[index];
     }
 
     /**
@@ -45,11 +49,14 @@ public class FixedArray<T> implements ListStructure<T> {
      */
     public void add(int index, T element) {
         StructureUtils.checkingIndex(index, size());
-        fixArray[index] = element;
+        fixedArray[index] = element;
     }
 
     /**
      * Add element on first vacant place from beginning
+     * (using deep cloning during array shifting)
+     * <p>
+     * If no vacant place @throws IncorrectSizeException
      * Example [1] [2] [] [] []
      * Result [1] [2] [NEW] [] []
      *
@@ -57,32 +64,26 @@ public class FixedArray<T> implements ListStructure<T> {
      */
     @Override
     public void add(T element) {
-
+        for (int i = 0; i < size(); i++) {
+            if (fixedArray[i] == null) {
+                fixedArray[i] = element;
+                return;
+            }
+        }
+        throw new IncorrectSizeException("There is no vacant place for new element");
     }
 
     /**
      * Addition new element on specified index strictly
-     * (using deep cloning during array shifting)
+     * (using deep cloning during addition)
      *
      * @param index   index for adding
      * @param element element for adding
      */
     @Override
     public void strictAdd(int index, T element) {
-
-    }
-
-    @Override
-    /**
-     * Add element on first vacant place from beginning strictly
-     * (using deep cloning during array shifting)
-     * Example [1] [2] [] [] []
-     * Result [1] [2] [NEW] [] []
-     *
-     * @param element element for adding
-     */
-    public void strictAdd(T element) {
-
+        StructureUtils.checkingIndex(index, size());
+        fixedArray[index] = SystemUtils.clone(element);
     }
 
     /**
@@ -95,14 +96,48 @@ public class FixedArray<T> implements ListStructure<T> {
         leftShift(index);
     }
 
+    /**
+     * Add element on first vacant place from beginning strictly
+     * (using deep cloning during array shifting)
+     * <p>
+     * If no vacant place @throws IncorrectSizeException
+     * Example [1] [2] [] [] []
+     * Result [1] [2] [NEW] [] []
+     *
+     * @param element element for adding
+     */
     @Override
-    public void strictRemove(int index) {
-
+    public void strictAdd(T element) {
+        for (int i = 0; i < size(); i++) {
+            if (fixedArray[i] == null) {
+                fixedArray[i] = SystemUtils.clone(element);
+                return;
+            }
+        }
+        throw new IncorrectSizeException("There is no vacant place for new element");
     }
 
+    /**
+     * Strict removing element on adjusted index
+     *
+     * @param index element's index in array
+     */
+    @Override
+    public void strictRemove(int index) {
+        StructureUtils.checkingIndex(index, size());
+        strictLeftShifting(index);
+    }
+
+    /**
+     * Deleting element on given index form array
+     * NULL-value is being set instead element on given index
+     *
+     * @param index index of deleting element
+     */
     @Override
     public void delete(int index) {
-
+        StructureUtils.checkingIndex(index, size());
+        fixedArray[index] = null;
     }
 
     /**
@@ -122,7 +157,7 @@ public class FixedArray<T> implements ListStructure<T> {
      */
     public boolean contains(T element) {
         for (int i = 0; i < maxSize; i++) {
-            if (fixArray[i].equals(element))
+            if (fixedArray[i].equals(element))
                 return true;
         }
         return false;
@@ -137,6 +172,31 @@ public class FixedArray<T> implements ListStructure<T> {
         return maxSize == 0;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FixedArray<T> array1 = (FixedArray<T>) o;
+        if (maxSize != array1.maxSize) return false;
+
+        for (int i = 0; i < maxSize; i++) {
+            if (!fixedArray[i].equals(array1.fixedArray[i]))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31 * maxSize;
+        result = 31 * result + Arrays.hashCode(fixedArray);
+        for (int i = 0; i < maxSize; i++) {
+            result += fixedArray[i].hashCode();
+        }
+        return result;
+    }
+
     /**
      * Array left shifting
      * <p>
@@ -147,8 +207,23 @@ public class FixedArray<T> implements ListStructure<T> {
      */
     private void leftShift(int startWithIndex) {
         for (int i = startWithIndex; i < size() - 1; i++) {
-            fixArray[i] = fixArray[i + 1];
+            fixedArray[i] = fixedArray[i + 1];
         }
-        fixArray[size() - 1] = null;
+        fixedArray[size() - 1] = null;
+    }
+
+    /**
+     * Strict array left shifting
+     * <p>
+     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
+     * Then we have [1] [3] [4] [NULL]
+     *
+     * @param startWithIndex first index for shifting
+     */
+    private void strictLeftShifting(int startWithIndex) {
+        for (int i = startWithIndex; i < size() - 1; i++) {
+            fixedArray[i] = SystemUtils.clone(fixedArray[i + 1]);
+        }
+        fixedArray[size() - 1] = null;
     }
 }

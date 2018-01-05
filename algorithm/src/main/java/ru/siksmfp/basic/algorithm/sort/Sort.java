@@ -12,17 +12,52 @@ public class Sort {
     }
 
     /**
-     * Classic bubble sorting
+     * Classic bubble sort with default ASCENDING ordering
      *
      * @param structure structure for sorting
-     * @param direction sort derection
      * @param <T>       Type of sort elements
      */
-    public static <T extends Comparable<T>> void bubbleSort(ListStructure<T> structure, SortDirection direction) {
-        if (direction == SortDirection.ASC) {
+    public static <T extends Comparable<T>> void bubbleSort(ListStructure<T> structure) {
+        bubbleAscSort(structure);
+    }
+
+    /**
+     * Classic bubble sorting
+     *
+     * @param structure     structure for sorting
+     * @param sortDirection sort direction
+     * @param <T>           Type of sort elements
+     */
+    public static <T extends Comparable<T>> void bubbleSort(ListStructure<T> structure, SortDirection sortDirection) {
+        if (sortDirection == SortDirection.ASC) {
             bubbleAscSort(structure);
         } else {
             bubbleDescSort(structure);
+        }
+    }
+
+    /**
+     * Classic select sort with default ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       Type of sort elements
+     */
+    public static <T extends Comparable<T>> void selectionSort(ListStructure<T> structure) {
+        selectionAscSort(structure);
+    }
+
+    /**
+     * Classic select sorting
+     *
+     * @param structure     structure for sorting
+     * @param sortDirection sort direction
+     * @param <T>           Type of sort elements
+     */
+    public static <T extends Comparable<T>> void selectionSort(ListStructure<T> structure, SortDirection sortDirection) {
+        if (sortDirection == SortDirection.ASC) {
+            selectionAscSort(structure);
+        } else {
+            selectionDescSort(structure);
         }
     }
 
@@ -59,6 +94,30 @@ public class Sort {
         }
     }
 
+    private static <T extends Comparable<T>> void selectionAscSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            int localIndexMin = i;
+            for (int j = i; j < structure.size(); j++) {
+                if (structure.get(j).compareTo(structure.get(localIndexMin)) < 0) {
+                    localIndexMin = j;
+                }
+            }
+            swap(structure, localIndexMin, i);
+        }
+    }
+
+    private static <T extends Comparable<T>> void selectionDescSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            int localIndexMax = i;
+            for (int j = i; j < structure.size(); j++) {
+                if (structure.get(j).compareTo(structure.get(localIndexMax)) > 0) {
+                    localIndexMax = j;
+                }
+            }
+            swap(structure, localIndexMax, i);
+        }
+    }
+
     /**
      * Classic element swapping
      *
@@ -67,9 +126,11 @@ public class Sort {
      * @index2 e2 second element
      */
     private static <T extends Comparable<T>> void swap(ListStructure<T> structure, int index1, int index2) {
-        T temp = structure.get(index1);
-        structure.add(index1, structure.get(index2));
-        structure.add(index2, temp);
+        if (index1 != index2) {
+            T temp = structure.get(index1);
+            structure.add(index1, structure.get(index2));
+            structure.add(index2, temp);
+        }
     }
 
 //    private static long[] array;
