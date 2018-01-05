@@ -5,8 +5,6 @@ import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
-import java.util.Arrays;
-
 /**
  * Created by Artyom Karnov on 15.11.16.
  * artyom-karnov@yandex.ru
@@ -181,8 +179,15 @@ public class FixedArray<T> implements ListStructure<T> {
         if (maxSize != array1.maxSize) return false;
 
         for (int i = 0; i < maxSize; i++) {
-            if (!fixedArray[i].equals(array1.fixedArray[i]))
-                return false;
+            if (fixedArray[i] == null || array1.fixedArray[i] == null) {
+                if (fixedArray[i] == null && array1.fixedArray[i] != null)
+                    return false;
+                if (fixedArray[i] != null && array1.fixedArray[i] == null)
+                    return false;
+            } else {
+                if (!fixedArray[i].equals(array1.fixedArray[i]))
+                    return false;
+            }
         }
         return true;
     }
@@ -190,12 +195,16 @@ public class FixedArray<T> implements ListStructure<T> {
     @Override
     public int hashCode() {
         int result = 31 * maxSize;
-        result = 31 * result + Arrays.hashCode(fixedArray);
         for (int i = 0; i < maxSize; i++) {
-            result += fixedArray[i].hashCode();
+            if (fixedArray[i] != null) {
+                result += 31 * fixedArray[i].hashCode();
+            } else {
+                result += 31;
+            }
         }
         return result;
     }
+
 
     /**
      * Array left shifting

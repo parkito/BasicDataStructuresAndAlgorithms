@@ -15,7 +15,7 @@ public class Sort {
      * Classic bubble sort with default ASCENDING ordering
      *
      * @param structure structure for sorting
-     * @param <T>       Type of sort elements
+     * @param <T>       type of sort elements
      */
     public static <T extends Comparable<T>> void bubbleSort(ListStructure<T> structure) {
         bubbleAscSort(structure);
@@ -26,7 +26,7 @@ public class Sort {
      *
      * @param structure     structure for sorting
      * @param sortDirection sort direction
-     * @param <T>           Type of sort elements
+     * @param <T>           type of sort elements
      */
     public static <T extends Comparable<T>> void bubbleSort(ListStructure<T> structure, SortDirection sortDirection) {
         if (sortDirection == SortDirection.ASC) {
@@ -40,18 +40,18 @@ public class Sort {
      * Classic select sort with default ASCENDING ordering
      *
      * @param structure structure for sorting
-     * @param <T>       Type of sort elements
+     * @param <T>       type of sort elements
      */
     public static <T extends Comparable<T>> void selectionSort(ListStructure<T> structure) {
         selectionAscSort(structure);
     }
 
     /**
-     * Classic select sorting
+     * Classic selection sorting
      *
      * @param structure     structure for sorting
      * @param sortDirection sort direction
-     * @param <T>           Type of sort elements
+     * @param <T>           type of sort elements
      */
     public static <T extends Comparable<T>> void selectionSort(ListStructure<T> structure, SortDirection sortDirection) {
         if (sortDirection == SortDirection.ASC) {
@@ -62,10 +62,60 @@ public class Sort {
     }
 
     /**
+     * Insertion sorting with default ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
+    public static <T extends Comparable<T>> void insertionSort(ListStructure<T> structure) {
+        insertionAscSort(structure);
+    }
+
+    /**
+     * Insertion  sorting
+     *
+     * @param structure     structure for sorting
+     * @param sortDirection sort direction
+     * @param <T>           type of sort elements
+     */
+    public static <T extends Comparable<T>> void insertionSort(ListStructure<T> structure, SortDirection sortDirection) {
+        if (sortDirection == SortDirection.ASC) {
+            insertionAscSort(structure);
+        } else {
+            insertionDescSort(structure);
+        }
+    }
+
+    /**
+     * Classic insertion sorting with default ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
+    public static <T extends Comparable<T>> void classicInsertionSort(ListStructure<T> structure) {
+        classicInsertionAscSort(structure);
+    }
+
+    /**
+     * Classic insertion sorting
+     *
+     * @param structure     structure for sorting
+     * @param sortDirection sort direction
+     * @param <T>           type of sort elements
+     */
+    public static <T extends Comparable<T>> void classicInsertionSort(ListStructure<T> structure, SortDirection sortDirection) {
+        if (sortDirection == SortDirection.ASC) {
+            classicInsertionAscSort(structure);
+        } else {
+            classicInsertionDescSort(structure);
+        }
+    }
+
+    /**
      * Bubble sorting with ASCENDING ordering
      *
      * @param structure structure for sorting
-     * @param <T>       Type of sort elements
+     * @param <T>       type of sort elements
      */
     private static <T extends Comparable<T>> void bubbleDescSort(ListStructure<T> structure) {
         for (int i = 0; i < structure.size(); i++) {
@@ -82,7 +132,7 @@ public class Sort {
      * Bubble sorting with DESCENDING ordering
      *
      * @param structure structure for sorting
-     * @param <T>       Type of sort elements
+     * @param <T>       type of sort elements
      */
     private static <T extends Comparable<T>> void bubbleAscSort(ListStructure<T> structure) {
         for (int i = 0; i < structure.size(); i++) {
@@ -94,6 +144,12 @@ public class Sort {
         }
     }
 
+    /**
+     * Selection sorting with ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
     private static <T extends Comparable<T>> void selectionAscSort(ListStructure<T> structure) {
         for (int i = 0; i < structure.size(); i++) {
             int localIndexMin = i;
@@ -106,6 +162,12 @@ public class Sort {
         }
     }
 
+    /**
+     * Selection sorting with DESCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
     private static <T extends Comparable<T>> void selectionDescSort(ListStructure<T> structure) {
         for (int i = 0; i < structure.size(); i++) {
             int localIndexMax = i;
@@ -118,37 +180,41 @@ public class Sort {
         }
     }
 
-    public static <T extends Comparable<T>> void insertionSort(ListStructure<T> structure, SortDirection sortDirection) {
-        if (sortDirection == SortDirection.ASC) {
-            insertionAscSort(structure);
-        } else {
-            insertionDescSort(structure);
-        }
-    }
-
+    /**
+     * Insertion sorting with ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
     private static <T extends Comparable<T>> void insertionAscSort(ListStructure<T> structure) {
         for (int i = 0; i < structure.size(); i++) {
-            int leftIndex = getLeftBorder(structure, i);
+            int leftIndex = getLeftBorderWithElementMoreThan(structure, i);
             rightShift(structure, leftIndex, i);
         }
     }
 
+    /**
+     * Insertion sorting with DESCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
     private static <T extends Comparable<T>> void insertionDescSort(ListStructure<T> structure) {
         for (int i = 0; i < structure.size(); i++) {
-            int leftIndex = getRightBorder(structure, i);
+            int leftIndex = getLeftBorderWithElementLessThan(structure, i);
             rightShift(structure, leftIndex, i);
         }
     }
 
-    private static <T extends Comparable<T>> void rightShift(ListStructure<T> structure, int leftIndex, int rightIndex) {
-        T localMinValue = structure.get(rightIndex);
-        for (int i = rightIndex; i > leftIndex; i--) {
-            structure.add(i, structure.get(i - 1));
-        }
-        structure.add(leftIndex, localMinValue);
-    }
-
-    private static <T extends Comparable<T>> int getLeftBorder(ListStructure<T> structure, int rightIndex) {
+    /**
+     * Calculate left border for ASC sorting
+     *
+     * @param structure  structure for searching
+     * @param rightIndex first index for searching (last is 0)
+     * @param <T>        type of sort elements
+     * @return index of element that less than element with rightIndex
+     */
+    private static <T extends Comparable<T>> int getLeftBorderWithElementMoreThan(ListStructure<T> structure, int rightIndex) {
         for (int i = rightIndex - 1; i >= 0; i--) {
             if (structure.get(rightIndex).compareTo(structure.get(i)) > 0)
                 return i + 1;
@@ -156,7 +222,15 @@ public class Sort {
         return 0;
     }
 
-    private static <T extends Comparable<T>> int getRightBorder(ListStructure<T> structure, int rightIndex) {
+    /**
+     * Calculate left border for DESC sorting
+     *
+     * @param structure  structure for searching
+     * @param rightIndex first index for searching (last is 0)
+     * @param <T>        type of sort elements
+     * @return index of element that more than element with rightIndex
+     */
+    private static <T extends Comparable<T>> int getLeftBorderWithElementLessThan(ListStructure<T> structure, int rightIndex) {
         for (int i = rightIndex - 1; i >= 0; i--) {
             if (structure.get(rightIndex).compareTo(structure.get(i)) < 0)
                 return i + 1;
@@ -164,6 +238,23 @@ public class Sort {
         return 0;
     }
 
+    /**
+     * Circular right elements shifting
+     * Consider [5] [4] [3] [2] [1]
+     * Result   [1] [5] [4] [3] [2]
+     *
+     * @param structure  structure for shifting
+     * @param leftIndex  initial element's index
+     * @param rightIndex end element's index
+     * @param <T>        type of sort elements
+     */
+    private static <T extends Comparable<T>> void rightShift(ListStructure<T> structure, int leftIndex, int rightIndex) {
+        T localMinValue = structure.get(rightIndex);
+        for (int i = rightIndex; i > leftIndex; i--) {
+            structure.add(i, structure.get(i - 1));
+        }
+        structure.add(leftIndex, localMinValue);
+    }
 
     /**
      * Classic element swapping
@@ -180,81 +271,40 @@ public class Sort {
         }
     }
 
-//    private static long[] array;
-//
-//    public Sort(long[] array) {
-//        this.array = array;
-//    }
-//
-//    public static long[] bubbleSort1() {
-//        for (int i = 0; i < array.length; i++) {
-//            for (int j = 0; j < array.length - 1; j++) {
-//                if (array[j] > array[j + 1]) {
-//                    swap(j, j + 1);
-//                }
-//            }
-//        }
-//        return array;
-//    }
-//
-//    public static long[] insertSort() {
-//        for (int i = 0; i < array.length; i++) {
-//            int j = i;
-//            while (j > 0) {
-//                if (array[j] < array[j - 1]) {
-//                    swap(j, j - 1);
-//                }
-//                j--;
-//            }
-//        }
-//        return array;
-//    }
-//
-//    private static void swap(int index1, int index2) {
-//        long temp = array[index1];
-//        array[index1] = array[index2];
-//        array[index2] = temp;
-//    }
+    /**
+     * Classic insertion sorting with ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
+    private static <T extends Comparable<T>> void classicInsertionAscSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            int j = i;
+            while (j > 0) {
+                if (structure.get(j).compareTo(structure.get(j - 1)) < 0) {
+                    swap(structure, j, j - 1);
+                }
+                j--;
+            }
+        }
+    }
 
-//    public void shellSort(long[] array) {
-//        int inner, outer;
-//        long temp;
-//
-//        int h = 1;
-//        while (h <= array.length / 3)
-//            h = h * 3 + 1;
-//        while (h > 0) {
-//            for (outer = h; outer < array.length; outer++) {
-//                temp = array[outer];
-//                inner = outer;
-//                while (inner > h - 1 && array[inner - h] >= temp) {
-//                    array[inner] = array[inner - h];
-//                    inner -= h;
-//                }
-//                array[inner] = temp;
-//            }
-//            h = (h - 1) / 3;
-//        }
-//    }
-//
-//    public int partitionIt(int left, int right, long pivot) {
-//        int leftPtr = left - 1;
-//        int rightPtr = right;
-//        while (true) {
-//            while (array[++leftPtr] < pivot) ;
-//            while (rightPtr > 0 && array[--rightPtr] > pivot) ;
-//
-//            if (leftPtr >= rightPtr)
-//                break;
-//            else
-//                swap(leftPtr, rightPtr);
-//        }
-//        swap(leftPtr, right);
-//        return leftPtr;
-
-
-//    }
-
-
+    /**
+     * Classic insertion sorting with ASCENDING ordering
+     *
+     * @param structure structure for sorting
+     * @param <T>       type of sort elements
+     */
+    private static <T extends Comparable<T>> void classicInsertionDescSort(ListStructure<T> structure) {
+        for (int i = 0; i < structure.size(); i++) {
+            int j = i;
+            while (j > 0) {
+                if (structure.get(j).compareTo(structure.get(j - 1)) > 0) {
+                    swap(structure, j, j - 1);
+                }
+                j--;
+            }
+        }
+    }
 }
 

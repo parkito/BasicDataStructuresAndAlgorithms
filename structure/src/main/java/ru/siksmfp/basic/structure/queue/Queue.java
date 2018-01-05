@@ -4,18 +4,20 @@ package ru.siksmfp.basic.structure.queue;
 import ru.siksmfp.basic.structure.array.dynamic.Array;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
-
+import ru.siksmfp.basic.structure.utils.SystemUtils;
 
 /**
- * @param <T> object type for storing in queue
- *            Queue built on dynamic array
  * @author Artem Karnov @date 21.02.17.
  * artem.karnov@t-systems.com
  * <p>
+ * Queue built on dynamic array
+ * <p>
+ * *@param <T> object type for storing in queue
  */
 public class Queue<T> {
     private Array<T> array;
     private int size;
+    private static final int INITIAL_QUEUE_SIZE = 1000;
 
     /**
      * Queue initialization
@@ -23,6 +25,11 @@ public class Queue<T> {
     public Queue() {
         size = 0;
         array = new Array<>();
+    }
+
+    public Queue(int size) {
+        this.size = size;
+        array = new Array<>(size);
     }
 
     /**
@@ -34,6 +41,30 @@ public class Queue<T> {
         StructureUtils.checkDataStructureSize(size);
         array.add(element);
         size++;
+    }
+
+    /**
+     * Strict pushing element into queue
+     *
+     * @param element element for pushing
+     */
+    public void strictPush(T element) {
+        StructureUtils.checkDataStructureSize(size);
+        array.add((T) SystemUtils.clone(element));
+        size++;
+    }
+
+    /**
+     * Getting first element in queue without deleting it
+     *
+     * @return first element in queue
+     */
+    public T peek() {
+        if (size > 0) {
+            return array.get(0);
+        } else {
+            throw new IncorrectSizeException("Queue is empty");
+        }
     }
 
     /**

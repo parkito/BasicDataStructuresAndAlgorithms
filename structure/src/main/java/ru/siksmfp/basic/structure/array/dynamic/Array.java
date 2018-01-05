@@ -4,8 +4,6 @@ import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
-import java.util.Arrays;
-
 /**
  * Created by Artyom Karnov on 17.11.16.
  * artyom-karnov@yandex.ru
@@ -182,8 +180,11 @@ public class Array<T> implements ListStructure<T> {
     @Override
     public boolean contains(T element) {
         for (int i = 0; i < size; i++) {
-            if (array[i].equals(element))
-                return true;
+            if (array[i] != null) {
+                if (array[i].equals(element)) {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -206,8 +207,15 @@ public class Array<T> implements ListStructure<T> {
         if (size != array1.size) return false;
 
         for (int i = 0; i < size; i++) {
-            if (!array[i].equals(array1.array[i]))
-                return false;
+            if (array[i] == null || array1.array[i] == null) {
+                if (array[i] == null && array1.array[i] != null)
+                    return false;
+                if (array[i] != null && array1.array[i] == null)
+                    return false;
+            } else {
+                if (!array[i].equals(array1.array[i]))
+                    return false;
+            }
         }
         return true;
     }
@@ -215,9 +223,12 @@ public class Array<T> implements ListStructure<T> {
     @Override
     public int hashCode() {
         int result = 31 * size;
-        result = 31 * result + Arrays.hashCode(array);
         for (int i = 0; i < size; i++) {
-            result += array[i].hashCode();
+            if (array[i] != null) {
+                result += 31 * array[i].hashCode();
+            } else {
+                result += 31;
+            }
         }
         return result;
     }

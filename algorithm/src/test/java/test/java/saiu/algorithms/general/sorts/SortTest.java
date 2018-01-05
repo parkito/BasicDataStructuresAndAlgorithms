@@ -108,4 +108,20 @@ public class SortTest {
         Sort.insertionSort(array, SortDirection.ASC);
         Assert.assertEquals(expected, array);
     }
+
+    @Test
+    public void insertClassicSortTestOne() {
+        Array array = new Array(3, 2, 1, 4, 5);
+        Array expected = new Array(1, 2, 3, 4, 5);
+        Sort.classicInsertionSort(array, SortDirection.ASC);
+        Assert.assertEquals(expected, array);
+    }
+
+    @Test
+    public void insertClssicSortTesTwo() {
+        Array array = new Array(3, 2, 1, 4, 5);
+        Array expected = new Array(5, 4, 3, 2, 1);
+        Sort.classicInsertionSort(array, SortDirection.DESC);
+        Assert.assertEquals(expected, array);
+    }
 }
