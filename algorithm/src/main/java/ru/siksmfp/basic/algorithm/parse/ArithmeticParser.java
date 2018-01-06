@@ -10,23 +10,24 @@ public class ArithmeticParser {
     private static final char OPENED_PARENTHESES = '(';
     private static final char CLOSED_PARENTHESES = ')';
     private static final char SPACE = ' ';
+    private static final char CARET = '^';
 
     public static void main(String[] args) {
         ArithmeticParser parser = new ArithmeticParser();
 
-        System.out.println(parser.infixToPostfix("A+B+C"));
-        System.out.println(parser.infixToPostfix("A+B*C"));
-        System.out.println(parser.infixToPostfix("A*(B+C)"));
-        System.out.println(parser.infixToPostfix("A + B * (C - D)"));
-        System.out.println(parser.infixToPostfix("A*(B+C)-D/(E+F)"));
-        System.out.println(parser.infixToPostfix("A*(B+C)*D"));
+        System.out.println(parser.infixToPostfix("A+B+C")); //A B C + +
+        System.out.println(parser.infixToPostfix("A+B*C")); //A B C * +
+        System.out.println(parser.infixToPostfix("A*(B+C)")); //A B C + *
+        System.out.println(parser.infixToPostfix("A + B * (C - D)")); //A B C D - * +
+        System.out.println(parser.infixToPostfix("A*(B+C)-D/(E+F)")); //A B C + * D E F + / -
+        System.out.println(parser.infixToPostfix("A*(B+C)*D")); //A B C + * D *
+        System.out.println(parser.infixToPostfix("A^B*C")); //A B ^ C *
+        System.out.println(parser.infixToPostfix("(A+B)^C+D")); //A B + C ^ D +
 
     }
 //    public double parse(String arithmeticString) {
 //
 //    }
-
-    // TODO: 1/6/2018 priorities
 
     private String infixToPostfix(String infixString) {
         infixString = infixString.replaceAll("\\s+", "");
@@ -48,10 +49,13 @@ public class ArithmeticParser {
             if (i > ch.length - 1)
                 break;
 
-            if (operatorStack.isEmpty()) {
+            else if (operatorStack.isEmpty()) {
                 operatorStack.push(ch[i]);
             } else if (ch[i] == CLOSED_PARENTHESES) {
                 clearStack(stringBuilder, operatorStack);
+            } else if (getOperatorPriority(ch[i]) < getOperatorPriority(operatorStack.peek()) && operatorStack.peek() != OPENED_PARENTHESES) {
+                stringBuilder.append(operatorStack.pop()).append(SPACE);
+                operatorStack.push(ch[i]);
             } else {
                 operatorStack.push(ch[i]);
             }
