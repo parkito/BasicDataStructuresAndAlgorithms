@@ -1,4 +1,4 @@
-package test.java.saiu.algorithms.interview.other.reverseInOneWayLinkedList;
+package test.java.saiu.algorithms.interview.other.reverse.in.one.way.linked.list;
 
 import org.junit.Assert;
 import org.junit.Before;

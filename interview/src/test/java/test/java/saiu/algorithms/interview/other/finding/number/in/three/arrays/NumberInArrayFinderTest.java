@@ -1,4 +1,4 @@
-package test.java.saiu.algorithms.interview.other.findingNumberInThreeArrays;
+package test.java.saiu.algorithms.interview.other.finding.number.in.three.arrays;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package test.java.saiu.algorithms.interview.other.maxDepthBinaryTree;
+package test.java.saiu.algorithms.interview.other.max.depth.binary.tree;
 
 import org.junit.Assert;
 import org.junit.Before;

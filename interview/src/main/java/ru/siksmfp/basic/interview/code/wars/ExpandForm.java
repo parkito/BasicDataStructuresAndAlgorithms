@@ -1,4 +1,4 @@
-package ru.siksmfp.basic.interview.codeWars;
+package ru.siksmfp.basic.interview.code.wars;
 
 /**
  * @author Artem Karnov @date 28.08.2017.

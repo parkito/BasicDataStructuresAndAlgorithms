@@ -30,34 +30,34 @@ public class ArithmeticParser {
 //    }
 
     private String infixToPostfix(String infixString) {
-        infixString = infixString.replaceAll("\\s+", "");
+        String infixStringWithoutSpaces = infixString.replaceAll("\\s+", "");
 
         StringBuilder stringBuilder = new StringBuilder();
         Stack<Character> operatorStack = new Stack<>(20);
-        char[] ch = infixString.toCharArray();
+        char[] infixChars = infixStringWithoutSpaces.toCharArray();
 
-        for (int i = 0; i < ch.length; i++) {
+        for (int i = 0; i < infixChars.length; i++) {
             StringBuilder currentExpression = new StringBuilder();
             //subtract values (sophisticated value (e.g. 400.24) should be subtracted as one value)
-            while (i < ch.length && getOperatorPriority(ch[i]) == 0) {
-                currentExpression.append(ch[i]);
+            while (i < infixChars.length && getOperatorPriority(infixChars[i]) == 0) {
+                currentExpression.append(infixChars[i]);
                 i++;
             }
             if (currentExpression.length() > 0)
                 stringBuilder.append(currentExpression).append(SPACE);
             //come to the string's end, no more symbols further.
-            if (i > ch.length - 1)
+            if (i > infixChars.length - 1)
                 break;
 
             else if (operatorStack.isEmpty()) {
-                operatorStack.push(ch[i]);
-            } else if (ch[i] == CLOSED_PARENTHESES) {
+                operatorStack.push(infixChars[i]);
+            } else if (infixChars[i] == CLOSED_PARENTHESES) {
                 clearStack(stringBuilder, operatorStack);
-            } else if (getOperatorPriority(ch[i]) < getOperatorPriority(operatorStack.peek()) && operatorStack.peek() != OPENED_PARENTHESES) {
+            } else if (getOperatorPriority(infixChars[i]) < getOperatorPriority(operatorStack.peek()) && operatorStack.peek() != OPENED_PARENTHESES) {
                 stringBuilder.append(operatorStack.pop()).append(SPACE);
-                operatorStack.push(ch[i]);
+                operatorStack.push(infixChars[i]);
             } else {
-                operatorStack.push(ch[i]);
+                operatorStack.push(infixChars[i]);
             }
         }
 

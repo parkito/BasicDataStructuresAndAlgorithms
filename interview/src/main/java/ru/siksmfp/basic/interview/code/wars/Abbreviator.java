@@ -1,4 +1,4 @@
-package ru.siksmfp.basic.interview.codeWars;
+package ru.siksmfp.basic.interview.code.wars;
 
 /**
  * @author Artem Karnov @date 07.03.17.
@@ -48,7 +48,8 @@ public class Abbreviator {
 
     public String abbreviate(String string) {
         StringBuilder result = new StringBuilder();
-        int i = 0, j = 0;
+        int i = 0;
+        int j = 0;
         while (i < string.length()) {
             int endingWordCorrectionCoefficient;
             if (!Character.isAlphabetic(string.charAt(i)) || i == string.length() - 1) {

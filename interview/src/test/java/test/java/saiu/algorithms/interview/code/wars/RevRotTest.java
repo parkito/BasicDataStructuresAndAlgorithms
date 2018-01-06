@@ -1,8 +1,8 @@
-package test.java.saiu.algorithms.interview.codeWars;
+package test.java.saiu.algorithms.interview.code.wars;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import ru.siksmfp.basic.interview.codeWars.RevRot;
+import ru.siksmfp.basic.interview.code.wars.RevRot;
 
 import static org.junit.Assert.assertEquals;
 

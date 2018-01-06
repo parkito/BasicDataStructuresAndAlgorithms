@@ -1,7 +1,7 @@
-package test.java.saiu.algorithms.interview.codeWars;
+package test.java.saiu.algorithms.interview.code.wars;
 
 import org.junit.Test;
-import ru.siksmfp.basic.interview.codeWars.ExpandForm;
+import ru.siksmfp.basic.interview.code.wars.ExpandForm;
 
 import static org.junit.Assert.assertEquals;
 
