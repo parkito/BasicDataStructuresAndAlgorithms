@@ -7,6 +7,9 @@ import ru.siksmfp.basic.structure.stack.Stack;
  * artem.karnov@t-systems.com
  */
 public class ArithmeticParser {
+    private static final char OPENED_PARENTHESES = '(';
+    private static final char CLOSED_PARENTHESES = ')';
+    private static final char SPACE = ' ';
 
     public static void main(String[] args) {
         ArithmeticParser parser = new ArithmeticParser();
@@ -16,10 +19,14 @@ public class ArithmeticParser {
         System.out.println(parser.infixToPostfix("A*(B+C)"));
         System.out.println(parser.infixToPostfix("A + B * (C - D)"));
         System.out.println(parser.infixToPostfix("A*(B+C)-D/(E+F)"));
+        System.out.println(parser.infixToPostfix("A*(B+C)*D"));
+
     }
 //    public double parse(String arithmeticString) {
 //
 //    }
+
+    // TODO: 1/6/2018 priorities
 
     private String infixToPostfix(String infixString) {
         infixString = infixString.replaceAll("\\s+", "");
@@ -27,24 +34,23 @@ public class ArithmeticParser {
         StringBuilder stringBuilder = new StringBuilder();
         Stack<Character> operatorStack = new Stack<>(20);
         char[] ch = infixString.toCharArray();
-        int maxI = ch.length - 1;
 
         for (int i = 0; i < ch.length; i++) {
             StringBuilder currentExpression = new StringBuilder();
-
-            while (i < maxI && getOperatorPriority(ch[i]) == 0) {
+            //subtract values (sophisticated value (e.g. 400.24) should be subtracted as one value)
+            while (i < ch.length && getOperatorPriority(ch[i]) == 0) {
                 currentExpression.append(ch[i]);
                 i++;
             }
             if (currentExpression.length() > 0)
-                stringBuilder.append(currentExpression).append(" ");
-
-            if (i >= maxI)
+                stringBuilder.append(currentExpression).append(SPACE);
+            //come to the string's end, no more symbols further.
+            if (i > ch.length - 1)
                 break;
 
             if (operatorStack.isEmpty()) {
                 operatorStack.push(ch[i]);
-            } else if (ch[i] == ')') {
+            } else if (ch[i] == CLOSED_PARENTHESES) {
                 clearStack(stringBuilder, operatorStack);
             } else {
                 operatorStack.push(ch[i]);
@@ -52,6 +58,8 @@ public class ArithmeticParser {
         }
 
         clearStack(stringBuilder, operatorStack);
+        //remove last space symbol after clearStack printing
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
 
@@ -62,25 +70,23 @@ public class ArithmeticParser {
     private void clearStack(StringBuilder stringBuilder, Stack<Character> operatorStack) {
         while (!operatorStack.isEmpty()) {
             Character currentOperator = operatorStack.pop();
-            if (currentOperator != '(') {
-                stringBuilder.append(currentOperator);
+            if (currentOperator != OPENED_PARENTHESES) {
+                stringBuilder.append(currentOperator).append(SPACE);
             }
         }
-        stringBuilder.append(" ");
     }
 
     private int getOperatorPriority(char operator) {
         switch (operator) {
             case '(':
-                return 3;
             case ')':
+                return 4;
+            case '^':
                 return 3;
             case '*':
-                return 2;
             case '/':
                 return 2;
             case '+':
-                return 1;
             case '-':
                 return 1;
             default:
