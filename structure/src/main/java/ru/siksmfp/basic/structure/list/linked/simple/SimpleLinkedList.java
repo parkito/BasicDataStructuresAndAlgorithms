@@ -1,5 +1,6 @@
 package ru.siksmfp.basic.structure.list.linked.simple;
 
+import ru.siksmfp.basic.structure.api.Iterator;
 import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
@@ -171,10 +172,6 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         }
     }
 
-    @Override
-    public void strictRemove(int index) {
-
-    }
 
     @Override
     public void delete(int index) {
@@ -188,6 +185,11 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      */
     public boolean isEmpty() {
         return size() == 0;
+    }
+
+    @Override
+    public Iterator<T> getIterator() {
+        return null;
     }
 
     /**

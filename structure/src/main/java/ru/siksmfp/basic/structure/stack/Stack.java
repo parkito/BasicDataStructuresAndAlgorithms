@@ -1,6 +1,8 @@
 package ru.siksmfp.basic.structure.stack;
 
+import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
+import ru.siksmfp.basic.structure.array.g.GArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
@@ -15,7 +17,7 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  */
 // TODO: 1/5/2018 Cross stucture sortable
 public class Stack<T> {
-    private final DynamicArray<T> array;
+    private final ArrayStructure<T> array;
     private int size;
     private static final int INITIAL_STACK_SIZE = 1000;
 
@@ -24,12 +26,12 @@ public class Stack<T> {
      */
     public Stack() {
         size = 0;
-        array = new DynamicArray<>(INITIAL_STACK_SIZE);
+        array = new GArray<>(INITIAL_STACK_SIZE);
     }
 
     public Stack(int size) {
         this.size = 0;
-        array = new DynamicArray<>(size);
+        array = new GArray<>(size);
     }
 
     /**

@@ -1,7 +1,9 @@
 package ru.siksmfp.basic.structure.queue;
 
 
+import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
+import ru.siksmfp.basic.structure.array.g.GArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
@@ -15,7 +17,7 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  * *@param <T> object type for storing in queue
  */
 public class Queue<T> {
-    private DynamicArray<T> array;
+    private ArrayStructure<T> array;
     private int size;
     private static final int INITIAL_QUEUE_SIZE = 1000;
 
@@ -24,12 +26,12 @@ public class Queue<T> {
      */
     public Queue() {
         size = 0;
-        array = new DynamicArray<>();
+        array = new GArray<>();
     }
 
     public Queue(int size) {
         this.size = size;
-        array = new DynamicArray<>(size);
+        array = new GArray<>(size);
     }
 
     /**

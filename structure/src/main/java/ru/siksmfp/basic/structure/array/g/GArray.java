@@ -9,6 +9,8 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
 /**
  * @author Artem Karnov @date 1/8/2018.
  * artem.karnov@t-systems.com
+ * <p>
+ * GArray means general array realization. Best practise for arrays implemented here.
  */
 public class GArray<T> implements ArrayStructure<T> {
     private static int PREDEFINED_ARRAY_SIZE = 100;
