@@ -1,87 +1,81 @@
-package ru.siksmfp.basic.structure.list.linked.simple;
+package ru.siksmfp.basic.structure.list.linked.doubled;
+
 
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
-import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 
 /**
- * Created by Artyom Karnov on 23.11.16.
+ * Created by Artyom Karnov on 26.11.16.
  * artyom-karnov@yandex.ru
  * <p>
- * Typical linkedList
+ * Typical com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
  *
- * @param <T> object type for storing in linkedList
+ * @param <T> object type for storing in com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
  */
-public class LinkedList<T> {
-    /**
-     * Class represents list of list
-     *
-     * @param <T> object type for storing in list
-     */
-    private static class List<T> {
-        private T data;
-        private List next;
+public class DoublyLinkedList<T> {
 
-        public List() {
+    private class List<T> {
+        public T data;
+        public List next;
+        public List previous;
+
+        public List(List previous) {
             next = null;
+            this.previous = previous;
         }
     }
 
-    private List<T> firstList;
+    private List<T> firstList = new List<>(null);
+    private List<T> tempList;
     private int size;
 
     /**
      * Constructor with begin initialization
      */
-    public LinkedList() {
+    public DoublyLinkedList() {
         size = 0;
-        firstList = new List<>();
     }
 
     /**
-     * Adding element to linkedList
+     * Adding element to com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
      *
      * @param element element for adding
      */
     public void add(T element) {
-        StructureUtils.checkDataStructureSize(size);
-        List tempList = firstList;
+        tempList = firstList;
         while (tempList.next != null) {
             tempList = tempList.next;
         }
         size++;
         tempList.data = element;
-        tempList.next = new List();
+        tempList.next = new List(tempList);
     }
 
     /**
-     * Getting element from adjusted position
-     *
-     * @param index index of element in linkedList
-     * @return element from adjusted position
+     * Displaying com.saiu.ru.siksmfp.basic.structure.list.linked.doubled from index = 0
      */
-    public T get(int index) {
-        StructureUtils.checkingIndex(index, size);
-        List tempList = firstList;
-        for (int i = 0; i < index; i++) {
-            tempList = tempList.next;
-        }
-        return (T) tempList.data;
-    }
-
-    /**
-     * Method for displaying all lists of liked list
-     */
-    @SuppressWarnings("Warning")
-    public T[] toArray() {
-        Object[] arr = new Object[size];
-        List tempList = firstList;
-        int i = 0;
+    public void displayFromStarch() {
+        tempList = firstList;
         while (tempList.next != null) {
-            arr[i] = tempList.data;
+            System.out.println(tempList.data);
             tempList = tempList.next;
         }
-        return (T[]) arr;
+
+    }
+
+    /**
+     * Displaying com.saiu.ru.siksmfp.basic.structure.list.linked.doubled from last index
+     */
+    public void displayFromEnd() {
+        tempList = firstList;
+        while (tempList.next != null) {
+            tempList = tempList.next;
+        }
+        tempList = tempList.previous;//?
+        while (tempList != null) {
+            System.out.println(tempList.data);
+            tempList = tempList.previous;
+        }
     }
 
     /**
@@ -92,7 +86,7 @@ public class LinkedList<T> {
             firstList = firstList.next;
             size--;
         } else {
-            throw new IncorrectSizeException("List is already empty");
+            throw new IncorrectIndexException("Index couldn't be <0");
         }
     }
 
@@ -101,7 +95,7 @@ public class LinkedList<T> {
      */
     public void removeLast() {
         if (size() > 1) {
-            List tempList = firstList;
+            tempList = firstList;
             while (tempList.next.next != null) {
                 tempList = tempList.next;
             }
@@ -110,7 +104,7 @@ public class LinkedList<T> {
         } else if (size() == 1)
             removeFirst();
         else {
-            throw new IncorrectIndexException("List is already empty");
+            throw new IncorrectIndexException("Index couldn't be <0");
         }
     }
 
@@ -134,7 +128,7 @@ public class LinkedList<T> {
         if (index == 0) {
             removeFirst();
         } else {
-            List tempList = firstList;
+            tempList = firstList;
             for (int i = 0; i < index - 1; i++) {
                 tempList = tempList.next;
             }
@@ -155,10 +149,16 @@ public class LinkedList<T> {
     /**
      * Getting size of linkedList
      *
-     * @return number of elements in linked list
+     * @return number of elements
      */
     public int size() {
-        return size;
+        int i = 0;
+        tempList = firstList;
+        while (tempList.next != null) {
+            i++;
+            tempList = tempList.next;
+        }
+        return i;
     }
 
     /**
@@ -168,7 +168,7 @@ public class LinkedList<T> {
      * @return true - if array contain adjusted element, false - if doesn't
      */
     public boolean contains(T element) {
-        List tempList = firstList;
+        tempList = firstList;
         while (tempList.next != null) {
             if (tempList.data.equals(element)) {
                 return true;
@@ -178,15 +178,4 @@ public class LinkedList<T> {
         return false;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        List tempList = firstList;
-        while (tempList.next != null) {
-            result.append(tempList.data);
-            result.append(" ");
-            tempList = tempList.next;
-        }
-        return "LinkedList{" + result.toString() + "}";
-    }
 }

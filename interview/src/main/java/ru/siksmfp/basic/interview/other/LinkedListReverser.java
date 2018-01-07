@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Reversal one-way linked list
  * listUnpacking and listPacking are needed for transformation
- * LinkedList structure into internal list.
+ * SimpleLinkedList structure into internal list.
  * Without it algorithm doesn't matter as method for self education
  */
 

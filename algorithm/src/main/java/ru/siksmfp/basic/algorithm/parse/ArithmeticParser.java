@@ -1,7 +1,7 @@
 package ru.siksmfp.basic.algorithm.parse;
 
 import ru.siksmfp.basic.algorithm.math.Math;
-import ru.siksmfp.basic.structure.array.dynamic.Array;
+import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
 import ru.siksmfp.basic.structure.stack.Stack;
 
 import java.util.StringTokenizer;
@@ -91,7 +91,7 @@ public class ArithmeticParser {
 
     private double calculateExpression(String postfix) {
         Double result = null;
-        Array<String> expressionArray = new Array();
+        DynamicArray<String> expressionArray = new DynamicArray();
         StringTokenizer tokenizer = new StringTokenizer(postfix, " ");
         while (tokenizer.hasMoreElements()) {
             expressionArray.add(tokenizer.nextToken());

@@ -1,44 +1,48 @@
-package ru.siksmfp.basic.structure.array.dynamic;
+package ru.siksmfp.basic.structure.array.g;
 
 import ru.siksmfp.basic.structure.api.ArrayStructure;
+import ru.siksmfp.basic.structure.api.Iterator;
+import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
 /**
- * Created by Artyom Karnov on 17.11.16.
- * artyom-karnov@yandex.ru
- * <p>
- * Array of variable length. Non initialized elements - 0
- *
- * @param <T> object type for storing in array
+ * @author Artem Karnov @date 1/8/2018.
+ * artem.karnov@t-systems.com
  */
-public class Array<T> implements ArrayStructure<T> {
+public class GArray<T> implements ArrayStructure<T> {
+    private static int PREDEFINED_ARRAY_SIZE = 100;
+
     private Object[] array;
     private int size;
 
     /**
-     * Constructor without parameters
+     * Constructor without parameters for zero-length array creation
      */
-    public Array() {
-        array = new Object[0];
+    public GArray() {
+        array = new Object[PREDEFINED_ARRAY_SIZE];
         size = 0;
     }
 
-    public Array(Object... objects) {
-        size = objects.length;
+    /**
+     * Constructor for element array creation
+     *
+     * @param elements - elements for string
+     */
+    public GArray(T... elements) {
+        size = elements.length;
         array = new Object[size];
-        for (int i = 0; i < objects.length; i++) {
-            array[i] = SystemUtils.clone(objects[i]);
+        for (int i = 0; i < elements.length; i++) {
+            array[i] = SystemUtils.clone(elements[i]);
         }
-
     }
 
     /**
-     * Creating Array by copying other array in constructor
+     * Creating DynamicArray by copying other array in constructor
      *
      * @param arrayForCopy array for copy
      */
-    public Array(Array<T> arrayForCopy) {
+    public GArray(ArrayStructure<T> arrayForCopy) {
         size = arrayForCopy.size();
         array = new Object[size];
         for (int i = 0; i < size; i++) {
@@ -47,11 +51,25 @@ public class Array<T> implements ArrayStructure<T> {
     }
 
     /**
+     * Creating dynamic array from list
+     *
+     * @param listStructure - list for creation
+     */
+    public GArray(ListStructure<T> listStructure) {
+        size = listStructure.size();
+        array = new Object[size];
+        Iterator iterator = listStructure.getIterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            array[i] = SystemUtils.clone(iterator.next());
+        }
+    }
+
+    /**
      * Constructor for getting array's size and initialization
      *
      * @param size array size
      */
-    public Array(int size) {
+    public GArray(int size) {
         StructureUtils.checkDataStructureSize(size);
         this.size = size;
         array = new Object[size];
@@ -82,33 +100,42 @@ public class Array<T> implements ArrayStructure<T> {
     }
 
     /**
-     * Add element to array
+     * Add element to array.
+     * Method creates last element and adds @element
      *
      * @param element element for adding
      */
     public void add(T element) {
-        Object[] extendedArray = new Object[size + 1];
-        for (int i = 0; i < size; i++) {
-            extendedArray[i] = array[i];
+        if (size >= array.length - 1) {
+            Object[] extendedArray = new Object[size + PREDEFINED_ARRAY_SIZE];
+            for (int i = 0; i < size; i++) {
+                extendedArray[i] = array[i];
+            }
+            extendedArray[size] = element;
+            array = extendedArray;
+        } else {
+            array[size] = element;
         }
-        extendedArray[size] = element;
-        array = extendedArray;
         size++;
     }
 
     /**
-     * Add element to array strictly. Using deep cloning
+     * Add element to array strictly (using deep cloning)
      *
      * @param element element for adding
      */
     @Override
     public void strictAdd(T element) {
-        Object[] extendedArray = new Object[size + 1];
-        for (int i = 0; i < size; i++) {
-            extendedArray[i] = SystemUtils.clone(array[i]);
+        if (size >= array.length - 1) {
+            Object[] extendedArray = new Object[size + PREDEFINED_ARRAY_SIZE];
+            for (int i = 0; i < size; i++) {
+                extendedArray[i] = SystemUtils.clone(array[i]);
+            }
+            extendedArray[size] = SystemUtils.clone(element);
+            array = extendedArray;
+        } else {
+            array[size] = SystemUtils.clone(element);
         }
-        extendedArray[size] = SystemUtils.clone(element);
-        array = extendedArray;
         size++;
     }
 
@@ -138,7 +165,7 @@ public class Array<T> implements ArrayStructure<T> {
 
     /**
      * Strict removing element on given index
-     * There is deep copying during element's offset
+     * Difference from @remove method in implemented deep copying during element's offset
      *
      * @param index index of removing element
      */
@@ -203,7 +230,7 @@ public class Array<T> implements ArrayStructure<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Array<T> array1 = (Array<T>) o;
+        GArray<T> array1 = (GArray<T>) o;
         if (size != array1.size) return false;
 
         for (int i = 0; i < size; i++) {
@@ -233,8 +260,20 @@ public class Array<T> implements ArrayStructure<T> {
         return result;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            result.append(array[i]);
+            result.append(", ");
+        }
+        result.deleteCharAt(result.length() - 1);
+        result.deleteCharAt(result.length() - 2);
+        return "GArray{" + result.toString() + "}";
+    }
+
     /**
-     * Array left shifting
+     * DynamicArray left shifting
      * <p>
      * Consider [1] [2] [3] [4]. We have to shift array since index = 1
      * Then we have [1] [3] [4] [NULL]
@@ -249,7 +288,7 @@ public class Array<T> implements ArrayStructure<T> {
     }
 
     /**
-     * Array left shifting
+     * DynamicArray left shifting
      * <p>
      * Consider [1] [2] [3] [4]. We have to shift array since index = 1
      * Then we have [1] [3] [4] [NULL]

@@ -11,7 +11,7 @@ public interface ListStructure<T> {
 
     void replace(int index, T element);
 
-    public void strictReplace(int index, T element);
+    void strictReplace(int index, T element);
 
     T get(int index);
 
@@ -21,8 +21,6 @@ public interface ListStructure<T> {
 
     void remove(int index);
 
-    void strictRemove(int index);
-
     void delete(int index);
 
     int size();
@@ -30,4 +28,6 @@ public interface ListStructure<T> {
     boolean contains(T element);
 
     boolean isEmpty();
+
+    Iterator<T> getIterator();
 }

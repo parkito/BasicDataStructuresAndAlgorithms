@@ -1,6 +1,6 @@
 package ru.siksmfp.basic.structure.deck;
 
-import ru.siksmfp.basic.structure.array.dynamic.Array;
+import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
 /**
@@ -12,7 +12,7 @@ import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
  * Deck built on dynamic array
  */
 public class Deck<T> {
-    private Array<T> array;
+    private DynamicArray<T> array;
     private int size;
 
     /**
@@ -20,7 +20,7 @@ public class Deck<T> {
      */
     public Deck() {
         size = 0;
-        array = new Array<T>();
+        array = new DynamicArray<T>();
     }
 
     /**
@@ -44,7 +44,7 @@ public class Deck<T> {
      */
     public void pushIntoBegin(T element) {
         if (size < Integer.MAX_VALUE) {
-            Array<T> newArray = new Array<T>();
+            DynamicArray<T> newArray = new DynamicArray<T>();
             newArray.add(element);
             for (int i = 0; i < size; i++) {
                 newArray.add(array.get(i));

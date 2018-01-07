@@ -12,7 +12,7 @@ import ru.siksmfp.basic.structure.array.fixed.FixedArray;
  * artem.karnov@t-systems.com
  */
 
-public class NumberInArrayFinderTest {
+public class NumberInDynamicArrayFinderTest {
     private NumberInArrayFinder<Integer> finder;
     private FixedArray<Integer> first;
     private FixedArray<Integer> second;

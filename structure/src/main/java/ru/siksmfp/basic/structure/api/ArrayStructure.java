@@ -9,7 +9,7 @@ public interface ArrayStructure<T> {
 
     void add(T element);
 
-    public void strictAdd(int index, T element);
+    void strictAdd(int index, T element);
 
     void strictAdd(T element);
 

@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * artem.karnov@t-systems.com
  */
 
-public class LinkedListReverserTest {
+public class SimpleLinkedListReverserTest {
 
     private LinkedList<Integer> linkedList;
     private LinkedListReverser<Integer> reverser;

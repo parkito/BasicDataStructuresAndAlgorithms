@@ -8,11 +8,11 @@ import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
  * @author Artem Karnov @date 1/4/2018.
  * artem.karnov@t-systems.com
  */
-public class ArrayTest {
+public class DynamicArrayTest {
 
     @Test
     public void typicalUseCaseOne() {
-        Array array = new Array();
+        DynamicArray array = new DynamicArray();
 
         array.add(1);
         array.add(2);
@@ -27,7 +27,7 @@ public class ArrayTest {
 
     @Test
     public void correctRemoving() {
-        Array array = new Array();
+        DynamicArray array = new DynamicArray();
 
         array.add(1);
         array.add(2);
@@ -46,7 +46,7 @@ public class ArrayTest {
 
     @Test(expected = IncorrectIndexException.class)
     public void failedRemovind() {
-        Array array = new Array();
+        DynamicArray array = new DynamicArray();
 
         array.add(10);
         array.add(9);

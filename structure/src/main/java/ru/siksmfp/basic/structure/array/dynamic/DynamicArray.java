@@ -1,31 +1,39 @@
-package ru.siksmfp.basic.structure.array.fixed;
+package ru.siksmfp.basic.structure.array.dynamic;
 
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.api.Iterator;
 import ru.siksmfp.basic.structure.api.ListStructure;
-import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
 /**
- * Created by Artyom Karnov on 15.11.16.
+ * Created by Artyom Karnov on 17.11.16.
  * artyom-karnov@yandex.ru
  * <p>
- * DynamicArray of fix length.
+ * DynamicArray of variable length.
  *
  * @param <T> object type for storing in array
  */
-public class FixedArray<T> implements ArrayStructure<T> {
-    private final Object[] array;
-    private final int maxSize;
+public class DynamicArray<T> implements ArrayStructure<T> {
+    private Object[] array;
+    private int size;
+
+    /**
+     * Constructor without parameters for zero-length array creation
+     */
+    public DynamicArray() {
+        array = new Object[0];
+        size = 0;
+    }
+
     /**
      * Constructor for element array creation
      *
      * @param elements - elements for string
      */
-    public FixedArray(T... elements) {
-        maxSize = elements.length;
-        array = new Object[maxSize];
+    public DynamicArray(T... elements) {
+        size = elements.length;
+        array = new Object[size];
         for (int i = 0; i < elements.length; i++) {
             array[i] = SystemUtils.clone(elements[i]);
         }
@@ -36,10 +44,10 @@ public class FixedArray<T> implements ArrayStructure<T> {
      *
      * @param arrayForCopy array for copy
      */
-    public FixedArray(ArrayStructure<T> arrayForCopy) {
-        maxSize = arrayForCopy.size();
-        array = new Object[maxSize];
-        for (int i = 0; i < maxSize; i++) {
+    public DynamicArray(ArrayStructure<T> arrayForCopy) {
+        size = arrayForCopy.size();
+        array = new Object[size];
+        for (int i = 0; i < size; i++) {
             array[i] = SystemUtils.clone(arrayForCopy.get(i));
         }
     }
@@ -49,9 +57,9 @@ public class FixedArray<T> implements ArrayStructure<T> {
      *
      * @param listStructure - list for creation
      */
-    public FixedArray(ListStructure<T> listStructure) {
-        maxSize = listStructure.size();
-        array = new Object[maxSize];
+    public DynamicArray(ListStructure<T> listStructure) {
+        size = listStructure.size();
+        array = new Object[size];
         Iterator iterator = listStructure.getIterator();
         for (int i = 0; iterator.hasNext(); i++) {
             array[i] = SystemUtils.clone(iterator.next());
@@ -63,10 +71,65 @@ public class FixedArray<T> implements ArrayStructure<T> {
      *
      * @param size array size
      */
-    public FixedArray(int size) {
+    public DynamicArray(int size) {
         StructureUtils.checkDataStructureSize(size);
-        this.maxSize = size;
+        this.size = size;
         array = new Object[size];
+    }
+
+    /**
+     * Add element on given index
+     *
+     * @param element element for adding
+     * @param index   index of adding element
+     */
+    @Override
+    public void add(int index, T element) {
+        StructureUtils.checkingIndex(index, size);
+        array[index] = element;
+    }
+
+    /**
+     * Add element on given position by deep copying of element
+     *
+     * @param element element for adding
+     * @param index   position of adding element
+     */
+    @Override
+    public void strictAdd(int index, T element) {
+        StructureUtils.checkingIndex(index, size);
+        array[index] = SystemUtils.clone(element);
+    }
+
+    /**
+     * Add element to array
+     *
+     * @param element element for adding
+     */
+    public void add(T element) {
+        Object[] extendedArray = new Object[size + 1];
+        for (int i = 0; i < size; i++) {
+            extendedArray[i] = array[i];
+        }
+        extendedArray[size] = element;
+        array = extendedArray;
+        size++;
+    }
+
+    /**
+     * Add element to array strictly. Using deep cloning
+     *
+     * @param element element for adding
+     */
+    @Override
+    public void strictAdd(T element) {
+        Object[] extendedArray = new Object[size + 1];
+        for (int i = 0; i < size; i++) {
+            extendedArray[i] = SystemUtils.clone(array[i]);
+        }
+        extendedArray[size] = SystemUtils.clone(element);
+        array = extendedArray;
+        size++;
     }
 
     /**
@@ -75,54 +138,10 @@ public class FixedArray<T> implements ArrayStructure<T> {
      * @param index index of element
      * @return element on adjusted index
      */
+    @Override
     public T get(int index) {
-        StructureUtils.checkingIndex(index, size());
+        StructureUtils.checkingIndex(index, size);
         return (T) array[index];
-    }
-
-    /**
-     * Addition new element on specified index
-     *
-     * @param element element for adding
-     * @param index   index of adding
-     */
-    public void add(int index, T element) {
-        StructureUtils.checkingIndex(index, size());
-        array[index] = element;
-    }
-
-    /**
-     * Add element on first vacant place from beginning
-     * (using deep cloning during array shifting)
-     * <p>
-     * If no vacant place @throws IncorrectSizeException
-     * Example [1] [2] [] [] []
-     * Result [1] [2] [NEW] [] []
-     *
-     * @param element element for adding
-     */
-    @Override
-    public void add(T element) {
-        for (int i = 0; i < size(); i++) {
-            if (array[i] == null) {
-                array[i] = element;
-                return;
-            }
-        }
-        throw new IncorrectSizeException("There is no vacant place for new element");
-    }
-
-    /**
-     * Addition new element on specified index strictly
-     * (using deep cloning during addition)
-     *
-     * @param index   index for adding
-     * @param element element for adding
-     */
-    @Override
-    public void strictAdd(int index, T element) {
-        StructureUtils.checkingIndex(index, size());
-        array[index] = SystemUtils.clone(element);
     }
 
     /**
@@ -130,30 +149,11 @@ public class FixedArray<T> implements ArrayStructure<T> {
      *
      * @param index element's index in array
      */
+    @Override
     public void remove(int index) {
         StructureUtils.checkingIndex(index, size());
         leftShift(index);
-    }
-
-    /**
-     * Add element on first vacant place from beginning strictly
-     * (using deep cloning during array shifting)
-     * <p>
-     * If no vacant place @throws IncorrectSizeException
-     * Example [1] [2] [] [] []
-     * Result [1] [2] [NEW] [] []
-     *
-     * @param element element for adding
-     */
-    @Override
-    public void strictAdd(T element) {
-        for (int i = 0; i < size(); i++) {
-            if (array[i] == null) {
-                array[i] = SystemUtils.clone(element);
-                return;
-            }
-        }
-        throw new IncorrectSizeException("There is no vacant place for new element");
+        size--;
     }
 
     /**
@@ -165,7 +165,8 @@ public class FixedArray<T> implements ArrayStructure<T> {
     @Override
     public void strictRemove(int index) {
         StructureUtils.checkingIndex(index, size());
-        strictLeftShifting(index);
+        strictLeftShift(index);
+        size--;
     }
 
     /**
@@ -185,8 +186,9 @@ public class FixedArray<T> implements ArrayStructure<T> {
      *
      * @return size of array
      */
+    @Override
     public int size() {
-        return maxSize;
+        return size;
     }
 
     /**
@@ -195,10 +197,14 @@ public class FixedArray<T> implements ArrayStructure<T> {
      * @param element element for checking
      * @return true - if array contain adjusted element, false - if doesn't
      */
+    @Override
     public boolean contains(T element) {
-        for (int i = 0; i < maxSize; i++) {
-            if (array[i].equals(element))
-                return true;
+        for (int i = 0; i < size; i++) {
+            if (array[i] != null) {
+                if (array[i].equals(element)) {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -208,19 +214,19 @@ public class FixedArray<T> implements ArrayStructure<T> {
      *
      * @return true if size=0, false if size>0
      */
+    @Override
     public boolean isEmpty() {
-        return maxSize == 0;
+        return size == 0;
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FixedArray<T> array1 = (FixedArray<T>) o;
-        if (maxSize != array1.maxSize) return false;
+        DynamicArray<T> array1 = (DynamicArray<T>) o;
+        if (size != array1.size) return false;
 
-        for (int i = 0; i < maxSize; i++) {
+        for (int i = 0; i < size; i++) {
             if (array[i] == null || array1.array[i] == null) {
                 if (array[i] == null && array1.array[i] != null)
                     return false;
@@ -236,8 +242,8 @@ public class FixedArray<T> implements ArrayStructure<T> {
 
     @Override
     public int hashCode() {
-        int result = 31 * maxSize;
-        for (int i = 0; i < maxSize; i++) {
+        int result = 31 * size;
+        for (int i = 0; i < size; i++) {
             if (array[i] != null) {
                 result += 31 * array[i].hashCode();
             } else {
@@ -247,11 +253,10 @@ public class FixedArray<T> implements ArrayStructure<T> {
         return result;
     }
 
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < maxSize; i++) {
+        for (int i = 0; i < size; i++) {
             result.append(array[i]);
             result.append(", ");
         }
@@ -276,14 +281,16 @@ public class FixedArray<T> implements ArrayStructure<T> {
     }
 
     /**
-     * Strict array left shifting
+     * DynamicArray left shifting
      * <p>
      * Consider [1] [2] [3] [4]. We have to shift array since index = 1
      * Then we have [1] [3] [4] [NULL]
+     * <p>
+     * Strict means for copying we use deep clone mechanism
      *
      * @param startWithIndex first index for shifting
      */
-    private void strictLeftShifting(int startWithIndex) {
+    private void strictLeftShift(int startWithIndex) {
         for (int i = startWithIndex; i < size() - 1; i++) {
             array[i] = SystemUtils.clone(array[i + 1]);
         }
