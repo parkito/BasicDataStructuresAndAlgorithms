@@ -1,1 +1,0 @@
-package ru.siksmfp.basic.structure.queue;

@@ -1,10 +1,12 @@
 package ru.siksmfp.basic.structure.list.linked.simple;
 
+import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.api.Iterator;
 import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
+import ru.siksmfp.basic.structure.utils.SystemUtils;
 
 /**
  * Created by Artyom Karnov on 23.11.16.
@@ -41,6 +43,17 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     }
 
     /**
+     * Creating simple linked list from array structure
+     *
+     * @param arrayStructure structure for creating
+     */
+    public SimpleLinkedList(ArrayStructure<T> arrayStructure) {
+        for (int i = 0; i < arrayStructure.size(); i++) {
+            add(arrayStructure.get(i));
+        }
+    }
+
+    /**
      * Adding element to linkedList
      *
      * @param element element for adding
@@ -57,20 +70,36 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         tempList.next = new List();
     }
 
-
     @Override
-    public void strictAdd(Object element) {
-
+    public void strictAdd(T element) {
+        StructureUtils.checkDataStructureSize(size);
+        List tempList = firstList;
+        while (tempList.next != null) {
+            tempList = tempList.next;
+        }
+        size++;
+        tempList.data = SystemUtils.clone(element);
+        tempList.next = new List();
     }
 
     @Override
-    public void replace(int index, Object element) {
-
+    public void replace(int index, T element) {
+        StructureUtils.checkingIndex(index, size);
+        List tempList = firstList;
+        for (int i = 0; i < index; i++) {
+            tempList = tempList.next;
+        }
+        tempList.data = element;
     }
 
     @Override
-    public void strictReplace(int index, Object element) {
-
+    public void strictReplace(int index, T element) {
+        StructureUtils.checkingIndex(index, size);
+        List tempList = firstList;
+        for (int i = 0; i < index; i++) {
+            tempList = tempList.next;
+        }
+        tempList.data = SystemUtils.clone(element);
     }
 
     /**
@@ -79,29 +108,45 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      * @param index index of element in linkedList
      * @return element from adjusted position
      */
+    @Override
     public T get(int index) {
         StructureUtils.checkingIndex(index, size);
-        List tempList = firstList;
+        List<T> tempList = firstList;
         for (int i = 0; i < index; i++) {
             tempList = tempList.next;
         }
-        return (T) tempList.data;
+        return tempList.data;
     }
 
     @Override
     public T getFirst() {
-        return null;
+        if (size > 0) {
+            return firstList.data;
+        } else {
+            throw new IncorrectSizeException("List is empty");
+        }
     }
 
     @Override
     public T getLast() {
-        return null;
+        if (size() > 1) {
+            List<T> tempList = firstList;
+            while (tempList.next.next != null) {
+                tempList = tempList.next;
+            }
+            return tempList.data;
+        } else if (size == 1)
+            return getFirst();
+        else {
+            throw new IncorrectIndexException("List is empty");
+        }
     }
 
     /**
      * Method for displaying all lists of liked list
      */
     @SuppressWarnings("Warning")
+    @Override
     public T[] toArray() {
         Object[] arr = new Object[size];
         List tempList = firstList;
@@ -116,6 +161,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     /**
      * Removing element with index = 0
      */
+    @Override
     public void removeFirst() {
         if (size() > 0) {
             firstList = firstList.next;
@@ -128,6 +174,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     /**
      * Removing element with last index
      */
+    @Override
     public void removeLast() {
         if (size() > 1) {
             List tempList = firstList;
@@ -139,7 +186,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         } else if (size == 1)
             removeFirst();
         else {
-            throw new IncorrectIndexException("List is already empty");
+            throw new IncorrectIndexException("List is empty");
         }
     }
 
@@ -158,6 +205,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      * 3 - is needed to remove element which "surrounded" by others - on last "else"
      * ([][][X][][])
      */
+    @Override
     public void remove(int index) {
         StructureUtils.checkingIndex(index, size);
         if (index == 0) {
@@ -172,10 +220,14 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         }
     }
 
-
     @Override
     public void delete(int index) {
-
+        StructureUtils.checkingIndex(index, size);
+        List<T> tempList = firstList;
+        for (int i = 0; i < index; i++) {
+            tempList = tempList.next;
+        }
+        tempList.data = null;
     }
 
     /**
@@ -183,12 +235,14 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      *
      * @return true - if linkedList has elements, false - if linkedList is empty
      */
+    @Override
     public boolean isEmpty() {
-        return size() == 0;
+        return size == 0;
     }
 
     @Override
     public Iterator<T> getIterator() {
+        // TODO: 1/8/2018 Implement it
         return null;
     }
 
@@ -197,10 +251,10 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      *
      * @return number of elements in linked list
      */
+    @Override
     public int size() {
         return size;
     }
-
 
     /**
      * Checking elements storing in linkedList
@@ -218,6 +272,49 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
             tempList = tempList.next;
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SimpleLinkedList<T> list1 = (SimpleLinkedList<T>) o;
+        if (size != list1.size) return false;
+
+        List tempList = firstList;
+        List tempList1 = list1.firstList;
+        while (tempList.next != null) {
+            if (tempList.data == null || tempList1.data == null) {
+                if (tempList.data == null && tempList1.data != null)
+                    return false;
+                if (tempList.data != null && tempList1.data == null)
+                    return false;
+            } else {
+                if (!tempList.data.equals(tempList1.data))
+                    return false;
+            }
+            tempList = tempList.next;
+            tempList1 = tempList1.next;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31 * size;
+        for (int i = 0; i < size; i++) {
+            if (firstList != null) {
+                List tempList = firstList;
+                while (tempList.next != null) {
+                    result += 31 * tempList.data.hashCode();
+                    tempList = tempList.next;
+                }
+            } else {
+                result += 31;
+            }
+        }
+        return result;
     }
 
     @Override

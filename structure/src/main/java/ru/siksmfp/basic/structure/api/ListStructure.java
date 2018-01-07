@@ -21,6 +21,12 @@ public interface ListStructure<T> {
 
     void remove(int index);
 
+    T[] toArray();
+
+    void removeFirst();
+
+    void removeLast();
+
     void delete(int index);
 
     int size();

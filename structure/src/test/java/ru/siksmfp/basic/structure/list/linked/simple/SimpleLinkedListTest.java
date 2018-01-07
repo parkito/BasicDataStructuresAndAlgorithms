@@ -1,5 +1,6 @@
 package ru.siksmfp.basic.structure.list.linked.simple;
 
+import org.junit.Assert;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 
@@ -109,6 +110,20 @@ public class SimpleLinkedListTest {
         simpleLinkedList.add(42);
         assertTrue(simpleLinkedList.contains(16));
         assertFalse(simpleLinkedList.contains(Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void replaceTest() {
+        SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>();
+        simpleLinkedList.add(1);
+        simpleLinkedList.add(2);
+        simpleLinkedList.add(3);
+        simpleLinkedList.replace(0, 3);
+        simpleLinkedList.replace(1, 100);
+        simpleLinkedList.replace(2, null);
+        Assert.assertEquals(3, simpleLinkedList.get(0).intValue());
+        Assert.assertEquals(100, simpleLinkedList.get(1).intValue());
+        Assert.assertNull(simpleLinkedList.get(2));
     }
 
 }
