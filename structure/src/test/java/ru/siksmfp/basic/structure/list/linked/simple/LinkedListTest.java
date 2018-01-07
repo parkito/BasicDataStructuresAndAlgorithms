@@ -72,6 +72,15 @@ public class LinkedListTest {
     }
 
     @Test
+    public void incorrectRemoving() {
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        linkedList.add(1);
+        linkedList.add(2);
+        linkedList.remove(1);
+        System.out.println(linkedList);
+    }
+
+    @Test
     public void isEmpty() throws Exception {
         LinkedList<Integer> emptyList = new LinkedList<Integer>();
         LinkedList<Integer> list = new LinkedList<Integer>();

@@ -1,6 +1,6 @@
 package ru.siksmfp.basic.structure.array.dynamic;
 
-import ru.siksmfp.basic.structure.api.ListStructure;
+import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
@@ -12,7 +12,7 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  *
  * @param <T> object type for storing in array
  */
-public class Array<T> implements ListStructure<T> {
+public class Array<T> implements ArrayStructure<T> {
     private Object[] array;
     private int size;
 

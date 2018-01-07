@@ -2,6 +2,7 @@ package ru.siksmfp.basic.structure.list.linked.doubled;
 
 
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
+import ru.siksmfp.basic.structure.utils.StructureUtils;
 
 /**
  * Created by Artyom Karnov on 26.11.16.
@@ -13,7 +14,18 @@ import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
  */
 public class DoubleLinkedList<T> {
 
-    private List<T> firstList = new List(null);
+    private class List<T> {
+        public T data;
+        public List next;
+        public List previous;
+
+        public List(List previous) {
+            next = null;
+            this.previous = previous;
+        }
+    }
+
+    private List<T> firstList = new List<>(null);
     private List<T> tempList;
     private int size;
 
@@ -34,6 +46,7 @@ public class DoubleLinkedList<T> {
         while (tempList.next != null) {
             tempList = tempList.next;
         }
+        size++;
         tempList.data = element;
         tempList.next = new List(tempList);
     }
@@ -71,6 +84,7 @@ public class DoubleLinkedList<T> {
     public void removeFirst() {
         if (size() > 0) {
             firstList = firstList.next;
+            size--;
         } else {
             throw new IncorrectIndexException("Index couldn't be <0");
         }
@@ -86,6 +100,7 @@ public class DoubleLinkedList<T> {
                 tempList = tempList.next;
             }
             tempList.next = null;
+            size--;
         } else if (size() == 1)
             removeFirst();
         else {
@@ -109,32 +124,16 @@ public class DoubleLinkedList<T> {
      * ([][][X][][])
      */
     public void remove(int index) {
-        checkingIndex(index);
+        StructureUtils.checkingIndex(index, size);
         if (index == 0) {
             removeFirst();
-        } else if (index == size) {
-            removeLast();
         } else {
             tempList = firstList;
             for (int i = 0; i < index - 1; i++) {
                 tempList = tempList.next;
             }
+            size--;
             tempList.next = tempList.next.next;
-        }
-
-    }
-
-    /**
-     * Checking correctness of index
-     *
-     * @param index index for checking
-     */
-    private void checkingIndex(int index) {
-        this.size = size();
-        if (index < 0) {
-            throw new IncorrectIndexException("Index couldn't be <0");
-        } else if (index >= size) {
-            throw new IncorrectIndexException("Index couldn't be more than list size-1");
         }
     }
 
@@ -179,14 +178,4 @@ public class DoubleLinkedList<T> {
         return false;
     }
 
-    private class List<T> {
-        public T data;
-        public List next;
-        public List previous;
-
-        public List(List previous) {
-            next = null;
-            this.previous = previous;
-        }
-    }
 }

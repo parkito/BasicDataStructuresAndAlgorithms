@@ -1,6 +1,7 @@
 package ru.siksmfp.basic.structure.list.linked.simple;
 
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
+import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 
 /**
@@ -72,15 +73,15 @@ public class LinkedList<T> {
      * Method for displaying all lists of liked list
      */
     @SuppressWarnings("Warning")
-    public <T> T[] toArray() {
-        T[] arr = (T[]) new Object[size];
+    public T[] toArray() {
+        Object[] arr = new Object[size];
         List tempList = firstList;
         int i = 0;
         while (tempList.next != null) {
-            arr[i] = (T) tempList.data;
+            arr[i] = tempList.data;
             tempList = tempList.next;
         }
-        return arr;
+        return (T[]) arr;
     }
 
     /**
@@ -89,8 +90,9 @@ public class LinkedList<T> {
     public void removeFirst() {
         if (size() > 0) {
             firstList = firstList.next;
+            size--;
         } else {
-            throw new IncorrectIndexException("Index couldn't be less than 0");
+            throw new IncorrectSizeException("List is already empty");
         }
     }
 
@@ -104,10 +106,11 @@ public class LinkedList<T> {
                 tempList = tempList.next;
             }
             tempList.next = null;
+            size--;
         } else if (size() == 1)
             removeFirst();
         else {
-            throw new IncorrectIndexException("Index couldn't be <0");
+            throw new IncorrectIndexException("List is already empty");
         }
     }
 
@@ -130,16 +133,14 @@ public class LinkedList<T> {
         StructureUtils.checkingIndex(index, size);
         if (index == 0) {
             removeFirst();
-        } else if (index == size) {
-            removeLast();
         } else {
             List tempList = firstList;
             for (int i = 0; i < index - 1; i++) {
                 tempList = tempList.next;
             }
+            size--;
             tempList.next = tempList.next.next;
         }
-
     }
 
     /**

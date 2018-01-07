@@ -1,23 +1,19 @@
 package ru.siksmfp.basic.structure.api;
 
 /**
- * @author Artem Karnov @date 1/7/2018.
+ * @author Artem Karnov @date 1/4/2018.
  * artem.karnov@t-systems.com
  */
-public interface ListStructure<T> {
+public interface ArrayStructure<T> {
+    void add(int index, T element);
+
     void add(T element);
+
+    public void strictAdd(int index, T element);
 
     void strictAdd(T element);
 
-    void replace(int index, T element);
-
-    public void strictReplace(int index, T element);
-
     T get(int index);
-
-    T getFirst();
-
-    T getLast();
 
     void remove(int index);
 
