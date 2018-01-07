@@ -1,7 +1,11 @@
 package ru.siksmfp.basic.structure.list.linked.doubled;
 
 
+import ru.siksmfp.basic.structure.api.ArrayStructure;
+import ru.siksmfp.basic.structure.api.Iterator;
+import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
+import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 
 /**
@@ -12,12 +16,16 @@ import ru.siksmfp.basic.structure.utils.StructureUtils;
  *
  * @param <T> object type for storing in com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
  */
-public class DoublyLinkedList<T> {
+public class DoublyLinkedList<T> implements ListStructure<T> {
 
     private class List<T> {
         public T data;
         public List next;
         public List previous;
+
+        public List() {
+            next = null;
+        }
 
         public List(List previous) {
             next = null;
@@ -26,7 +34,6 @@ public class DoublyLinkedList<T> {
     }
 
     private List<T> firstList = new List<>(null);
-    private List<T> tempList;
     private int size;
 
     /**
@@ -34,6 +41,29 @@ public class DoublyLinkedList<T> {
      */
     public DoublyLinkedList() {
         size = 0;
+        firstList = new List<>();
+    }
+
+    /**
+     * Add elements to linked list
+     *
+     * @param objects objects for adding
+     */
+    public DoublyLinkedList(T... objects) {
+        for (T object : objects) {
+            add(object);
+        }
+    }
+
+    /**
+     * Creating simple linked list from array structure
+     *
+     * @param arrayStructure structure for creating
+     */
+    public DoublyLinkedList(ArrayStructure<T> arrayStructure) {
+        for (int i = 0; i < arrayStructure.size(); i++) {
+            add(arrayStructure.get(i));
+        }
     }
 
     /**
@@ -42,7 +72,7 @@ public class DoublyLinkedList<T> {
      * @param element element for adding
      */
     public void add(T element) {
-        tempList = firstList;
+        List<T> tempList = firstList;
         while (tempList.next != null) {
             tempList = tempList.next;
         }
@@ -51,23 +81,65 @@ public class DoublyLinkedList<T> {
         tempList.next = new List(tempList);
     }
 
-    /**
-     * Displaying com.saiu.ru.siksmfp.basic.structure.list.linked.doubled from index = 0
-     */
-    public void displayFromStarch() {
-        tempList = firstList;
-        while (tempList.next != null) {
-            System.out.println(tempList.data);
-            tempList = tempList.next;
-        }
+    @Override
+    public void strictAdd(T element) {
 
+    }
+
+    @Override
+    public void replace(int index, T element) {
+
+    }
+
+    @Override
+    public void strictReplace(int index, T element) {
+
+    }
+
+    @Override
+    public T get(int index) {
+        return null;
+    }
+
+    /**
+     * Get first element of linked list
+     *
+     * @return first element of linked list
+     */
+    @Override
+    public T getFirst() {
+        if (size > 0) {
+            return firstList.data;
+        } else {
+            throw new IncorrectSizeException("List is empty");
+        }
+    }
+
+    /**
+     * Get last element of linked list
+     *
+     * @return last element of linked list
+     */
+    @Override
+    public T getLast() {
+        if (size() > 1) {
+            List<T> tempDoublyList = firstList;
+            while (tempDoublyList.next.next != null) {
+                tempDoublyList = tempDoublyList.next;
+            }
+            return tempDoublyList.data;
+        } else if (size == 1)
+            return getFirst();
+        else {
+            throw new IncorrectIndexException("List is empty");
+        }
     }
 
     /**
      * Displaying com.saiu.ru.siksmfp.basic.structure.list.linked.doubled from last index
      */
     public void displayFromEnd() {
-        tempList = firstList;
+        List<T> tempList = firstList;
         while (tempList.next != null) {
             tempList = tempList.next;
         }
@@ -95,7 +167,7 @@ public class DoublyLinkedList<T> {
      */
     public void removeLast() {
         if (size() > 1) {
-            tempList = firstList;
+            List<T> tempList = firstList;
             while (tempList.next.next != null) {
                 tempList = tempList.next;
             }
@@ -106,6 +178,21 @@ public class DoublyLinkedList<T> {
         else {
             throw new IncorrectIndexException("Index couldn't be <0");
         }
+    }
+
+    /**
+     * Replace element with @index on NULL value
+     *
+     * @param index index of replacement element
+     */
+    @Override
+    public void delete(int index) {
+        StructureUtils.checkingIndex(index, size);
+        List<T> tempList = firstList;
+        for (int i = 0; i < index; i++) {
+            tempList = tempList.next;
+        }
+        tempList.data = null;
     }
 
     /**
@@ -128,13 +215,29 @@ public class DoublyLinkedList<T> {
         if (index == 0) {
             removeFirst();
         } else {
-            tempList = firstList;
+            List<T> tempList = firstList;
             for (int i = 0; i < index - 1; i++) {
                 tempList = tempList.next;
             }
             size--;
             tempList.next = tempList.next.next;
         }
+    }
+
+    /**
+     * Method for displaying all lists of liked list
+     */
+    @SuppressWarnings("Warning")
+    @Override
+    public T[] toArray() {
+        Object[] arr = new Object[size];
+        List<T> tempList = firstList;
+        int i = 0;
+        while (tempList.next != null) {
+            arr[i] = tempList.data;
+            tempList = tempList.next;
+        }
+        return (T[]) arr;
     }
 
     /**
@@ -146,6 +249,11 @@ public class DoublyLinkedList<T> {
         return size() == 0;
     }
 
+    @Override
+    public Iterator<T> getIterator() {
+        return null;
+    }
+
     /**
      * Getting size of linkedList
      *
@@ -153,7 +261,7 @@ public class DoublyLinkedList<T> {
      */
     public int size() {
         int i = 0;
-        tempList = firstList;
+        List<T> tempList = firstList;
         while (tempList.next != null) {
             i++;
             tempList = tempList.next;
@@ -168,7 +276,7 @@ public class DoublyLinkedList<T> {
      * @return true - if array contain adjusted element, false - if doesn't
      */
     public boolean contains(T element) {
-        tempList = firstList;
+        List<T> tempList = firstList;
         while (tempList.next != null) {
             if (tempList.data.equals(element)) {
                 return true;
@@ -178,4 +286,61 @@ public class DoublyLinkedList<T> {
         return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DoublyLinkedList<T> list1 = (DoublyLinkedList<T>) o;
+        if (size != list1.size) return false;
+
+        List<T> tempList = firstList;
+        List<T> tempList1 = list1.firstList;
+        while (tempList.next != null) {
+            if (tempList.data == null || tempList1.data == null) {
+                if (tempList.data == null && tempList1.data != null)
+                    return false;
+                if (tempList.data != null && tempList1.data == null)
+                    return false;
+            } else {
+                if (!tempList.data.equals(tempList1.data))
+                    return false;
+            }
+            tempList = tempList.next;
+            tempList1 = tempList1.next;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31 * size;
+        for (int i = 0; i < size; i++) {
+            if (firstList != null) {
+                List<T> tempList = firstList;
+                while (tempList.next != null) {
+                    result += 31 * tempList.data.hashCode();
+                    tempList = tempList.next;
+                }
+            } else {
+                result += 31;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        List<T> tempList = firstList;
+        while (tempList.next != null) {
+            result.append(tempList.data);
+            result.append(", ");
+            tempList = tempList.next;
+        }
+        //remove last ', '
+        result.deleteCharAt(result.length() - 1);
+        result.deleteCharAt(result.length() - 2);
+        return "DoublyLinkedList{" + result.toString() + "}";
+    }
 }

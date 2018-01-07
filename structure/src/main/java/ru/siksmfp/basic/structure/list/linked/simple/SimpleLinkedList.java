@@ -43,6 +43,17 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     }
 
     /**
+     * Add elements to linked list
+     *
+     * @param objects objects for adding
+     */
+    public SimpleLinkedList(T... objects) {
+        for (T object : objects) {
+            add(object);
+        }
+    }
+
+    /**
      * Creating simple linked list from array structure
      *
      * @param arrayStructure structure for creating
@@ -70,6 +81,11 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         tempList.next = new List();
     }
 
+    /**
+     * Adding element to linkedList strictly
+     *
+     * @param element element for adding
+     */
     @Override
     public void strictAdd(T element) {
         StructureUtils.checkDataStructureSize(size);
@@ -82,6 +98,12 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         tempList.next = new List();
     }
 
+    /**
+     * Replace element in linked list
+     *
+     * @param index   index of element
+     * @param element element for replacment
+     */
     @Override
     public void replace(int index, T element) {
         StructureUtils.checkingIndex(index, size);
@@ -92,6 +114,12 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         tempList.data = element;
     }
 
+    /**
+     * Replace element in linked list strictly
+     *
+     * @param index   index of element
+     * @param element element for replacment
+     */
     @Override
     public void strictReplace(int index, T element) {
         StructureUtils.checkingIndex(index, size);
@@ -118,6 +146,11 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         return tempList.data;
     }
 
+    /**
+     * Get first element of linked list
+     *
+     * @return first element of linked list
+     */
     @Override
     public T getFirst() {
         if (size > 0) {
@@ -127,6 +160,11 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         }
     }
 
+    /**
+     * Get last element of linked list
+     *
+     * @return last element of linked list
+     */
     @Override
     public T getLast() {
         if (size() > 1) {
@@ -159,7 +197,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     }
 
     /**
-     * Removing element with index = 0
+     * Removing element first element
      */
     @Override
     public void removeFirst() {
@@ -220,6 +258,11 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         }
     }
 
+    /**
+     * Replace element with @index on NULL value
+     *
+     * @param index index of replacement element
+     */
     @Override
     public void delete(int index) {
         StructureUtils.checkingIndex(index, size);
@@ -240,6 +283,11 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         return size == 0;
     }
 
+    /**
+     * Get iterator of linked list
+     *
+     * @return
+     */
     @Override
     public Iterator<T> getIterator() {
         // TODO: 1/8/2018 Implement it
