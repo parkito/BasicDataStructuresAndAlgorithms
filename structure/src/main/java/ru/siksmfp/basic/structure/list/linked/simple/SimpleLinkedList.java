@@ -431,7 +431,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      */
     @Override
     public Iterator<T> getIterator() {
-        return new ListIterator<>(firstList);
+        return new ListIterator(firstList);
     }
 
     /**
