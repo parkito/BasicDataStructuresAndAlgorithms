@@ -24,10 +24,151 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      */
     private static class List<T> {
         private T data;
-        private List next;
+        private List<T> next;
 
         public List() {
             next = null;
+        }
+
+        public List(T data) {
+            this.data = data;
+            next = null;
+        }
+    }
+
+    /**
+     * Iterator for simple linked list
+     */
+    private class ListIterator implements Iterator<T> {
+        private List<T> currentList;
+        private List<T> firstList;
+        private int currentPosition;
+
+        public ListIterator(List<T> fistList) {
+            this.currentList = fistList;
+            this.firstList = fistList;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentList.next != null;
+        }
+
+        @Override
+        public boolean isLast() {
+            return currentPosition == size - 1;
+        }
+
+        @Override
+        public boolean isFirst() {
+            return currentPosition == 0;
+        }
+
+        @Override
+        public void reset() {
+            currentList = this.firstList;
+            currentPosition = 0;
+        }
+
+        @Override
+        public T next() {
+            currentList = currentList.next;
+            return currentList.data;
+        }
+
+        @Override
+        public void insertBefore(T element) {
+            List<T> newList = new List<>();
+            newList.data = element;
+            size++;
+            if (currentPosition == 0) {
+                newList.next = firstList;
+                firstList = newList;
+            } else {
+                List<T> tempList = null;
+                for (int i = 0; i < currentPosition; i++) {
+                    tempList = firstList.next;
+                }
+                newList.next = tempList.next;
+                tempList.next = newList;
+            }
+        }
+
+        @Override
+        public void insertAfter(T element) {
+            List<T> newList = new List<>(element);
+            newList.next = currentList.next;
+            currentList.next = newList;
+        }
+
+        @Override
+        public void replace(T element) {
+            currentList.data = element;
+        }
+
+        @Override
+        public void strictInsertBefore(T element) {
+            List<T> newList = new List<>();
+            newList.data = (T) SystemUtils.clone(element);
+            size++;
+            if (currentPosition == 0) {
+                newList.next = firstList;
+                firstList = newList;
+            } else {
+                List<T> tempList = null;
+                for (int i = 0; i < currentPosition; i++) {
+                    tempList = firstList.next;
+                }
+                newList.next = tempList.next;
+                tempList.next = newList;
+            }
+        }
+
+        @Override
+        public void strictInsertAfter(T element) {
+            List<T> newList = new List<>();
+            newList.data = (T) SystemUtils.clone(element);
+            newList.next = currentList.next;
+            currentList.next = newList;
+        }
+
+        @Override
+        public void strictReplace(T element) {
+            currentList.data = (T) SystemUtils.clone(element);
+        }
+
+        @Override
+        public void removeBefore() {
+            if (currentPosition == 0) {
+                throw new IncorrectSizeException("There is not element before");
+            } else {
+                List<T> tempList = null;
+                for (int i = 0; i < currentPosition - 1; i++) {
+                    tempList = firstList.next;
+                }
+                tempList.next = currentList;
+                size--;
+            }
+        }
+
+        @Override
+        public void removeAfter() {
+            if (currentPosition == size - 1) {
+                throw new IncorrectSizeException("There is not element after");
+            } else {
+                currentList.next = currentList.next.next;
+                size--;
+            }
+        }
+
+        @Override
+        public void remove() {
+            currentList = currentList.next;
+        }
+
+        @Override
+        public void delete() {
+            currentList.data = null;
         }
     }
 
@@ -290,8 +431,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      */
     @Override
     public Iterator<T> getIterator() {
-        // TODO: 1/8/2018 Implement it
-        return null;
+        return new ListIterator<>(firstList);
     }
 
     /**

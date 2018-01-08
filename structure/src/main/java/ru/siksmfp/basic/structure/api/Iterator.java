@@ -15,9 +15,23 @@ public interface Iterator<T> {
 
     T next();
 
-    void insertBefore();
+    void insertBefore(T element);
 
-    void insertAfter();
+    void insertAfter(T element);
 
-    void deleteCurrent();
+    void replace(T element);
+
+    void strictInsertBefore(T element);
+
+    void strictInsertAfter(T element);
+
+    void strictReplace(T element);
+
+    void removeBefore();
+
+    void removeAfter();
+
+    void remove();
+
+    void delete();
 }
