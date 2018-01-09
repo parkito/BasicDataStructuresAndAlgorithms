@@ -2,6 +2,9 @@ package ru.siksmfp.basic.structure.list.linked.simple;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.siksmfp.basic.structure.api.ArrayStructure;
+import ru.siksmfp.basic.structure.api.Iterator;
+import ru.siksmfp.basic.structure.array.g.GArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 
 import static junit.framework.TestCase.assertEquals;
@@ -124,6 +127,56 @@ public class SimpleLinkedListTest {
         Assert.assertEquals(3, simpleLinkedList.get(0).intValue());
         Assert.assertEquals(100, simpleLinkedList.get(1).intValue());
         Assert.assertNull(simpleLinkedList.get(2));
+    }
+
+    @Test
+    public void interationOnAllElements() {
+        SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>(1, 2, 3, 4, 5);
+        Iterator<Integer> iterator = simpleLinkedList.getIterator();
+        ArrayStructure<Integer> array = new GArray<>();
+        while (iterator.hasNext()) {
+            array.add(iterator.next());
+        }
+        Assert.assertEquals(simpleLinkedList.size(), array.size());
+        Assert.assertEquals(simpleLinkedList.get(0), array.get(0));
+        Assert.assertEquals(simpleLinkedList.get(1), array.get(1));
+        Assert.assertEquals(simpleLinkedList.get(2), array.get(2));
+        Assert.assertEquals(simpleLinkedList.get(3), array.get(3));
+        Assert.assertEquals(simpleLinkedList.get(4), array.get(4));
+    }
+
+    @Test
+    public void addBefore() {
+        SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>(1, 2, 3, 4, 5);
+        Iterator<Integer> iterator = simpleLinkedList.getIterator();
+        for (int i = 0; i < 2; i++) {
+            iterator.next();
+        }
+        iterator.insertBefore(7);
+
+        Assert.assertEquals(1, simpleLinkedList.get(0).intValue());
+        Assert.assertEquals(2, simpleLinkedList.get(1).intValue());
+        Assert.assertEquals(7, simpleLinkedList.get(2).intValue());
+        Assert.assertEquals(3, simpleLinkedList.get(3).intValue());
+        Assert.assertEquals(4, simpleLinkedList.get(4).intValue());
+        Assert.assertEquals(5, simpleLinkedList.get(5).intValue());
+    }
+
+    @Test
+    public void addAfter() {
+        SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>(1, 2, 3, 4, 5);
+        Iterator<Integer> iterator = simpleLinkedList.getIterator();
+        for (int i = 0; i < 2; i++) {
+            iterator.next();
+        }
+        iterator.insertAfter(7);
+
+        Assert.assertEquals(1, simpleLinkedList.get(0).intValue());
+        Assert.assertEquals(2, simpleLinkedList.get(1).intValue());
+        Assert.assertEquals(3, simpleLinkedList.get(2).intValue());
+        Assert.assertEquals(7, simpleLinkedList.get(3).intValue());
+        Assert.assertEquals(4, simpleLinkedList.get(4).intValue());
+        Assert.assertEquals(5, simpleLinkedList.get(5).intValue());
     }
 
 }

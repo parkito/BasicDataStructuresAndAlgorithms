@@ -338,9 +338,9 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             result.append(", ");
             tempList = tempList.next;
         }
-        //remove last ', '
-        result.deleteCharAt(result.length() - 1);
-        result.deleteCharAt(result.length() - 2);
+        if (result.length() > 1) {
+            result.delete(result.length() - 2, result.length());
+        }
         return "DoublyLinkedList{" + result.toString() + "}";
     }
 }

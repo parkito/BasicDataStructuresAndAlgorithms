@@ -51,7 +51,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
 
         @Override
         public boolean hasNext() {
-            return currentList.next != null;
+            return currentPosition != size  ;
         }
 
         @Override
@@ -72,8 +72,10 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
 
         @Override
         public T next() {
+            T data = currentList.data;
             currentList = currentList.next;
-            return currentList.data;
+            currentPosition++;
+            return data;
         }
 
         @Override
@@ -99,6 +101,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
             List<T> newList = new List<>(element);
             newList.next = currentList.next;
             currentList.next = newList;
+            size++;
         }
 
         @Override
@@ -164,6 +167,8 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         @Override
         public void remove() {
             currentList = currentList.next;
+            size--;
+            currentPosition--;
         }
 
         @Override
@@ -180,7 +185,6 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      */
     public SimpleLinkedList() {
         size = 0;
-        firstList = new List<>();
     }
 
     /**
@@ -189,6 +193,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      * @param objects objects for adding
      */
     public SimpleLinkedList(T... objects) {
+        size = 0;
         for (T object : objects) {
             add(object);
         }
@@ -200,6 +205,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
      * @param arrayStructure structure for creating
      */
     public SimpleLinkedList(ArrayStructure<T> arrayStructure) {
+        size = 0;
         for (int i = 0; i < arrayStructure.size(); i++) {
             add(arrayStructure.get(i));
         }
@@ -213,13 +219,17 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     @Override
     public void add(T element) {
         StructureUtils.checkDataStructureSize(size);
-        List tempList = firstList;
-        while (tempList.next != null) {
-            tempList = tempList.next;
+        if (firstList == null) {
+            firstList = new List<>(element);
+        } else {
+            List tempList = firstList;
+            while (tempList.next != null) {
+                tempList = tempList.next;
+            }
+            tempList.next = new List();
+            tempList.next.data = element;
         }
         size++;
-        tempList.data = element;
-        tempList.next = new List();
     }
 
     /**
@@ -509,14 +519,14 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     public String toString() {
         StringBuilder result = new StringBuilder();
         List tempList = firstList;
-        while (tempList.next != null) {
+        while (tempList != null) {
             result.append(tempList.data);
             result.append(", ");
             tempList = tempList.next;
         }
-        //remove last ', '
-        result.deleteCharAt(result.length() - 1);
-        result.deleteCharAt(result.length() - 2);
+        if (result.length() > 1) {
+            result.delete(result.length() - 2, result.length());
+        }
         return "SimpleLinkedList{" + result.toString() + "}";
     }
 }

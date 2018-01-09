@@ -269,8 +269,8 @@ public class GArray<T> implements ArrayStructure<T> {
             result.append(array[i]);
             result.append(", ");
         }
-        result.deleteCharAt(result.length() - 1);
-        result.deleteCharAt(result.length() - 2);
+        if (result.length() > 1){
+            result.delete(result.length() - 2, result.length());}
         return "GArray{" + result.toString() + "}";
     }
 
