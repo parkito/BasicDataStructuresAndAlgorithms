@@ -26,7 +26,6 @@ public class ArithmeticParserTest {
         Assert.assertEquals(expected, result, DELTA);
     }
 
-    @Ignore
     @Test
     public void testThree() {
         double result = arithmeticParser.parse("(1+1)+1");
@@ -34,10 +33,9 @@ public class ArithmeticParserTest {
         Assert.assertEquals(expected, result, DELTA);
     }
 
-    @Ignore
     @Test
     public void testFour() {
-        double result = arithmeticParser.parse("(7+5-1*(2-3+7)");
+        double result = arithmeticParser.parse("7+5-1*(2-3+7)");
         double expected = 6;
         Assert.assertEquals(expected, result, DELTA);
     }

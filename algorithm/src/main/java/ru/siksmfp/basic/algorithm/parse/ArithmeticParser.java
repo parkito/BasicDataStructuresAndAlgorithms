@@ -46,6 +46,15 @@ public class ArithmeticParser {
         System.out.println(parser.parse("1^(1+1)")); //1 isn't cor
 
     }
+
+    //if current element is operand - to string
+    //if current element is operator
+        //if stack is empty  - to stack
+        // if not - stack.peek > element
+                    //yes - element to stack
+                    //no - stack.pop to string by stack.pop==stack.pop
+
+
     public double parse(String arithmeticString) {
         String postfix = infixToPostfix(arithmeticString);
         return calculateExpression(postfix);
@@ -68,10 +77,9 @@ public class ArithmeticParser {
             if (currentExpression.length() > 0)
                 stringBuilder.append(currentExpression).append(SPACE);
             //come to the string's end, no more symbols further.
-            if (i > infixChars.length - 1)
+            if (i > infixChars.length - 1) {
                 break;
-
-            else if (operatorStack.isEmpty()) {
+            } else if (operatorStack.isEmpty()) {
                 operatorStack.push(infixChars[i]);
             } else if (infixChars[i] == CLOSED_PARENTHESES) {
                 clearStack(stringBuilder, operatorStack);
@@ -105,11 +113,16 @@ public class ArithmeticParser {
             } else {
                 while (!operatorStacks.isEmpty()) {
                     if (result == null) {
+                        if (!isDouble(expressionArray.get(i - 1))) {
+                            operatorStacks.push(expressionArray.get(i - 1).charAt(0));
+                            i--;
+                            break;
+                        }
                         result = makeArithmeticOperation(Double.valueOf(expressionArray.get(i - 1)), Double.valueOf(expressionArray.get(i)), operatorStacks.pop());
-                        i--;
                     } else {
                         if (!isDouble(expressionArray.get(i))) {
                             operatorStacks.push(expressionArray.get(i).charAt(0));
+                            i--;
                             break;
                         }
                         result = makeArithmeticOperation(result, Double.valueOf(expressionArray.get(i)), operatorStacks.pop());
