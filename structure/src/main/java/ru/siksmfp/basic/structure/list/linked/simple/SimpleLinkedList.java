@@ -86,12 +86,12 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
                 newList.next = firstList;
                 firstList = newList;
             } else {
-                List<T> tempList = null;
-                for (int i = 0; i < currentPosition; i++) {
-                    tempList = firstList.next;
+                List<T> tempList = firstList;
+                for (int i = 0; i < currentPosition - 1; i++) {
+                    tempList = tempList.next;
                 }
-                newList.next = tempList.next;
                 tempList.next = newList;
+                newList.next = currentList;
             }
             size++;
             currentPosition++;
@@ -148,9 +148,9 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
             if (currentPosition == 0) {
                 throw new IncorrectSizeException("There is not element before");
             } else {
-                List<T> tempList = null;
-                for (int i = 0; i < currentPosition - 1; i++) {
-                    tempList = firstList.next;
+                List<T> tempList = firstList;
+                for (int i = 1; i < currentPosition - 1; i++) {
+                    tempList = tempList.next;
                 }
                 tempList.next = currentList;
                 currentPosition--;
@@ -360,7 +360,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
             firstList = firstList.next;
             size--;
         } else {
-            throw new IncorrectSizeException("List is already empty");
+            throw new IncorrectIndexException("List is already empty");
         }
     }
 
@@ -467,12 +467,13 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     @Override
     public boolean contains(T element) {
         List tempList = firstList;
-        while (tempList.next != null) {
+        do {
             if (tempList.data.equals(element)) {
                 return true;
             }
             tempList = tempList.next;
         }
+        while (tempList.next != null);
         return false;
     }
 

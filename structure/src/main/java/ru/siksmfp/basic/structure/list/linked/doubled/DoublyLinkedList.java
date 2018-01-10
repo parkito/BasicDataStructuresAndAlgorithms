@@ -317,12 +317,13 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
     /**
      * Removing element with index = 0
      */
+    @Override
     public void removeFirst() {
         if (size() > 0) {
             firstList = firstList.next;
             size--;
         } else {
-            throw new IncorrectIndexException("Index couldn't be <0");
+            throw new IncorrectIndexException("List is already empty");
         }
     }
 
@@ -423,12 +424,13 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
     @Override
     public boolean contains(T element) {
         List tempList = firstList;
-        while (tempList.next != null) {
+        do {
             if (tempList.data.equals(element)) {
                 return true;
             }
             tempList = tempList.next;
         }
+        while (tempList.next != null);
         return false;
     }
 
