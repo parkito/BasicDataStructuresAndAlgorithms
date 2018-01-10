@@ -17,6 +17,8 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  *
  * @param <T> object type for storing in com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
  */
+
+// TODO: 1/10/2018 finish it
 public class DoublyLinkedList<T> implements ListStructure<T> {
 
     private class List<T> {
@@ -25,12 +27,14 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
         public List previous;
 
         public List() {
-            next = null;
         }
 
-        public List(List previous) {
-            next = null;
+        public void addPrevious(List<T> previous) {
             this.previous = previous;
+        }
+
+        public void addNext(List<T> next) {
+            this.next = next;
         }
     }
 
@@ -167,7 +171,7 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
         }
     }
 
-    private List<T> firstList = new List<>(null);
+    private List<T> firstList;
     private int size;
 
     /**
@@ -175,7 +179,7 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
      */
     public DoublyLinkedList() {
         size = 0;
-        firstList = new List<>();
+        firstList = null;
     }
 
     /**
