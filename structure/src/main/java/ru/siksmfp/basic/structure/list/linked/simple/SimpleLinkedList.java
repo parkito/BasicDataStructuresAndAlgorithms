@@ -51,7 +51,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
 
         @Override
         public boolean hasNext() {
-            return currentPosition != size  ;
+            return currentPosition != size;
         }
 
         @Override
@@ -82,7 +82,6 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         public void insertBefore(T element) {
             List<T> newList = new List<>();
             newList.data = element;
-            size++;
             if (currentPosition == 0) {
                 newList.next = firstList;
                 firstList = newList;
@@ -94,6 +93,8 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
                 newList.next = tempList.next;
                 tempList.next = newList;
             }
+            size++;
+            currentPosition++;
         }
 
         @Override
@@ -113,7 +114,6 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
         public void strictInsertBefore(T element) {
             List<T> newList = new List<>();
             newList.data = (T) SystemUtils.clone(element);
-            size++;
             if (currentPosition == 0) {
                 newList.next = firstList;
                 firstList = newList;
@@ -125,6 +125,8 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
                 newList.next = tempList.next;
                 tempList.next = newList;
             }
+            size++;
+            currentPosition++;
         }
 
         @Override
@@ -133,6 +135,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
             newList.data = (T) SystemUtils.clone(element);
             newList.next = currentList.next;
             currentList.next = newList;
+            size++;
         }
 
         @Override
@@ -150,6 +153,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
                     tempList = firstList.next;
                 }
                 tempList.next = currentList;
+                currentPosition--;
                 size--;
             }
         }
