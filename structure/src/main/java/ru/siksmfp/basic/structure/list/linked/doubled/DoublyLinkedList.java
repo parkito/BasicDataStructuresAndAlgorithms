@@ -15,10 +15,9 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  * <p>
  * Classic doubly linked list
  *
- * @param <T> object type for storing in com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
+ * @param <T> object type for storing
  */
 
-// TODO: 1/10/2018 finish it
 public class DoublyLinkedList<T> implements ListStructure<T> {
 
     private class List<T> {
