@@ -371,7 +371,7 @@ public class SimpleLinkedListTest {
     }
 
     @Test
-    public void removeAftereAndAddAfter() {
+    public void removeAfterAndAddAfter() {
         SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>(1, 2, 3, 4, 5);
         Iterator<Integer> iterator = simpleLinkedList.getIterator();
 
@@ -385,5 +385,17 @@ public class SimpleLinkedListTest {
         Assert.assertEquals(4, simpleLinkedList.get(3).intValue());
         Assert.assertEquals(5, simpleLinkedList.get(4).intValue());
         Assert.assertEquals(5, simpleLinkedList.size());
+    }
+
+    @Test
+    public void getLast() {
+        SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>(1, 2, 3, 4, 5);
+        Assert.assertEquals(5, simpleLinkedList.getLast().intValue());
+    }
+
+    @Test(expected = IncorrectIndexException.class)
+    public void getLastUnsuccessfully() {
+        SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>();
+        simpleLinkedList.getLast();
     }
 }

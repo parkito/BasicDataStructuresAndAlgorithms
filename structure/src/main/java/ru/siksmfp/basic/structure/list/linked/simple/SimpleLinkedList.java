@@ -324,7 +324,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     public T getLast() {
         if (size() > 1) {
             List<T> tempList = firstList;
-            while (tempList.next.next != null) {
+            while (tempList.next != null) {
                 tempList = tempList.next;
             }
             return tempList.data;

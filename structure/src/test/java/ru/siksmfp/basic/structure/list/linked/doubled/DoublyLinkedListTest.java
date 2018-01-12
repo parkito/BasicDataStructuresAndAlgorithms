@@ -45,7 +45,6 @@ public class DoublyLinkedListTest {
         DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
 
         list.get(-1);
-        list.get(4);
     }
 
     @Test
@@ -83,6 +82,7 @@ public class DoublyLinkedListTest {
     @Test(expected = IncorrectIndexException.class)
     public void removeLastInEmptyList() {
         DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+
         list.removeLast();
     }
 
@@ -388,4 +388,15 @@ public class DoublyLinkedListTest {
         Assert.assertEquals(5, list.size());
     }
 
+    @Test
+    public void getLast() {
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>(1, 2, 3, 4, 5);
+        Assert.assertEquals(5, doublyLinkedList.getLast().intValue());
+    }
+
+    @Test(expected = IncorrectIndexException.class)
+    public void getLastUnsuccessfully() {
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
+        doublyLinkedList.getLast();
+    }
 }

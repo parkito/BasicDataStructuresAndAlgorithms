@@ -141,7 +141,13 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             if (currentPosition == 0) {
                 throw new IncorrectSizeException("There is not element before");
             } else {
-                currentList.previous = currentList.previous.previous;
+                List<T> previous = currentList.previous;
+                if (previous.previous != null) {
+                    previous.next = currentList;
+//                    currentList.next; todo
+                } else {
+                    currentList.previous = null;
+                }
                 currentPosition--;
                 size--;
             }
@@ -220,6 +226,7 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             }
             tempList.next = new List();
             tempList.next.data = element;
+            tempList.previous = tempList;
         }
         size++;
     }
@@ -231,9 +238,10 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
         while (tempList.next != null) {
             tempList = tempList.next;
         }
-        size++;
         tempList.data = SystemUtils.clone(element);
         tempList.next = new List();
+        tempList.previous = tempList;
+        size++;
     }
 
     @Override
@@ -288,18 +296,17 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
     @Override
     public T getLast() {
         if (size() > 1) {
-            List<T> tempDoublyList = firstList;
-            while (tempDoublyList.next.next != null) {
-                tempDoublyList = tempDoublyList.next;
+            List<T> tempList = firstList;
+            while (tempList.next != null) {
+                tempList = tempList.next;
             }
-            return tempDoublyList.data;
+            return tempList.data;
         } else if (size == 1)
-            return getFirst();
+            return firstList.data;
         else {
             throw new IncorrectIndexException("List is empty");
         }
     }
-
 
     /**
      * Method for displaying all lists of liked list
