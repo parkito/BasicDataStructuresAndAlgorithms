@@ -372,10 +372,9 @@ public class DoublyLinkedListTest {
     }
 
     @Test
-    public void removeAftereAndAddAfter() {
+    public void removeAfterAndAddAfter() {
         DoublyLinkedList<Integer> list = new DoublyLinkedList<>(1, 2, 3, 4, 5);
         Iterator<Integer> iterator = list.getIterator();
-
 
         iterator.removeAfter();
         iterator.insertAfter(2);

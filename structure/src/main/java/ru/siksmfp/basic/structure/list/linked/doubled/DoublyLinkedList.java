@@ -17,9 +17,13 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  *
  * @param <T> object type for storing
  */
-
 public class DoublyLinkedList<T> implements ListStructure<T> {
 
+    /**
+     * Class represents list of elements
+     *
+     * @param <T> object type for storing in list
+     */
     private class List<T> {
         public T data;
         public List next;
@@ -50,27 +54,52 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             this.firstList = fistList;
         }
 
+        /**
+         * Is there next element?
+         *
+         * @return true if there is next element, false if there isn't
+         */
         @Override
         public boolean hasNext() {
             return currentPosition != size;
         }
 
+        /**
+         * Is current element last?
+         *
+         * @return true if current element is last element in the list
+         * false if it isn't
+         */
         @Override
         public boolean isLast() {
             return currentPosition == size - 1;
         }
 
+        /**
+         * Is current element first?
+         *
+         * @return true if current element is first element in the list
+         * false if it isn't
+         */
         @Override
         public boolean isFirst() {
             return currentPosition == 0;
         }
 
+        /**
+         * Rollback current pointer to first list's element
+         */
         @Override
         public void reset() {
             currentList = this.firstList;
             currentPosition = 0;
         }
 
+        /**
+         * Get data of current element and move pointer to next element
+         *
+         * @return data of current element
+         */
         @Override
         public T next() {
             T data = currentList.data;
@@ -79,6 +108,11 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             return data;
         }
 
+        /**
+         * Insert element before current
+         *
+         * @param element element for inserting
+         */
         @Override
         public void insertBefore(T element) {
             List<T> newList = new List<>();
@@ -96,6 +130,11 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             currentPosition++;
         }
 
+        /**
+         * Insert element after current
+         *
+         * @param element element for inserting
+         */
         @Override
         public void insertAfter(T element) {
             List<T> newList = new List<>();
@@ -105,39 +144,67 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             size++;
         }
 
+        /**
+         * Replace data in current element
+         *
+         * @param element element for replacing
+         */
         @Override
         public void replace(T element) {
             currentList.data = element;
         }
 
+        /**
+         * Insert element before current strictly
+         *
+         * @param element element for inserting
+         */
         @Override
         public void strictInsertBefore(T element) {
             List<T> newList = new List<>();
             newList.data = (T) SystemUtils.clone(element);
             if (currentPosition == 0) {
                 newList.next = firstList;
+                firstList.previous = newList;
                 firstList = newList;
             } else {
-                newList.next = currentList;
                 currentList.previous.next = newList;
+                newList.next = currentList;
+                currentList.previous = newList;
             }
             size++;
             currentPosition++;
         }
 
+        /**
+         * Insert element after current strictly
+         *
+         * @param element element for inserting
+         */
         @Override
         public void strictInsertAfter(T element) {
             List<T> newList = new List<>();
             newList.data = (T) SystemUtils.clone(element);
             newList.next = currentList.next;
             currentList.next = newList;
+            size++;
         }
 
+        /**
+         * Replace data in current element strictly
+         *
+         * @param element element for replacing
+         */
         @Override
         public void strictReplace(T element) {
             currentList.data = (T) SystemUtils.clone(element);
         }
 
+        /**
+         * Remove element before current
+         *
+         * @throws IncorrectSizeException if current element is first
+         */
         @Override
         public void removeBefore() {
             if (currentPosition == 0) {
@@ -155,6 +222,11 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             }
         }
 
+        /**
+         * Remove element after current
+         *
+         * @throws IncorrectSizeException if current element is last
+         */
         @Override
         public void removeAfter() {
             if (currentPosition == size - 1) {
@@ -165,13 +237,23 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             }
         }
 
+        /**
+         * Remove current element
+         */
         @Override
         public void remove() {
-            currentList = currentList.next;
-            size--;
-            currentPosition--;
+            if (currentPosition == 0) {
+                throw new IncorrectSizeException("There is not element before");
+            } else {
+                currentList = currentList.next;
+                size--;
+                currentPosition--;
+            }
         }
 
+        /**
+         * Set to current element's data NULL value
+         */
         @Override
         public void delete() {
             currentList.data = null;
