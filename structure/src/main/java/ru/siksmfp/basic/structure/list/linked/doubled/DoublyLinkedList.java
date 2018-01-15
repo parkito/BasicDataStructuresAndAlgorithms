@@ -85,10 +85,12 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             newList.data = element;
             if (currentPosition == 0) {
                 newList.next = firstList;
+                firstList.previous = newList;
                 firstList = newList;
             } else {
-                newList.next = currentList;
                 currentList.previous.next = newList;
+                newList.next = currentList;
+                currentList.previous = newList;
             }
             size++;
             currentPosition++;
@@ -143,8 +145,8 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             } else {
                 List<T> previous = currentList.previous;
                 if (previous.previous != null) {
-                    previous.next = currentList;
-//                    currentList.next; todo
+                    previous.previous.next = currentList;
+                    currentList.previous = previous.previous;
                 } else {
                     currentList.previous = null;
                 }
@@ -226,7 +228,7 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
             }
             tempList.next = new List();
             tempList.next.data = element;
-            tempList.previous = tempList;
+            tempList.next.previous = tempList;
         }
         size++;
     }
@@ -234,13 +236,18 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
     @Override
     public void strictAdd(T element) {
         StructureUtils.checkDataStructureSize(size);
-        List tempList = firstList;
-        while (tempList.next != null) {
-            tempList = tempList.next;
+        if (firstList == null) {
+            firstList = new List<>();
+            firstList.data = element;
+        } else {
+            List tempList = firstList;
+            while (tempList.next != null) {
+                tempList = tempList.next;
+            }
+            tempList.next = new List();
+            tempList.next.data = SystemUtils.clone(element);
+            tempList.next.previous = tempList;
         }
-        tempList.data = SystemUtils.clone(element);
-        tempList.next = new List();
-        tempList.previous = tempList;
         size++;
     }
 
