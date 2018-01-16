@@ -27,10 +27,20 @@ public class GLinkedList<T> implements ListStructure<T> {
         public List() {
         }
 
+        /**
+         * Add pointer on previous element
+         *
+         * @param previous element for adding
+         */
         public void addPrevious(List<T> previous) {
             this.previous = previous;
         }
 
+        /**
+         * Add pointer on next element
+         *
+         * @param next element for adding
+         */
         public void addNext(List<T> next) {
             this.next = next;
         }
@@ -290,7 +300,7 @@ public class GLinkedList<T> implements ListStructure<T> {
     }
 
     /**
-     * Adding element to com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
+     * Adding element to g linked list
      *
      * @param element element for adding
      */
@@ -311,6 +321,11 @@ public class GLinkedList<T> implements ListStructure<T> {
         size++;
     }
 
+    /**
+     * Adding element to g linked list strictly
+     *
+     * @param element element for adding
+     */
     @Override
     public void strictAdd(T element) {
         StructureUtils.checkDataStructureSize(size);
@@ -329,6 +344,12 @@ public class GLinkedList<T> implements ListStructure<T> {
         size++;
     }
 
+    /**
+     * Replace element on given index
+     *
+     * @param index   index for replacing
+     * @param element element for replacing
+     */
     @Override
     public void replace(int index, T element) {
         StructureUtils.checkingIndex(index, size);
@@ -339,6 +360,12 @@ public class GLinkedList<T> implements ListStructure<T> {
         tempList.data = element;
     }
 
+    /**
+     * Replace element on given index strictly
+     *
+     * @param index   index for replacing
+     * @param element element for replacing
+     */
     @Override
     public void strictReplace(int index, T element) {
         StructureUtils.checkingIndex(index, size);
@@ -349,6 +376,13 @@ public class GLinkedList<T> implements ListStructure<T> {
         tempList.data = SystemUtils.clone(element);
     }
 
+    /**
+     * Get element by index
+     *
+     * @param index index of element for getting
+     * @return element by index
+     * @throws IncorrectIndexException if @index out of bounds
+     */
     @Override
     public T get(int index) {
         StructureUtils.checkingIndex(index, size);
@@ -493,7 +527,7 @@ public class GLinkedList<T> implements ListStructure<T> {
     /**
      * Get iterator of linked list
      *
-     * @return
+     * @return iterator of g linked list
      */
     @Override
     public Iterator<T> getIterator() {
