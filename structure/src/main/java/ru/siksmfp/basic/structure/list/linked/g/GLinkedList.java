@@ -5,7 +5,6 @@ import ru.siksmfp.basic.structure.api.Iterator;
 import ru.siksmfp.basic.structure.api.ListStructure;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
-import ru.siksmfp.basic.structure.list.linked.doubled.DoublyLinkedList;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
 
@@ -66,7 +65,7 @@ public class GLinkedList<T> implements ListStructure<T> {
          */
         @Override
         public boolean hasNext() {
-            return currentPosition != size;
+            return currentPosition < size;
         }
 
         /**
@@ -146,6 +145,9 @@ public class GLinkedList<T> implements ListStructure<T> {
             newList.data = element;
             newList.next = currentList.next;
             currentList.next = newList;
+            if (currentPosition == size - 1) {
+                lastList = newList;
+            }
             size++;
         }
 
@@ -192,6 +194,9 @@ public class GLinkedList<T> implements ListStructure<T> {
             newList.data = (T) SystemUtils.clone(element);
             newList.next = currentList.next;
             currentList.next = newList;
+            if (currentPosition == size - 1) {
+                lastList = newList;
+            }
             size++;
         }
 
@@ -309,14 +314,13 @@ public class GLinkedList<T> implements ListStructure<T> {
         if (firstList == null) {
             firstList = new List<>();
             firstList.data = element;
+            lastList = firstList;
         } else {
-            List<T> tempList = firstList;
-            while (tempList.next != null) {
-                tempList = tempList.next;
-            }
-            tempList.next = new List();
-            tempList.next.data = element;
-            tempList.next.previous = tempList;
+            List<T> newList = new List<>();
+            newList.data = element;
+            newList.previous = lastList;
+            lastList.next = newList;
+            lastList = newList;
         }
         size++;
     }
@@ -332,14 +336,13 @@ public class GLinkedList<T> implements ListStructure<T> {
         if (firstList == null) {
             firstList = new List<>();
             firstList.data = element;
+            lastList = firstList;
         } else {
-            List<T> tempList = firstList;
-            while (tempList.next != null) {
-                tempList = tempList.next;
-            }
-            tempList.next = new List();
-            tempList.next.data = SystemUtils.clone(element);
-            tempList.next.previous = tempList;
+            List<T> newList = new List<>();
+            newList.data = (T) SystemUtils.clone(element);
+            newList.previous = lastList;
+            lastList.next = newList;
+            lastList = newList;
         }
         size++;
     }
@@ -414,16 +417,10 @@ public class GLinkedList<T> implements ListStructure<T> {
      */
     @Override
     public T getLast() {
-        if (size() > 1) {
-            List<T> tempList = firstList;
-            while (tempList.next != null) {
-                tempList = tempList.next;
-            }
-            return tempList.data;
-        } else if (size == 1)
-            return firstList.data;
-        else {
+        if (size == 0) {
             throw new IncorrectIndexException("List is empty");
+        } else {
+            return lastList.data;
         }
     }
 
@@ -461,17 +458,15 @@ public class GLinkedList<T> implements ListStructure<T> {
      */
     @Override
     public void removeLast() {
-        if (size() > 1) {
-            List tempList = firstList;
-            while (tempList.next.next != null) {
-                tempList = tempList.next;
-            }
-            tempList.next = null;
-            size--;
-        } else if (size == 1)
-            removeFirst();
-        else {
+        if (size == 0) {
             throw new IncorrectIndexException("List is empty");
+        } else if (size == 1) {
+            size--;
+            firstList = null;
+        } else {
+            lastList = lastList.previous;
+            lastList.next = null;
+            size--;
         }
     }
 
