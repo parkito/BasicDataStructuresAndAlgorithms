@@ -47,12 +47,20 @@ public class ArithmeticParser {
 
     }
 
+    //to postfix notation
     //if current element is operand - to string
     //if current element is operator
         //if stack is empty  - to stack
         // if not - stack.peek > element
                     //yes - element to stack
                     //no - stack.pop to string by stack.pop==stack.pop
+
+
+    //calculate
+    //Get first, Get second to stack1
+        // if third is operator - calculate and result to stack2
+        // third is operand - add it to stack1
+    //брать с конца опернанты, с начала операторы.  сопоставлять
 
 
     public double parse(String arithmeticString) {
