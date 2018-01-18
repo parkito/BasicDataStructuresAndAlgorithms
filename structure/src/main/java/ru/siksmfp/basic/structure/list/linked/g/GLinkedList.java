@@ -486,11 +486,15 @@ public class GLinkedList<T> implements ListStructure<T> {
             removeFirst();
         } else {
             List tempList = firstList;
-            for (int i = 0; i < index - 1; i++) {
+            for (int i = 0; i < index; i++) {
                 tempList = tempList.next;
             }
+            tempList.previous.next = tempList.next;
+            if (tempList.next != null) {
+                tempList.next.previous = tempList.previous;
+            }
+            tempList = null; //escape obsolete references
             size--;
-            tempList.next = tempList.next.next;
         }
     }
 
@@ -561,7 +565,7 @@ public class GLinkedList<T> implements ListStructure<T> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof GLinkedList)) return false;
         GLinkedList<T> list1 = (GLinkedList<T>) o;
         if (size != list1.size) return false;
 

@@ -555,7 +555,7 @@ public class SimpleLinkedList<T> implements ListStructure<T> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof SimpleLinkedList)) return false;
         SimpleLinkedList<T> list1 = (SimpleLinkedList<T>) o;
         if (size != list1.size) return false;
 
