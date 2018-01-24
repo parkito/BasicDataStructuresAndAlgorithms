@@ -8,6 +8,7 @@ import org.junit.Test;
  * @author Artem Karnov @date 1/6/2018.
  * artem.karnov@t-systems.com
  */
+@Ignore
 public class ArithmeticParserTest {
     private static final double DELTA = 0.0001;
     private ArithmeticParser arithmeticParser = new ArithmeticParser();

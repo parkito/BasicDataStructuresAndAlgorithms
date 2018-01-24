@@ -24,6 +24,18 @@ public class ArithmeticParser {
     public static void main(String[] args) {
         ArithmeticParser parser = new ArithmeticParser();
 
+        //A + B + C
+        //ABC++
+
+        //A*(B+C)
+        //ABC+*
+
+        //A+B*(C-D)
+        //ABC
+
+        //A*(B+C)*D
+        //ABC+D**
+
 //        System.out.println(parser.infixToPostfix("A+B+C")); //A B C + +
 //        System.out.println(parser.infixToPostfix("A+B*C")); //A B C * +
 //        System.out.println(parser.infixToPostfix("A*(B+C)")); //A B C + *
@@ -40,121 +52,96 @@ public class ArithmeticParser {
 //        System.out.println(parser.calculateExpression("2 2 ^")); //4
 //        System.out.println(parser.calculateExpression("2 2 2 ^ ^")); //16
 
-        System.out.println(parser.parse("1+1")); //1
-        System.out.println(parser.parse("1+1+1")); //3
-        System.out.println(parser.parse("1+(1+1)")); //3
-        System.out.println(parser.parse("1^(1+1)")); //1 isn't cor
+//        System.out.println(parser.parse("1+1")); //1
+//        System.out.println(parser.parse("1+1+1")); //3
+//        System.out.println(parser.parse("1+(1+1)")); //3
+//        System.out.println(parser.parse("1^(1+1)")); //1 isn't cor
+
+//        System.out.println(parser.parse("1+2+1+1"));
+        System.out.println(parser.parse("8-2-2"));
+//        System.out.println(parser.parse("(1+2)+(1+1)"));
+//        System.out.println(parser.parse("2*2+1"));
+//        System.out.println(parser.parse("2*2+1+1"));
+//        System.out.println(parser.parse("2/2+1/1"));
+//        System.out.println(parser.parse("2^9"));
+//        System.out.println(parser.parse("(2+2)^2-1"));
+//        System.out.println(parser.parse("(1+(2+1)+1)"));
 
     }
 
     //to postfix notation
     //if current element is operand - to string
     //if current element is operator
-        //if stack is empty  - to stack
-        // if not - stack.peek > element
-                    //yes - element to stack
-                    //no - stack.pop to string by stack.pop==stack.pop
+    //if stack is empty  - to stack
+    // if not - stack.peek > element
+    //yes - element to stack
+    //no - stack.pop to string by stack.pop==stack.pop
 
 
     //calculate
     //Get first, Get second to stack1
-        // if third is operator - calculate and result to stack2
-        // third is operand - add it to stack1
+    // if third is operator - calculate and result to stack2
+    // third is operand - add it to stack1
     //брать с конца опернанты, с начала операторы.  сопоставлять
 
 
     public double parse(String arithmeticString) {
-        String postfix = infixToPostfix(arithmeticString);
-        return calculateExpression(postfix);
-    }
-
-    private String infixToPostfix(String infixString) {
-        String infixStringWithoutSpaces = infixString.replaceAll("\\s+", "");
-
-        StringBuilder stringBuilder = new StringBuilder();
-        Stack<Character> operatorStack = new Stack<>(20);
-        char[] infixChars = infixStringWithoutSpaces.toCharArray();
-
-        for (int i = 0; i < infixChars.length; i++) {
-            StringBuilder currentExpression = new StringBuilder();
-            //subtract values (sophisticated value (e.g. 400.24) should be subtracted as one value)
-            while (i < infixChars.length && getOperatorPriority(infixChars[i]) == 0) {
-                currentExpression.append(infixChars[i]);
-                i++;
-            }
-            if (currentExpression.length() > 0)
-                stringBuilder.append(currentExpression).append(SPACE);
-            //come to the string's end, no more symbols further.
-            if (i > infixChars.length - 1) {
-                break;
-            } else if (operatorStack.isEmpty()) {
-                operatorStack.push(infixChars[i]);
-            } else if (infixChars[i] == CLOSED_PARENTHESES) {
-                clearStack(stringBuilder, operatorStack);
-            } else if (getOperatorPriority(infixChars[i]) < getOperatorPriority(operatorStack.peek()) && operatorStack.peek() != OPENED_PARENTHESES) {
-                stringBuilder.append(operatorStack.pop()).append(SPACE);
-                operatorStack.push(infixChars[i]);
+        Stack<Double> operands = new Stack<>();
+        Stack<Character> operators = new Stack<>();
+        for (char current : arithmeticString.toCharArray()) {
+            if (getOperatorPriority(current) == 0) {
+                operands.push(Double.parseDouble(String.valueOf(current)));
+            } else if (operators.isEmpty()) {
+                operators.push(current);
+            } else if (current == ')') {
+                do {
+                    operands.push(makeArithmeticOperation(operands.pop(), operands.pop(), operators.pop()));
+                } while (operators.peek() != '(');
+                operators.pop();
+            } else if (getOperatorPriority(operators.peek()) <= getOperatorPriority(current)) {
+                operators.push(current);
+            } else if (operators.peek() == '(') {
+                operators.push(current);
             } else {
-                operatorStack.push(infixChars[i]);
+                do {
+                    operands.push(makeArithmeticOperation(operands.pop(), operands.pop(), operators.pop()));
+                } while (!operators.isEmpty() && getOperatorPriority(current) >= getOperatorPriority(operators.peek()));
+                operators.push(current);
             }
         }
-
-        clearStack(stringBuilder, operatorStack);
-        //remove last space symbol after clearStack printing
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        return stringBuilder.toString();
+        do {
+            operands.push(makeArithmeticOperation(operands.pop(), operands.pop(), operators.pop()));
+        } while (!operators.isEmpty());
+        return operands.pop();
     }
 
-    private double calculateExpression(String postfix) {
-        Double result = null;
-        DynamicArray<String> expressionArray = new DynamicArray();
-        StringTokenizer tokenizer = new StringTokenizer(postfix, " ");
-        while (tokenizer.hasMoreElements()) {
-            expressionArray.add(tokenizer.nextToken());
-        }
-
-        Stack<Character> operatorStacks = new Stack<>();
-        for (int i = expressionArray.size() - 1; i >= 0; i--) {
-            String currentExpression = expressionArray.get(i);
-            if (currentExpression.length() == 1 && getOperatorPriority(currentExpression.charAt(0)) > 0) {
-                operatorStacks.push(currentExpression.charAt(0));
+    private String infixToPostfix(String arithmeticString) {
+        Stack<Character> operators = new Stack<>();
+        StringBuilder result = new StringBuilder();
+        for (char current : arithmeticString.toCharArray()) {
+            int currentPriority = getOperatorPriority(current);
+            if (getOperatorPriority(current) == 0) {
+                result.append(current).append(' ');
             } else {
-                while (!operatorStacks.isEmpty()) {
-                    if (result == null) {
-                        if (!isDouble(expressionArray.get(i - 1))) {
-                            operatorStacks.push(expressionArray.get(i - 1).charAt(0));
-                            i--;
-                            break;
-                        }
-                        result = makeArithmeticOperation(Double.valueOf(expressionArray.get(i - 1)), Double.valueOf(expressionArray.get(i)), operatorStacks.pop());
+                if (operators.isEmpty()) {
+                    operators.push(current);
+                } else {
+                    if (getOperatorPriority(operators.peek()) > currentPriority) {
+                        operators.push(current);
                     } else {
-                        if (!isDouble(expressionArray.get(i))) {
-                            operatorStacks.push(expressionArray.get(i).charAt(0));
-                            i--;
-                            break;
-                        }
-                        result = makeArithmeticOperation(result, Double.valueOf(expressionArray.get(i)), operatorStacks.pop());
+                        result.append(operators.pop()).append(' ');
                     }
-                    i--;
                 }
             }
         }
-        return result;
-    }
 
-    private void clearStack(StringBuilder stringBuilder, Stack<Character> operatorStack) {
-        while (!operatorStack.isEmpty()) {
-            Character currentOperator = operatorStack.pop();
-            if (currentOperator != OPENED_PARENTHESES) {
-                stringBuilder.append(currentOperator).append(SPACE);
-            }
-        }
+        return result.toString();
     }
 
     private double makeArithmeticOperation(double firstValue, double secondValue, char operator) {
         switch (operator) {
             case '^':
-                return Math.pow(firstValue, secondValue);
+                return Math.pow(secondValue, firstValue);
             case '*':
                 return firstValue * secondValue;
             case '/':
@@ -162,7 +149,7 @@ public class ArithmeticParser {
             case '+':
                 return firstValue + secondValue;
             case '-':
-                return firstValue - secondValue;
+                return secondValue - firstValue;
             default:
                 throw new ArithmeticException("Unknown operator");
         }
