@@ -22,6 +22,20 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
             this.key = key;
             this.value = value;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<K, V> node = (Node<K, V>) o;
+            return key.equals(node.key) &&
+                    value.equals(node.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return 31 * key.hashCode() + 31 * value.hashCode();
+        }
     }
 
     private final Function<K, Integer> DEFAULT_HASH_FUNCTION = t -> {
@@ -149,6 +163,42 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !(o instanceof LinearProbHashTable)) return false;
+        LinearProbHashTable<K, V> table1 = (LinearProbHashTable<K, V>) o;
+        if (size != table1.size) return false;
+
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i) == null && table1.array.get(i) != null) {
+                return false;
+            }
+
+            if (array.get(i) != null && table1.array.get(i) == null) {
+                return false;
+            }
+
+            if (array.get(i) != null && table1.array.get(i) != null)
+                if (!array.get(i).equals(table1.array.get(i))) {
+                    return false;
+                }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 31 * size;
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i) != null) {
+                result += 31 * array.get(i).value.hashCode();
+            }
+        }
+        return result;
+    }
+
+    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < array.size(); i++) {
@@ -161,7 +211,6 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
             } else {
                 result.append("null, ");
             }
-
         }
         if (result.length() > 1) {
             result.delete(result.length() - 2, result.length());

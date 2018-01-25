@@ -9,7 +9,6 @@ import ru.siksmfp.basic.structure.api.HashTable;
  * @email artem.karnov@t-systems.com
  */
 public class LinearProbHashTableTest {
-
     @Test
     public void firstTest() {
         HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
@@ -198,5 +197,57 @@ public class LinearProbHashTableTest {
         Assert.assertNull(hashTable.get(3));
         Assert.assertNull(hashTable.get(4));
         Assert.assertEquals(hashTable.get(5).intValue(), 5);
+    }
+
+    @Test
+    public void eleventhTest() {
+        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        hashTable1.add(1, 1);
+        hashTable1.add(2, 2);
+
+        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        hashTable2.add(1, 1);
+        hashTable2.add(2, 2);
+
+        Assert.assertEquals(hashTable1, hashTable2);
+    }
+
+    @Test
+    public void twelfthTest() {
+        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        hashTable1.add(1, 1);
+        hashTable1.add(2, 2);
+
+        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        hashTable2.add(1, 1);
+        hashTable2.add(2, 3);
+
+        Assert.assertFalse(hashTable1.equals(hashTable2));
+    }
+
+    @Test
+    public void thirteenTest() {
+        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        hashTable1.add(1, 1);
+        hashTable1.add(2, 2);
+
+        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        hashTable2.add(1, 1);
+        hashTable2.add(2, 2);
+
+        Assert.assertEquals(hashTable1.hashCode(), hashTable2.hashCode());
+    }
+
+    @Test
+    public void fourteenthTest() {
+        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        hashTable1.add(1, 1);
+        hashTable1.add(2, 2);
+
+        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        hashTable2.add(1, 1);
+        hashTable2.add(2, 3);
+
+        Assert.assertNotEquals(hashTable1.hashCode(), hashTable2.hashCode());
     }
 }
