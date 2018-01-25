@@ -10,32 +10,25 @@ public class Math {
         return java.lang.Math.pow(base, exponent);
     }
 
-    public static int[] getFirstSimpleNumberBefore(int before) {
-        int arr[] = new int[before];
-        int i = 0;
-        for (int k = 3; k <= before; k += 2, i++) {
-            arr[i] = k;
-        }
-
-        for (int k = 0; k < i; k++) {
-            for (int h = 3, j = arr[k] * h; h < i; h += 2, j = arr[k] * h) {
-                deleteFromArray(arr, j);
-            }
-
-        }
-        return arr;
-    }
-
-    private static void deleteFromArray(int arr[], int number) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == number) {
-                arr[i] = 0;
+    public static int getFirstSimpleNumberAfter(int after) {
+        for (int i = after + 1; i < Integer.MAX_VALUE; i++) {
+            if (isPrimeNumber(i)) {
+                return i;
             }
         }
+        throw new ArithmeticException("There is no prime numbers after " + after + " in [0, Integer.MAX_VALUE]");
     }
 
-    public static void main(String[] args) {
-        for (int i : getFirstSimpleNumberBefore(3000))
-            System.out.print(i + " ");
+    public static boolean isPrimeNumber(int number) {
+        if (number % 2 == 0) {
+            return false;
+        } else {
+            for (int i = number - 2; i > 1; i -= 2) {
+                if (number % i == 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
