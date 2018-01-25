@@ -1,4 +1,4 @@
-package ru.siksmfp.basic.algorithm.math;
+package ru.siksmfp.basic.structure.utils.math;
 
 import org.junit.Assert;
 import org.junit.Test;

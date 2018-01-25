@@ -1,4 +1,4 @@
-package ru.siksmfp.basic.algorithm.math;
+package ru.siksmfp.basic.structure.utils.math;
 
 /**
  * @author Artem Karnov @date 1/6/2018.

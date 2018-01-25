@@ -1,10 +1,7 @@
 package ru.siksmfp.basic.algorithm.parse;
 
-import ru.siksmfp.basic.algorithm.math.Math;
-import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
 import ru.siksmfp.basic.structure.stack.Stack;
 
-import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 /**

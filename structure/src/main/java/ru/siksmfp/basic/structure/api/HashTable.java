@@ -2,17 +2,18 @@ package ru.siksmfp.basic.structure.api;
 
 import java.util.function.Function;
 
-public interface HashTable<T> {
-    void add(T element);
+public interface HashTable<K, V> {
+    void add(K key, V value);
 
-    int getHash(T element);
+    int getHash(K key);
 
-    ArrayStructure<T> get(int hash);
+    V get(K key);
 
-    void setHashFunction(Function<T, Integer> hashFunction);
+    void setHashFunction(Function<K, Integer> hashFunction);
 
-    void remove(int key);
+    void remove(K key);
 
-    void remove(int key, T element);
+    void delete(K key);
 
+    int size();
 }
