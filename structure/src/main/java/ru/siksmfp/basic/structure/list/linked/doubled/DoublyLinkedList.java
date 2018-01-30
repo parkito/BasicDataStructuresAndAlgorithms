@@ -294,7 +294,7 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
     }
 
     /**
-     * Adding element to com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
+     * Adding element to com.saiu.ru.siksmfp.basic.structure.list.linked.binary
      *
      * @param element element for adding
      */
@@ -446,7 +446,7 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
     }
 
     /*
-     * There are 3 situations when is needed to remove list from com.saiu.ru.siksmfp.basic.structure.list.linked.doubled
+     * There are 3 situations when is needed to remove list from com.saiu.ru.siksmfp.basic.structure.list.linked.binary
      * 1 - needed element is first - checking by "if"
      * ([X][][][][])
      * 2 - is needed to remove last element - checking by "else if"

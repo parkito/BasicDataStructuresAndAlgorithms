@@ -1,5 +1,4 @@
-package ru.siksmfp.basic.structure.hash.table.open.adress.linear.prob;
-
+package ru.siksmfp.basic.structure.hash.table.binary;
 
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.api.HashTable;
@@ -10,12 +9,12 @@ import ru.siksmfp.basic.structure.utils.math.Math;
 import java.util.function.Function;
 
 /**
- * @author Artem Karnov @date 1/10/2018.
+ * @author Artem Karnov @date 1/30/2018.
  * @email artem.karnov@t-systems.com
  * <p>
- * Hash table with linear probing
+ * Hash table with binary probing
  */
-public class LinearProbHashTable<K, V> implements HashTable<K, V> {
+public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
     /**
      * Structure for storing key-value structure
      *
@@ -68,7 +67,7 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
      *
      * @param size size of table
      */
-    public LinearProbHashTable(int size) {
+    public BinaryProbHashTable(int size) {
         array = new FixedArray<>(Math.getFirstSimpleNumberAfter(size));
         hashFunction = DEFAULT_HASH_FUNCTION;
     }
@@ -85,15 +84,22 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
         if (array.get(index) == null) {
             addNoteToArray(index, new Node<>(key, value));
         } else {
-            int i = index + 1;
-            while (i != index) {
-                if (i >= array.size()) {
-                    i = 0;
-                } else if (array.get(i) == null) {
+            int i = 2;
+            while (i < array.size()) {
+                if (index == 0 || index == 1) {
+                    index = 2;
+                } else {
+                    index = (int) Math.pow(index, 2);
+                }
+
+                if (index > array.size()) {
+                    index = i;
+                    i++;
+                }
+
+                if (array.get(index) == null) {
                     addNoteToArray(i, new Node<>(key, value));
                     return;
-                } else {
-                    i++;
                 }
             }
             throw new IncorrectSizeException("There is no space for new element");
@@ -123,14 +129,21 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
         if (array.get(index) != null && array.get(index).key.equals(key)) {
             return array.get(index).value;
         } else {
-            int i = index + 1;
-            while (i != index) {
-                if (i >= array.size()) {
-                    i = 0;
-                } else if (array.get(i) != null && array.get(i).key.equals(key)) {
-                    return array.get(i).value;
+            int i = 0;
+            while (i < array.size()) {
+                if (index == 0 || index == 1) {
+                    index++;
                 } else {
+                    index = (int) Math.pow(index, 2);
+                }
+
+                if (index > array.size()) {
+                    index = i;
                     i++;
+                }
+
+                if (array.get(index) != null && array.get(index).key.equals(key)) {
+                    return array.get(index).value;
                 }
             }
             return null;
@@ -216,8 +229,9 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof LinearProbHashTable)) return false;
-        LinearProbHashTable<K, V> table1 = (LinearProbHashTable<K, V>) o;
+        if (o == null || !(o instanceof ru.siksmfp.basic.structure.hash.table.open.adress.linear.prob.LinearProbHashTable))
+            return false;
+        BinaryProbHashTable<K, V> table1 = (BinaryProbHashTable<K, V>) o;
         if (size != table1.size) return false;
 
         for (int i = 0; i < array.size(); i++) {
@@ -266,8 +280,9 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
         if (result.length() > 1) {
             result.delete(result.length() - 2, result.length());
         }
-        return "LinearProbHashTable{" + result.toString() + "}";
+        return "BinaryProbHashTable{" + result.toString() + "}";
     }
+
 
     /**
      * Adding note to allocated
