@@ -84,23 +84,17 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
         if (array.get(index) == null) {
             addNoteToArray(index, new Node<>(key, value));
         } else {
-            int i = 2;
-            while (i < array.size()) {
-                if (index == 0 || index == 1) {
-                    index = 2;
-                } else {
-                    index = (int) Math.pow(index, 2);
-                }
-
-                if (index > array.size()) {
-                    index = i;
-                    i++;
-                }
-
-                if (array.get(index) == null) {
-                    addNoteToArray(i, new Node<>(key, value));
+            int beginIndex = index;
+            for (int i = 0; i < size; i++) {
+                int probIndex = insertBinaryProbing(index);
+                if (probIndex != -1) {
+                    addNoteToArray(probIndex, new Node<>(key, value));
                     return;
                 }
+                if (i == beginIndex) {
+                    i++;
+                }
+                index = i;
             }
             throw new IncorrectSizeException("There is no space for new element");
         }
@@ -129,22 +123,16 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
         if (array.get(index) != null && array.get(index).key.equals(key)) {
             return array.get(index).value;
         } else {
-            int i = 0;
-            while (i < array.size()) {
-                if (index == 0 || index == 1) {
-                    index++;
-                } else {
-                    index = (int) Math.pow(index, 2);
-                }
-
-                if (index > array.size()) {
-                    index = i;
-                    i++;
-                }
-
-                if (array.get(index) != null && array.get(index).key.equals(key)) {
+            int beginIndex = index;
+            for (int i = 0; i < size; i++) {
+                int probIndex = findBinaryProbing(index, key);
+                if (probIndex != -1) {
                     return array.get(index).value;
                 }
+                if (i == beginIndex) {
+                    i++;
+                }
+                index = i;
             }
             return null;
         }
@@ -303,5 +291,67 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
      */
     private int applyHashing(K key) {
         return hashFunction.apply(key) % array.size();
+    }
+
+    private int insertBinaryProbing(int index) {
+        if (index == 0 && size >= 1) {
+            if (array.get(index) == null) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+
+        if (index == 1 && size > 1) {
+            if (array.get(index) == null) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+
+        if (array.get(index) == null && index < size)
+            return index;
+
+        while (true) {
+            index = (int) Math.pow(index, 2);
+            if (index >= size) {
+                return -1;
+            }
+            if (array.get(index) == null) {
+                return index;
+            }
+        }
+    }
+
+    private int findBinaryProbing(int index, K key) {
+        if (index == 0 && size >= 1) {
+            if (array.get(index) != null && array.get(index).key.equals(key)) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+
+        if (index == 1 && size > 1) {
+            if (array.get(index) != null && array.get(index).key.equals(key)) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+
+        if (array.get(index) != null && index < size && array.get(index).key.equals(key))
+            return index;
+
+        while (true) {
+            index = (int) Math.pow(index, 2);
+            if (index >= size) {
+                return -1;
+            }
+            if (array.get(index) != null && array.get(index).key.equals(key)) {
+                return index;
+            }
+        }
     }
 }
