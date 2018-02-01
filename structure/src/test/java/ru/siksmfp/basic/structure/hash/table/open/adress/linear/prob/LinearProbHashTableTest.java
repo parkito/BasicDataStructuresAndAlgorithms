@@ -3,6 +3,8 @@ package ru.siksmfp.basic.structure.hash.table.open.adress.linear.prob;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.HashTable;
+import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
+import ru.siksmfp.basic.structure.hash.table.binary.BinaryProbHashTable;
 
 /**
  * @author Artem Karnov @date 1/25/2018.
@@ -250,4 +252,14 @@ public class LinearProbHashTableTest {
 
         Assert.assertNotEquals(hashTable1.hashCode(), hashTable2.hashCode());
     }
+
+    @Test(expected = IncorrectSizeException.class)
+    public void fiftiethTest() {
+        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(3);
+        hashTable.add(1, 1);
+        hashTable.add(2, 2);
+        hashTable.add(3, 3);
+        hashTable.add(4, 4);
+    }
+
 }

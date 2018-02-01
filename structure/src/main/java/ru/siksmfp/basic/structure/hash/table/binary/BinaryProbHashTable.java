@@ -15,6 +15,8 @@ import java.util.function.Function;
  * Hash table with binary probing
  */
 public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
+    private static final int STEP_CONSTANT = 5;
+
     /**
      * Structure for storing key-value structure
      *
@@ -45,22 +47,18 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
         }
     }
 
+
+    private ArrayStructure<Node<K, V>> array;
+    private Function<K, Integer> hashFunction;
+    private int initialSize;
+    private int size;
     /**
      * Default hash function is being applying whe custom function isn't given
      */
     private final Function<K, Integer> DEFAULT_HASH_FUNCTION = t -> {
-        int i = t.hashCode();
-        i = (i + 0x7ed55d16) + (i << 12);
-        i = (i ^ 0xc761c23c) ^ (i >> 19);
-        i = (i + 0x165667b1) + (i << 5);
-        i = (i + 0xd3a2646c) ^ (i << 9);
-        i = (i + 0xfd7046c5) + (i << 3);
-        i = (i ^ 0xb55a4f09) ^ (i >> 16);
+        int i = t.hashCode() % array.size();
         return i > 0 ? i : -i;
     };
-    private ArrayStructure<Node<K, V>> array;
-    private Function<K, Integer> hashFunction;
-    private int size;
 
     /**
      * Constructor with size initialization
@@ -68,6 +66,7 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
      * @param size size of table
      */
     public BinaryProbHashTable(int size) {
+        this.initialSize = size;
         array = new FixedArray<>(Math.getFirstSimpleNumberAfter(size));
         hashFunction = DEFAULT_HASH_FUNCTION;
     }
@@ -80,23 +79,18 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
      */
     @Override
     public void add(K key, V value) {
-        int index = applyHashing(key);
-        if (array.get(index) == null) {
-            addNoteToArray(index, new Node<>(key, value));
-        } else {
-            int beginIndex = index;
-            for (int i = 0; i < size; i++) {
-                int probIndex = insertBinaryProbing(index);
-                if (probIndex != -1) {
-                    addNoteToArray(probIndex, new Node<>(key, value));
-                    return;
-                }
-                if (i == beginIndex) {
-                    i++;
-                }
-                index = i;
-            }
+        if (size == initialSize) {
             throw new IncorrectSizeException("There is no space for new element");
+        }
+        int index = applyHashing(key);
+        int stepSize = stepHashFunction(index);
+        while (array.get(index) != null) {
+            index += stepSize;
+            index %= array.size();
+        }
+        if (array.get(index) == null) {
+            array.add(index, new Node<>(key, value));
+            size++;
         }
     }
 
@@ -120,22 +114,15 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
     @Override
     public V get(K key) {
         int index = applyHashing(key);
-        if (array.get(index) != null && array.get(index).key.equals(key)) {
-            return array.get(index).value;
-        } else {
-            int beginIndex = index;
-            for (int i = 0; i < size; i++) {
-                int probIndex = findBinaryProbing(index, key);
-                if (probIndex != -1) {
-                    return array.get(index).value;
-                }
-                if (i == beginIndex) {
-                    i++;
-                }
-                index = i;
+        int stepSize = stepHashFunction(index);
+        while (array.get(index) != null) {
+            if (array.get(index).key.equals(key)) {
+                return array.get(index).value;
             }
-            return null;
+            index += stepSize;
+            index %= array.size();
         }
+        return null;
     }
 
     /**
@@ -160,22 +147,15 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
     @Override
     public void remove(K key) {
         int index = applyHashing(key);
-        if (array.get(index) != null && array.get(index).key.equals(key)) {
-            array.add(index, null);
-            size--;
-        } else {
-            int i = index + 1;
-            while (i != index) {
-                if (i >= array.size()) {
-                    i = 0;
-                } else if (array.get(i) != null && array.get(i).key.equals(key)) {
-                    array.add(i, null);
-                    size--;
-                    return;
-                } else {
-                    i++;
-                }
+        int stepSize = stepHashFunction(index);
+        while (array.get(index) != null) {
+            if (array.get(index).key.equals(key)) {
+                array.add(index, null);
+                size--;
+                return;
             }
+            index += stepSize;
+            index %= array.size();
         }
     }
 
@@ -187,20 +167,14 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
     @Override
     public void delete(K key) {
         int index = applyHashing(key);
-        if (array.get(index).key.equals(key)) {
-            array.get(index).value = null;
-        } else {
-            int i = index + 1;
-            while (i != index) {
-                if (i >= array.size()) {
-                    i = 0;
-                } else if (array.get(i) != null && array.get(i).key.equals(key)) {
-                    array.get(i).value = null;
-                    break;
-                } else {
-                    i++;
-                }
+        int stepSize = stepHashFunction(index);
+        while (array.get(index) != null) {
+            if (array.get(index).key.equals(key)) {
+                array.get(index).value = null;
+                return;
             }
+            index += stepSize;
+            index %= array.size();
         }
     }
 
@@ -217,10 +191,11 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof ru.siksmfp.basic.structure.hash.table.open.adress.linear.prob.LinearProbHashTable))
+        if (o == null || !(o instanceof BinaryProbHashTable))
             return false;
         BinaryProbHashTable<K, V> table1 = (BinaryProbHashTable<K, V>) o;
         if (size != table1.size) return false;
+        if (array.size() != table1.array.size()) return false;
 
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) == null && table1.array.get(i) != null) {
@@ -293,65 +268,7 @@ public class BinaryProbHashTable<K, V> implements HashTable<K, V> {
         return hashFunction.apply(key) % array.size();
     }
 
-    private int insertBinaryProbing(int index) {
-        if (index == 0 && size >= 1) {
-            if (array.get(index) == null) {
-                return index;
-            } else {
-                index++;
-            }
-        }
-
-        if (index == 1 && size > 1) {
-            if (array.get(index) == null) {
-                return index;
-            } else {
-                index++;
-            }
-        }
-
-        if (array.get(index) == null && index < size)
-            return index;
-
-        while (true) {
-            index = (int) Math.pow(index, 2);
-            if (index >= size) {
-                return -1;
-            }
-            if (array.get(index) == null) {
-                return index;
-            }
-        }
-    }
-
-    private int findBinaryProbing(int index, K key) {
-        if (index == 0 && size >= 1) {
-            if (array.get(index) != null && array.get(index).key.equals(key)) {
-                return index;
-            } else {
-                index++;
-            }
-        }
-
-        if (index == 1 && size > 1) {
-            if (array.get(index) != null && array.get(index).key.equals(key)) {
-                return index;
-            } else {
-                index++;
-            }
-        }
-
-        if (array.get(index) != null && index < size && array.get(index).key.equals(key))
-            return index;
-
-        while (true) {
-            index = (int) Math.pow(index, 2);
-            if (index >= size) {
-                return -1;
-            }
-            if (array.get(index) != null && array.get(index).key.equals(key)) {
-                return index;
-            }
-        }
+    private int stepHashFunction(int index) {
+        return STEP_CONSTANT - index % STEP_CONSTANT;
     }
 }

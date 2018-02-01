@@ -61,6 +61,7 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
     };
     private ArrayStructure<Node<K, V>> array;
     private Function<K, Integer> hashFunction;
+    private int initialSize;
     private int size;
 
     /**
@@ -69,6 +70,7 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
      * @param size size of table
      */
     public LinearProbHashTable(int size) {
+        this.initialSize = size;
         array = new FixedArray<>(Math.getFirstSimpleNumberAfter(size));
         hashFunction = DEFAULT_HASH_FUNCTION;
     }
@@ -81,6 +83,9 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
      */
     @Override
     public void add(K key, V value) {
+        if (size == initialSize) {
+            throw new IncorrectSizeException("There is no space for new element");
+        }
         int index = applyHashing(key);
         if (array.get(index) == null) {
             addNoteToArray(index, new Node<>(key, value));
@@ -219,6 +224,7 @@ public class LinearProbHashTable<K, V> implements HashTable<K, V> {
         if (o == null || !(o instanceof LinearProbHashTable)) return false;
         LinearProbHashTable<K, V> table1 = (LinearProbHashTable<K, V>) o;
         if (size != table1.size) return false;
+        if (array.size() != table1.array.size()) return false;
 
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) == null && table1.array.get(i) != null) {
