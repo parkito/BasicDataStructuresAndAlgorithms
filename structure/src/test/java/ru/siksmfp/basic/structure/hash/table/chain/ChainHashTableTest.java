@@ -1,19 +1,18 @@
-package ru.siksmfp.basic.structure.hash.table.open.adress.linear.prob;
+package ru.siksmfp.basic.structure.hash.table.chain;
 
 import org.junit.Assert;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.HashTable;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
-import ru.siksmfp.basic.structure.hash.table.binary.BinaryProbHashTable;
 
 /**
- * @author Artem Karnov @date 1/25/2018.
+ * @author Artem Karnov @date 2/5/2018.
  * @email artem.karnov@t-systems.com
  */
-public class LinearProbHashTableTest {
+public class ChainHashTableTest {
     @Test
     public void firstTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(10);
         hashTable.add(1, 1);
         hashTable.add(2, 2);
         hashTable.add(3, 3);
@@ -29,7 +28,7 @@ public class LinearProbHashTableTest {
 
     @Test
     public void secondTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(10);
         hashTable.add(1, 1);
         hashTable.add(2, 2);
         hashTable.add(3, 3);
@@ -55,7 +54,7 @@ public class LinearProbHashTableTest {
 
     @Test
     public void fifthTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(10);
         hashTable.add(1, 1);
         hashTable.add(2, 2);
         hashTable.add(3, 3);
@@ -74,7 +73,7 @@ public class LinearProbHashTableTest {
 
     @Test
     public void sixthTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(10);
         hashTable.setHashFunction(i -> i);
         hashTable.add(1, 1);
         hashTable.add(2, 2);
@@ -94,7 +93,7 @@ public class LinearProbHashTableTest {
 
     @Test
     public void seventhTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(10);
         hashTable.setHashFunction(i -> i);
 
         hashTable.add(1, 1);
@@ -138,7 +137,7 @@ public class LinearProbHashTableTest {
 
     @Test
     public void eightTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(10);
         hashTable.setHashFunction(i -> i);
         hashTable.add(1, 1);
         hashTable.add(2, 2);
@@ -160,7 +159,7 @@ public class LinearProbHashTableTest {
     @Test
     public void ninthTest() {
         int bigSize = 1_000_000;
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(bigSize);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(bigSize);
         for (int i = 0; i < bigSize; i++) {
             hashTable.add(i, i * i - i);
         }
@@ -180,8 +179,9 @@ public class LinearProbHashTableTest {
 
     @Test
     public void tenthTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(10);
         hashTable.setHashFunction(i -> i);
+
         hashTable.add(1, 1);
         hashTable.add(2, 2);
         hashTable.add(3, 3);
@@ -193,6 +193,9 @@ public class LinearProbHashTableTest {
         hashTable.delete(3);
         hashTable.delete(4);
 
+        hashTable.toString();
+
+
         Assert.assertEquals(hashTable.size(), 3);
         Assert.assertNull(hashTable.get(1));
         Assert.assertNull(hashTable.get(2));
@@ -203,11 +206,11 @@ public class LinearProbHashTableTest {
 
     @Test
     public void eleventhTest() {
-        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable1 = new ChainHashTable<>(10);
         hashTable1.add(1, 1);
         hashTable1.add(2, 2);
 
-        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable2 = new ChainHashTable<>(10);
         hashTable2.add(1, 1);
         hashTable2.add(2, 2);
 
@@ -216,11 +219,11 @@ public class LinearProbHashTableTest {
 
     @Test
     public void twelfthTest() {
-        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable1 = new ChainHashTable<>(10);
         hashTable1.add(1, 1);
         hashTable1.add(2, 2);
 
-        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable2 = new ChainHashTable<>(10);
         hashTable2.add(1, 1);
         hashTable2.add(2, 3);
 
@@ -229,11 +232,11 @@ public class LinearProbHashTableTest {
 
     @Test
     public void thirteenTest() {
-        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable1 = new ChainHashTable<>(10);
         hashTable1.add(1, 1);
         hashTable1.add(2, 2);
 
-        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable2 = new ChainHashTable<>(10);
         hashTable2.add(1, 1);
         hashTable2.add(2, 2);
 
@@ -242,11 +245,11 @@ public class LinearProbHashTableTest {
 
     @Test
     public void fourteenthTest() {
-        HashTable<Integer, Integer> hashTable1 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable1 = new ChainHashTable<>(10);
         hashTable1.add(1, 1);
         hashTable1.add(2, 2);
 
-        HashTable<Integer, Integer> hashTable2 = new LinearProbHashTable<>(10);
+        HashTable<Integer, Integer> hashTable2 = new ChainHashTable<>(10);
         hashTable2.add(1, 1);
         hashTable2.add(2, 3);
 
@@ -255,7 +258,7 @@ public class LinearProbHashTableTest {
 
     @Test(expected = IncorrectSizeException.class)
     public void fiftiethTest() {
-        HashTable<Integer, Integer> hashTable = new LinearProbHashTable<>(3);
+        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(3);
         hashTable.add(1, 1);
         hashTable.add(2, 2);
         hashTable.add(3, 3);

@@ -433,6 +433,9 @@ public class GLinkedList<T> implements ListStructure<T> {
         Object[] arr = new Object[size];
         List tempList = firstList;
         int i = 0;
+        if (size == 0) {
+            return (T[]) arr;
+        }
         while (tempList.next != null) {
             arr[i] = tempList.data;
             tempList = tempList.next;

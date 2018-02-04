@@ -36,8 +36,7 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Node<K, V> node = (Node<K, V>) o;
-            return key.equals(node.key) &&
-                    value.equals(node.value);
+            return key.equals(node.key) && value.equals(node.value);
         }
 
         @Override
@@ -227,15 +226,14 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) != null) {
                 result.append("{");
-                for (Node<K, V> node : array.get(i).toArray()) {
-                    result.append("(")
-                            .append(node.key)
-                            .append(";")
-                            .append(node.value)
-                            .append("), ");
-                }
-                if (result.length() > 1) {
-                    result.delete(result.length() - 2, result.length());
+                for (int j = 0; j < array.get(i).size(); j++) {
+                    if (array.get(i).get(j) != null) {
+                        result.append("(")
+                                .append(array.get(i).get(j).key)
+                                .append(";")
+                                .append(array.get(i).get(j).value)
+                                .append("), ");
+                    }
                 }
                 result.append("} ,");
             } else {
