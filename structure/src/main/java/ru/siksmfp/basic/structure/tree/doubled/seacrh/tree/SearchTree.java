@@ -1,11 +1,5 @@
 package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
 
-import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 /**
  * @author Artem Karnov @date 08.12.16.
  * artem.karnov@t-systems.com
@@ -17,13 +11,13 @@ public class SearchTree<T extends Comparable<T>> {
         private Node<T> leftChildren;
         private Node<T> rightChildren;
 
-        public Node(T data) {
+        private Node(T data) {
             this.data = data;
             this.rightChildren = null;
             this.leftChildren = null;
         }
 
-        public Node(T data, Node<T> leftChildren, Node<T> rightChildren) {
+        private Node(T data, Node<T> leftChildren, Node<T> rightChildren) {
             this.data = data;
             this.rightChildren = leftChildren;
             this.leftChildren = rightChildren;
@@ -47,21 +41,22 @@ public class SearchTree<T extends Comparable<T>> {
      * @param element element for adding
      */
     public void add(T element) {
-        Node<T> current = root, parent = root;
-        while (current != null) {
-            if (current.data.compareTo(element) < 0)
-                current = current.leftChildren;
+        Node<T> currentNode = root, parent = root;
+        while (currentNode != null) {
+            parent = currentNode;
+            if (currentNode.data.compareTo(element) < 0)
+                currentNode = currentNode.leftChildren;
             else {
-                current = current.rightChildren;
+                currentNode = currentNode.rightChildren;
             }
         }
-        current = new Node<>(element);
+        currentNode = new Node<>(element);
         size++;
         if (parent != null) {
             if (parent.data.compareTo(element) < 0)
-                parent.leftChildren = current;
+                parent.leftChildren = currentNode;
             else {
-                parent.rightChildren = current;
+                parent.rightChildren = currentNode;
             }
         }
     }
@@ -71,110 +66,85 @@ public class SearchTree<T extends Comparable<T>> {
      *
      * @return list's data if element exists, null if doesn't
      */
-    public boolean contains(T elements) {
-        Node<T> currentList = root;
-        while (currentList != null) {
-            if (currentList.data.equals(elements))
+    public boolean contains(T element) {
+        Node<T> currentNode = root;
+        while (currentNode != null) {
+            if (currentNode.data.equals(element))
                 return true;
-            else if (currentList.data.compareTo(elements) < 0) {
-                currentList = currentList.leftChildren;
+            else if (currentNode.data.compareTo(element) < 0) {
+                currentNode = currentNode.leftChildren;
             } else {
-                currentList = currentList.rightChildren;
+                currentNode = currentNode.rightChildren;
             }
         }
         return false;
     }
 
     /**
-     * Removing element by key
+     * Removing element
      *
-     * @param key for element removing
+     * @param element for element removing
      */
-    public void remove(long key) {
-        Node currentList = root, parent = root;
-        boolean isElementFound = false;
-        //Searching emelemt for deleting
-        while (currentList != null) {
-            if (currentList.getKey() == key) {
-                isElementFound = true;
-                break;
-            } else if (key > currentList.getKey()) {
-                parent = currentList;
-                currentList = currentList.getRightChildren();
-            } else if (key < currentList.getKey()) {
-                parent = currentList;
-                currentList = currentList.getLeftChildren();
-            }
-        }
-        if (!isElementFound) {
-            throw new IncorrectSizeException("Element with key=" + key + " wasn't found");
-        } else {
-            // TODO: 13.12.16 all logic for removing
-            // TODO: 13.12.2016 fuck this shit! Rewrite the method
-            //Element for deleting is found.
-            // Element is the root
-            if (currentList == root) {
-                root = null;
-            }
-            //Element has no childrenk
-            else if (numberOfChildren(currentList) == 0) {
-                if (parent.getLeftChildren() == currentList)
-                    parent.setLeftChildren(null);
-                else parent.setRightChildren(null);
-                //Element has only one children
-            } else if (numberOfChildren(currentList) == 1) {
-                Node tempList = null;
-                if (currentList.getLeftChildren() != null)
-                    tempList = currentList.getLeftChildren();
-                else currentList.getRightChildren();
-
-                if (parent.getLeftChildren() == currentList)
-                    parent.setLeftChildren(tempList);
-                else parent.setRightChildren(tempList);
-            }
-            // TODO: 21.12.2016 Lafore cussed out whole sub tree!
-            //Element has 2 children
-            else if (numberOfChildren(currentList) == 2) {
-                Node successor = getSuccessor(currentList);
-                Node rightChildren = currentList.getRightChildren();
-                Node leftChildren = currentList.getLeftChildren();
-                if (successor == leftChildren) {
-                    successor.setRightChildren(rightChildren);
-                } else if (successor == rightChildren) {
-                    successor.setLeftChildren(leftChildren);
+    public void remove(T element) {
+        Node<T> currentNode = root, parent = root;
+        while (currentNode != null) {
+            if (currentNode.data.equals(element)) {
+                if (currentNode.leftChildren == null && currentNode.rightChildren == null) {
+                    currentNode = null;
+                } else if (currentNode.leftChildren == null) {
+                    if (currentNode.data.compareTo(parent.data) < 0) {
+                        parent.leftChildren = currentNode.rightChildren;
+                    } else {
+                        parent.rightChildren = currentNode.rightChildren;
+                    }
+                    currentNode = null;
+                } else if (currentNode.rightChildren != null) {
+                    if (currentNode.data.compareTo(parent.data) < 0) {
+                        parent.leftChildren = currentNode.leftChildren;
+                    } else {
+                        parent.rightChildren = currentNode.leftChildren;
+                    }
+                    currentNode = null;
                 } else {
-                    successor.setLeftChildren(leftChildren);
-                    successor.setRightChildren(rightChildren);
+                    Node<T> leftNode = currentNode.leftChildren;
+                    Node<T> rightNode = currentNode.rightChildren;
+                    Node<T> successor = findSuccessor(currentNode);
+                    successor.leftChildren = leftNode;
+                    successor.rightChildren = rightNode;
                 }
-
-                if (parent.getKey() < currentList.getKey())
-                    parent.setRightChildren(successor);
-                else parent.setLeftChildren(successor);
             }
         }
     }
+
 
     /**
      * Getting successor for deleting list with two children
      *
-     * @param listForDeleting list for getting
+     * @param firstNode list for getting
      * @return successor
      */
-    private Node getSuccessor(Node listForDeleting) {
-        Node successorParent = listForDeleting;
-        Node successor = listForDeleting;
-        Node current = listForDeleting.getRightChildren();
+    private Node<T> findSuccessor(Node<T> firstNode) {
+        Node<T> successor = firstNode;
+        Node<T> successorParent = firstNode;
+        Node<T> current = firstNode.rightChildren;
         while (current != null) {
             successorParent = successor;
             successor = current;
-            current = current.getLeftChildren();
+            if (current.leftChildren != null) {
+                current = current.leftChildren;
+            } else {
+                current = current.rightChildren;
+            }
         }
-        if (successorParent != successor && successor != listForDeleting.getRightChildren())
-            successorParent.setLeftChildren(null);
+        if (successorParent != successor) {
+            if (successor.leftChildren == successor) {
+                successorParent.leftChildren = null;
+            } else {
+                successorParent.rightChildren = null;
+            }
+        }
         return successor;
     }
-
-    // TODO: 13.12.2016 @Vlad if you see it: it would be super if you can test private method like this!
 
     /**
      * Getting mount of list children
@@ -182,62 +152,16 @@ public class SearchTree<T extends Comparable<T>> {
      * @param list list for researching
      * @return mount of children
      */
-    private short numberOfChildren(Node list) {
-        if (list.getLeftChildren() == null && list.getRightChildren() == null)
+    private short childNodeNumber(Node list) {
+        if (list.leftChildren == null && list.rightChildren == null) {
             return 0;
-            //if only one children (XOR)
-        else if (list.getLeftChildren() == null ^ list.getRightChildren() == null) {
+        }
+        //if only one children (XOR)
+        else if (list.leftChildren == null ^ list.rightChildren == null) {
             return 1;
-        } else return 2;
-    }
-
-    /**
-     * Displaying full tree
-     */
-    public void showTree() {
-        numberGenerator = 0;
-        List<Node> rootOfTheTree = new ArrayList<Node>();
-        rootOfTheTree.add(root);
-        System.out.println("Root " + rootOfTheTree);
-        System.out.println("----------------------------------------------");
-        getChildrenLevel(rootOfTheTree);
-    }
-
-    // TODO: 12.12.2016 to remove last  empty level
-
-    /**
-     * Getting children of lists
-     *
-     * @param parentLevel array of lists
-     * @return array of children for adjusted lists
-     */
-    public List<Node> getChildrenLevel(List<Node> parentLevel) {
-        List<Node> childrenLevel = new ArrayList<Node>();
-        for (Node currentList : parentLevel) {
-            if (currentList.getLeftChildren() != null) {
-                childrenLevel.add(currentList.getLeftChildren());
-            }
-            if (currentList.getRightChildren() != null) {
-                childrenLevel.add(currentList.getRightChildren());
-            }
+        } else {
+            return 2;
         }
-        if (childrenLevel.size() > 0) {
-            System.out.println("Gen " + ++numberGenerator + "  " + childrenLevel);
-            System.out.println("----------------------------------------------");
-        }
-        if (childrenLevel.size() > 0)
-            return getChildrenLevel(childrenLevel);
-        else return null;
-    }
-
-    /**
-     * Displaying information of adjusted list
-     *
-     * @param list list for displaying
-     */
-    public void showListInfo(Node list) {
-        System.out.println(list);
-        System.out.println("Children " + list.getLeftChildren() + "   " + list.getRightChildren());
     }
 
     /**
@@ -268,9 +192,9 @@ public class SearchTree<T extends Comparable<T>> {
      */
     private void inOrderTraversal(Node currentList) {
         if (currentList != null) {
-            inOrderTraversal(currentList.getLeftChildren());
+            inOrderTraversal(currentList.leftChildren);
             System.out.println(currentList);
-            inOrderTraversal(currentList.getRightChildren());
+            inOrderTraversal(currentList.rightChildren);
         }
     }
 
@@ -282,8 +206,8 @@ public class SearchTree<T extends Comparable<T>> {
     private void preOrderTraversal(Node currentList) {
         if (currentList != null) {
             System.out.println(currentList);
-            preOrderTraversal(currentList.getLeftChildren());
-            preOrderTraversal(currentList.getRightChildren());
+            preOrderTraversal(currentList.leftChildren);
+            preOrderTraversal(currentList.rightChildren);
         }
     }
 
@@ -294,45 +218,9 @@ public class SearchTree<T extends Comparable<T>> {
      */
     private void postOrderTraversal(Node currentList) {
         if (currentList != null) {
-            postOrderTraversal(currentList.getLeftChildren());
-            postOrderTraversal(currentList.getRightChildren());
+            postOrderTraversal(currentList.leftChildren);
+            postOrderTraversal(currentList.rightChildren);
             System.out.println(currentList);
         }
-    }
-
-    /**
-     * Displaying tree in tree-view
-     */
-    public void displayTree() {
-        Stack globalStack = new Stack();
-        globalStack.push(root);
-        int nBlanks = 32;
-        boolean isRowEmpty = false;
-        System.out.println("......................................................");
-        while (isRowEmpty == false) {
-            Stack localStack = new Stack();
-            isRowEmpty = true;
-
-            for (int j = 0; j < nBlanks; j++) System.out.print(' ');
-            while (globalStack.isEmpty() == false) {
-                Node temp = (Node) globalStack.pop();
-                if (temp != null) {
-                    System.out.print(temp.getData());
-                    localStack.push(temp.getLeftChildren());
-                    localStack.push(temp.getRightChildren());
-                    if (temp.getLeftChildren() != null || temp.getLeftChildren() != null)
-                        isRowEmpty = false;
-                } else {
-                    System.out.print("--");
-                    localStack.push(null);
-                    localStack.push(null);
-                }
-                for (int j = 0; j < nBlanks * 2 - 2; j++) System.out.print(' ');
-            }
-            System.out.println();
-            nBlanks /= 2;
-            while (localStack.isEmpty() == false) globalStack.push(localStack.pop());
-        }
-        System.out.println("......................................................");
     }
 }
