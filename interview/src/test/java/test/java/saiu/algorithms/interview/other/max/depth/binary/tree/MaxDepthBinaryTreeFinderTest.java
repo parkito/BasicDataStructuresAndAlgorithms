@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.siksmfp.basic.interview.other.MaxDepthBinaryTreeFinder;
-import ru.siksmfp.basic.structure.tree.doubled.seacrh.tree.TreeList;
 
 /**
  * @author Artem Karnov @date 25.02.17.

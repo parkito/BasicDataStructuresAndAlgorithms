@@ -10,18 +10,36 @@ import java.util.Stack;
  * @author Artem Karnov @date 08.12.16.
  * artem.karnov@t-systems.com
  **/
-public class SearchTree<T> {
-    private static long numberGenerator;
-    private TreeList<T> root;
+public class SearchTree<T extends Comparable<T>> {
+
+    public class Node<T extends Comparable<T>> {
+        private T data;
+        private Node<T> leftChildren;
+        private Node<T> rightChildren;
+
+        public Node(T data) {
+            this.data = data;
+            this.rightChildren = null;
+            this.leftChildren = null;
+        }
+
+        public Node(T data, Node<T> leftChildren, Node<T> rightChildren) {
+            this.data = data;
+            this.rightChildren = leftChildren;
+            this.leftChildren = rightChildren;
+        }
+
+        public String toString() {
+            return "List{data " + data + ", left child " + leftChildren + ", right child " + rightChildren + "}";
+        }
+    }
+
+    private Node<T> root;
+    private int size;
 
     public SearchTree() {
         root = null;
     }
-
-    // TODO: 13.12.2016 Generic problem (any key and any data) 
-    // TODO: 12.12.2016   I hate my code
-    // TODO: 12.12.2016 Although i wrote more effective code than Lafore (without addition Note
-    // variable)
 
     /**
      * Addition list after max element
@@ -29,50 +47,21 @@ public class SearchTree<T> {
      * @param element element for adding
      */
     public void add(T element) {
-        TreeList current = root, parent = root;
+        Node<T> current = root, parent = root;
         while (current != null) {
-            parent = current;
-            current = current.getRightChildren();
+            if (current.data.compareTo(element) < 0)
+                current = current.leftChildren;
+            else {
+                current = current.rightChildren;
+            }
         }
-        parent.setRightChildren(new TreeList(parent.getKey() + 1, element));
-    }
-
-    /**
-     * Addition list to the tree by part tree traversal
-     *
-     * @param key     key of element
-     * @param element element for adding
-     */
-    public void add(long key, T element) {
-        if (root == null) {
-            root = new TreeList<T>(key, element);
-        } else {
-            TreeList currentList = root;
-            while (true) {
-                //choosing the branch of the tree (new key > current key -> we go to right branch )
-                if (key > currentList.getKey()) {
-                    if (currentList.getRightChildren() == null) {
-                        //we come to end of the right branch
-                        //we add element and finish this operation
-                        currentList.setRightChildren(new TreeList(key, element));
-                        return;
-                    }
-                    //it isn't end of the branch, so move on
-                    currentList = currentList.getRightChildren();
-
-                } else if (key < currentList.getKey()) {
-                    if (currentList.getLeftChildren() == null) {
-                        //we come to end of the left branch
-                        //we add element and finish this operation
-                        currentList.setLeftChildren(new TreeList(key, element));
-                        return;
-                    }
-                    //it isn't end of the branch, so move on
-                    currentList = currentList.getLeftChildren();
-
-                } else {
-                    throw new IncorrectSizeException("Element with key=" + key + " already exists!");
-                }
+        current = new Node<>(element);
+        size++;
+        if (parent != null) {
+            if (parent.data.compareTo(element) < 0)
+                parent.leftChildren = current;
+            else {
+                parent.rightChildren = current;
             }
         }
     }
@@ -80,36 +69,20 @@ public class SearchTree<T> {
     /**
      * Searching list's data by key
      *
-     * @param key list's key for searching
      * @return list's data if element exists, null if doesn't
      */
-    public T find(long key) {
-        TreeList currentList = root;
+    public boolean contains(T elements) {
+        Node<T> currentList = root;
         while (currentList != null) {
-            if (key == currentList.getKey())
-                return (T) currentList.getData();
-            else if (key > currentList.getKey()) {
-                currentList = currentList.getRightChildren();
+            if (currentList.data.equals(elements))
+                return true;
+            else if (currentList.data.compareTo(elements) < 0) {
+                currentList = currentList.leftChildren;
             } else {
-                currentList = currentList.getLeftChildren();
+                currentList = currentList.rightChildren;
             }
         }
-        return null;
-    }
-
-    /**
-     * Searching list's key by full tree traversal
-     *
-     * @param element element for adding
-     * @return key of list if element exists in the tree, null if doesn't
-     */
-    public Long indexOf(T element) {
-        TreeList currentList = root;
-        while (currentList != null) {
-            if (currentList.getData() == element)
-                return null;
-        }
-        return null;
+        return false;
     }
 
     /**
@@ -118,7 +91,7 @@ public class SearchTree<T> {
      * @param key for element removing
      */
     public void remove(long key) {
-        TreeList currentList = root, parent = root;
+        Node currentList = root, parent = root;
         boolean isElementFound = false;
         //Searching emelemt for deleting
         while (currentList != null) {
@@ -150,7 +123,7 @@ public class SearchTree<T> {
                 else parent.setRightChildren(null);
                 //Element has only one children
             } else if (numberOfChildren(currentList) == 1) {
-                TreeList tempList = null;
+                Node tempList = null;
                 if (currentList.getLeftChildren() != null)
                     tempList = currentList.getLeftChildren();
                 else currentList.getRightChildren();
@@ -162,9 +135,9 @@ public class SearchTree<T> {
             // TODO: 21.12.2016 Lafore cussed out whole sub tree!
             //Element has 2 children
             else if (numberOfChildren(currentList) == 2) {
-                TreeList successor = getSuccessor(currentList);
-                TreeList rightChildren = currentList.getRightChildren();
-                TreeList leftChildren = currentList.getLeftChildren();
+                Node successor = getSuccessor(currentList);
+                Node rightChildren = currentList.getRightChildren();
+                Node leftChildren = currentList.getLeftChildren();
                 if (successor == leftChildren) {
                     successor.setRightChildren(rightChildren);
                 } else if (successor == rightChildren) {
@@ -187,10 +160,10 @@ public class SearchTree<T> {
      * @param listForDeleting list for getting
      * @return successor
      */
-    private TreeList getSuccessor(TreeList listForDeleting) {
-        TreeList successorParent = listForDeleting;
-        TreeList successor = listForDeleting;
-        TreeList current = listForDeleting.getRightChildren();
+    private Node getSuccessor(Node listForDeleting) {
+        Node successorParent = listForDeleting;
+        Node successor = listForDeleting;
+        Node current = listForDeleting.getRightChildren();
         while (current != null) {
             successorParent = successor;
             successor = current;
@@ -209,7 +182,7 @@ public class SearchTree<T> {
      * @param list list for researching
      * @return mount of children
      */
-    private short numberOfChildren(TreeList list) {
+    private short numberOfChildren(Node list) {
         if (list.getLeftChildren() == null && list.getRightChildren() == null)
             return 0;
             //if only one children (XOR)
@@ -223,7 +196,7 @@ public class SearchTree<T> {
      */
     public void showTree() {
         numberGenerator = 0;
-        List<TreeList> rootOfTheTree = new ArrayList<TreeList>();
+        List<Node> rootOfTheTree = new ArrayList<Node>();
         rootOfTheTree.add(root);
         System.out.println("Root " + rootOfTheTree);
         System.out.println("----------------------------------------------");
@@ -238,9 +211,9 @@ public class SearchTree<T> {
      * @param parentLevel array of lists
      * @return array of children for adjusted lists
      */
-    public List<TreeList> getChildrenLevel(List<TreeList> parentLevel) {
-        List<TreeList> childrenLevel = new ArrayList<TreeList>();
-        for (TreeList currentList : parentLevel) {
+    public List<Node> getChildrenLevel(List<Node> parentLevel) {
+        List<Node> childrenLevel = new ArrayList<Node>();
+        for (Node currentList : parentLevel) {
             if (currentList.getLeftChildren() != null) {
                 childrenLevel.add(currentList.getLeftChildren());
             }
@@ -262,7 +235,7 @@ public class SearchTree<T> {
      *
      * @param list list for displaying
      */
-    public void showListInfo(TreeList list) {
+    public void showListInfo(Node list) {
         System.out.println(list);
         System.out.println("Children " + list.getLeftChildren() + "   " + list.getRightChildren());
     }
@@ -293,7 +266,7 @@ public class SearchTree<T> {
      *
      * @param currentList local root
      */
-    private void inOrderTraversal(TreeList currentList) {
+    private void inOrderTraversal(Node currentList) {
         if (currentList != null) {
             inOrderTraversal(currentList.getLeftChildren());
             System.out.println(currentList);
@@ -306,7 +279,7 @@ public class SearchTree<T> {
      *
      * @param currentList local root
      */
-    private void preOrderTraversal(TreeList currentList) {
+    private void preOrderTraversal(Node currentList) {
         if (currentList != null) {
             System.out.println(currentList);
             preOrderTraversal(currentList.getLeftChildren());
@@ -319,7 +292,7 @@ public class SearchTree<T> {
      *
      * @param currentList local root
      */
-    private void postOrderTraversal(TreeList currentList) {
+    private void postOrderTraversal(Node currentList) {
         if (currentList != null) {
             postOrderTraversal(currentList.getLeftChildren());
             postOrderTraversal(currentList.getRightChildren());
@@ -342,7 +315,7 @@ public class SearchTree<T> {
 
             for (int j = 0; j < nBlanks; j++) System.out.print(' ');
             while (globalStack.isEmpty() == false) {
-                TreeList temp = (TreeList) globalStack.pop();
+                Node temp = (Node) globalStack.pop();
                 if (temp != null) {
                     System.out.print(temp.getData());
                     localStack.push(temp.getLeftChildren());
