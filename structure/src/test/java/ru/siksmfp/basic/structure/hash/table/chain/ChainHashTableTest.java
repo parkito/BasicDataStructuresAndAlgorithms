@@ -193,9 +193,6 @@ public class ChainHashTableTest {
         hashTable.delete(3);
         hashTable.delete(4);
 
-        hashTable.toString();
-
-
         Assert.assertEquals(hashTable.size(), 3);
         Assert.assertNull(hashTable.get(1));
         Assert.assertNull(hashTable.get(2));
@@ -254,14 +251,5 @@ public class ChainHashTableTest {
         hashTable2.add(2, 3);
 
         Assert.assertNotEquals(hashTable1.hashCode(), hashTable2.hashCode());
-    }
-
-    @Test(expected = IncorrectSizeException.class)
-    public void fiftiethTest() {
-        HashTable<Integer, Integer> hashTable = new ChainHashTable<>(3);
-        hashTable.add(1, 1);
-        hashTable.add(2, 2);
-        hashTable.add(3, 3);
-        hashTable.add(4, 4);
     }
 }

@@ -16,6 +16,9 @@ import java.util.function.Function;
  * Hash table with binary probing
  */
 public class ChainHashTable<K, V> implements HashTable<K, V> {
+
+    private static final int INITIAL_SIZE = 10000;
+
     /**
      * Structure for storing key-value structure
      *
@@ -45,10 +48,8 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
         }
     }
 
-
     private ArrayStructure<ListStructure<Node<K, V>>> array;
     private Function<K, Integer> hashFunction;
-    private int initialSize;
     private int size;
     /**
      * Default hash function is being applying whe custom function isn't given
@@ -66,12 +67,17 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
 
     /**
      * Constructor with size initialization
-     *
-     * @param size size of table
      */
-    public ChainHashTable(int size) {
-        this.initialSize = size;
-        array = new FixedArray<>(Math.getFirstSimpleNumberAfter(size));
+    public ChainHashTable(int initialSize) {
+        array = new FixedArray<>(Math.getFirstSimpleNumberAfter(initialSize));
+        hashFunction = DEFAULT_HASH_FUNCTION;
+    }
+
+    /**
+     * Constructor with predefined initial size see @INITIAL_SIZE
+     */
+    public ChainHashTable() {
+        array = new FixedArray<>(Math.getFirstSimpleNumberAfter(INITIAL_SIZE));
         hashFunction = DEFAULT_HASH_FUNCTION;
     }
 
@@ -116,7 +122,7 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
             return null;
         } else {
             for (int i = 0; i < array.get(index).size(); i++) {
-                if (array.get(index).get(i).key.equals(key)) {
+                if (array.get(index).get(i) != null && array.get(index).get(i).key.equals(key)) {
                     return array.get(index).get(i).value;
                 }
             }
@@ -150,6 +156,11 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
             for (int i = 0; i < array.get(index).size(); i++) {
                 if (array.get(index).get(i).key.equals(key)) {
                     array.get(index).remove(i);
+                    size--;
+                }
+                if (array.get(index).size() == 0) {
+                    array.add(index, null);
+                    break;
                 }
             }
         }
@@ -192,18 +203,22 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
         if (array.size() != table1.array.size()) return false;
 
         for (int i = 0; i < array.size(); i++) {
-            if (array.get(i) == null && table1.array.get(i) != null) {
-                return false;
+            if (array.get(i) == null && table1.array.get(i) == null) {
+                continue;
             }
-
-            if (array.get(i) != null && table1.array.get(i) == null) {
-                return false;
-            }
-
-            if (array.get(i) != null && table1.array.get(i) != null)
-                if (!array.get(i).equals(table1.array.get(i))) {
+            for (int j = 0; j < array.get(i).size(); j++) {
+                if (array.get(i).get(j) != null && table1.array.get(i).get(j) == null) {
                     return false;
                 }
+                if (array.get(i).get(j) == null && table1.array.get(i).get(j) != null) {
+                    return false;
+                }
+                if (array.get(i).get(j) != null) {
+                    if (!array.get(i).get(j).equals(table1.array.get(i).get(j))) {
+                        return false;
+                    }
+                }
+            }
         }
 
         return true;
@@ -214,7 +229,9 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
         int result = 31 * size;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) != null) {
-                result += 31 * array.get(i).hashCode();
+                for (int j = 0; j < array.get(i).size(); j++) {
+                    result += 31 * array.get(i).get(j).hashCode();
+                }
             }
         }
         return result;
