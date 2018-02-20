@@ -4,31 +4,27 @@ package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
  * @author Artem Karnov @date 08.12.16.
  * artem.karnov@t-systems.com
  **/
-public class SearchTree<T extends Comparable<T>> {
+public class SearchTree<K extends Comparable<K>, V> {
 
-    public class Node<T extends Comparable<T>> {
-        private T data;
-        private Node<T> leftChildren;
-        private Node<T> rightChildren;
+    public class Node<K extends Comparable<K>, V> {
+        private K key;
+        private V value;
+        private Node<K, V> leftChildren;
+        private Node<K, V> rightChildren;
 
-        private Node(T data) {
-            this.data = data;
+        private Node(K key, V value) {
+            this.key = key;
+            this.value = value;
             this.rightChildren = null;
             this.leftChildren = null;
         }
 
-        private Node(T data, Node<T> leftChildren, Node<T> rightChildren) {
-            this.data = data;
-            this.rightChildren = leftChildren;
-            this.leftChildren = rightChildren;
-        }
-
         public String toString() {
-            return "List{data " + data + ", left child " + leftChildren + ", right child " + rightChildren + "}";
+            return "Node{key " + key + ", value " + value + ", left child " + leftChildren + ", right child " + rightChildren + "}";
         }
     }
 
-    private Node<T> root;
+    private Node<K, V> root;
     private int size;
 
     public SearchTree() {
@@ -36,24 +32,24 @@ public class SearchTree<T extends Comparable<T>> {
     }
 
     /**
-     * Addition list after max element
+     * Addition list after max value
      *
-     * @param element element for adding
+     * @param value value for adding
      */
-    public void add(T element) {
-        Node<T> currentNode = root, parent = root;
+    public void add(K key, V value) {
+        Node<K, V> currentNode = root, parent = root;
         while (currentNode != null) {
             parent = currentNode;
-            if (currentNode.data.compareTo(element) < 0)
+            if (currentNode.key.compareTo(key) < 0) {
                 currentNode = currentNode.leftChildren;
-            else {
+            } else {
                 currentNode = currentNode.rightChildren;
             }
         }
-        currentNode = new Node<>(element);
+        currentNode = new Node<>(key, value);
         size++;
         if (parent != null) {
-            if (parent.data.compareTo(element) < 0)
+            if (parent.key.compareTo(key) < 0)
                 parent.leftChildren = currentNode;
             else {
                 parent.rightChildren = currentNode;
@@ -62,16 +58,25 @@ public class SearchTree<T extends Comparable<T>> {
     }
 
     /**
-     * Searching list's data by key
+     * Searching list's value by value
      *
-     * @return list's data if element exists, null if doesn't
+     * @return list's value if element exists, null if doesn't
      */
-    public boolean contains(T element) {
-        Node<T> currentNode = root;
+    public boolean contains(V value) {
+        return inOrder(root, value);
+    }
+
+    /**
+     * Searching list's value by key
+     *
+     * @return list's value if element exists, null if doesn't
+     */
+    public boolean contains(K key) {
+        Node<K, V> currentNode = root;
         while (currentNode != null) {
-            if (currentNode.data.equals(element))
+            if (currentNode.key.equals(key)) {
                 return true;
-            else if (currentNode.data.compareTo(element) < 0) {
+            } else if (currentNode.key.compareTo(key) < 0) {
                 currentNode = currentNode.leftChildren;
             } else {
                 currentNode = currentNode.rightChildren;
@@ -80,35 +85,51 @@ public class SearchTree<T extends Comparable<T>> {
         return false;
     }
 
+    private boolean inOrder(Node<K, V> localRoot, V value) {
+        if (localRoot != null) {
+            boolean leftResult = inOrder(localRoot.leftChildren, value);
+            if (leftResult) {
+                return true;
+            }
+            if (localRoot.value.equals(value)) {
+                return true;
+            } else {
+                return inOrder(localRoot.rightChildren, value);
+            }
+        } else {
+            return false;
+        }
+    }
+
     /**
-     * Removing element
+     * Removing element with key
      *
-     * @param element for element removing
+     * @param key for key removing
      */
-    public void remove(T element) {
-        Node<T> currentNode = root, parent = root;
+    public void remove(K key) {
+        Node<K, V> currentNode = root, parent = root;
         while (currentNode != null) {
-            if (currentNode.data.equals(element)) {
+            if (currentNode.value.equals(key)) {
                 if (currentNode.leftChildren == null && currentNode.rightChildren == null) {
                     currentNode = null;
                 } else if (currentNode.leftChildren == null) {
-                    if (currentNode.data.compareTo(parent.data) < 0) {
+                    if (currentNode.key.compareTo(parent.key) < 0) {
                         parent.leftChildren = currentNode.rightChildren;
                     } else {
                         parent.rightChildren = currentNode.rightChildren;
                     }
                     currentNode = null;
                 } else if (currentNode.rightChildren != null) {
-                    if (currentNode.data.compareTo(parent.data) < 0) {
+                    if (currentNode.key.compareTo(parent.key) < 0) {
                         parent.leftChildren = currentNode.leftChildren;
                     } else {
                         parent.rightChildren = currentNode.leftChildren;
                     }
                     currentNode = null;
                 } else {
-                    Node<T> leftNode = currentNode.leftChildren;
-                    Node<T> rightNode = currentNode.rightChildren;
-                    Node<T> successor = findSuccessor(currentNode);
+                    Node<K, V> leftNode = currentNode.leftChildren;
+                    Node<K, V> rightNode = currentNode.rightChildren;
+                    Node<K, V> successor = findSuccessor(currentNode);
                     successor.leftChildren = leftNode;
                     successor.rightChildren = rightNode;
                 }
@@ -116,17 +137,16 @@ public class SearchTree<T extends Comparable<T>> {
         }
     }
 
-
     /**
      * Getting successor for deleting list with two children
      *
      * @param firstNode list for getting
      * @return successor
      */
-    private Node<T> findSuccessor(Node<T> firstNode) {
-        Node<T> successor = firstNode;
-        Node<T> successorParent = firstNode;
-        Node<T> current = firstNode.rightChildren;
+    private Node<K, V> findSuccessor(Node<K, V> firstNode) {
+        Node<K, V> successor = firstNode;
+        Node<K, V> successorParent = firstNode;
+        Node<K, V> current = firstNode.rightChildren;
         while (current != null) {
             successorParent = successor;
             successor = current;
@@ -144,83 +164,5 @@ public class SearchTree<T extends Comparable<T>> {
             }
         }
         return successor;
-    }
-
-    /**
-     * Getting mount of list children
-     *
-     * @param list list for researching
-     * @return mount of children
-     */
-    private short childNodeNumber(Node list) {
-        if (list.leftChildren == null && list.rightChildren == null) {
-            return 0;
-        }
-        //if only one children (XOR)
-        else if (list.leftChildren == null ^ list.rightChildren == null) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }
-
-    /**
-     * Tree traversal in order
-     */
-    public void inOrderFullTraversal() {
-        inOrderTraversal(root);
-    }
-
-    /**
-     * Tree traversal in pre order
-     */
-    public void preOrderFullTraversal() {
-        preOrderTraversal(root);
-    }
-
-    /**
-     * Tree traversal in post order
-     */
-    public void postOrderFullTraversal() {
-        postOrderTraversal(root);
-    }
-
-    /**
-     * Recurrent mechanism for in order tree traversal
-     *
-     * @param currentList local root
-     */
-    private void inOrderTraversal(Node currentList) {
-        if (currentList != null) {
-            inOrderTraversal(currentList.leftChildren);
-            System.out.println(currentList);
-            inOrderTraversal(currentList.rightChildren);
-        }
-    }
-
-    /**
-     * Recurrent mechanism for pre order tree traversal
-     *
-     * @param currentList local root
-     */
-    private void preOrderTraversal(Node currentList) {
-        if (currentList != null) {
-            System.out.println(currentList);
-            preOrderTraversal(currentList.leftChildren);
-            preOrderTraversal(currentList.rightChildren);
-        }
-    }
-
-    /**
-     * Recurrent mechanism for post order tree traversal
-     *
-     * @param currentList local root
-     */
-    private void postOrderTraversal(Node currentList) {
-        if (currentList != null) {
-            postOrderTraversal(currentList.leftChildren);
-            postOrderTraversal(currentList.rightChildren);
-            System.out.println(currentList);
-        }
     }
 }
