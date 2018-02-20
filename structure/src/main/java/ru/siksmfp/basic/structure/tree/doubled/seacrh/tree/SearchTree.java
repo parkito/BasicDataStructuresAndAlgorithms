@@ -1,10 +1,15 @@
 package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
 
+import ru.siksmfp.basic.structure.api.TreeStructure;
+import ru.siksmfp.basic.structure.utils.SystemUtils;
+
+import java.util.function.BiConsumer;
+
 /**
  * @author Artem Karnov @date 08.12.16.
  * artem.karnov@t-systems.com
  **/
-public class SearchTree<K extends Comparable<K>, V> {
+public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
 
     public class Node<K extends Comparable<K>, V> {
         private K key;
@@ -36,6 +41,7 @@ public class SearchTree<K extends Comparable<K>, V> {
      *
      * @param value value for adding
      */
+    @Override
     public void add(K key, V value) {
         Node<K, V> currentNode = root, parent = root;
         while (currentNode != null) {
@@ -57,13 +63,26 @@ public class SearchTree<K extends Comparable<K>, V> {
         }
     }
 
-    /**
-     * Searching list's value by value
-     *
-     * @return list's value if element exists, null if doesn't
-     */
-    public boolean contains(V value) {
-        return inOrder(root, value);
+    @Override
+    public void strictAdd(K key, V value) {
+        Node<K, V> currentNode = root, parent = root;
+        while (currentNode != null) {
+            parent = currentNode;
+            if (currentNode.key.compareTo(key) < 0) {
+                currentNode = currentNode.leftChildren;
+            } else {
+                currentNode = currentNode.rightChildren;
+            }
+        }
+        currentNode = new Node<>((K) SystemUtils.clone(key), (V) SystemUtils.clone(value));
+        size++;
+        if (parent != null) {
+            if (parent.key.compareTo(key) < 0)
+                parent.leftChildren = currentNode;
+            else {
+                parent.rightChildren = currentNode;
+            }
+        }
     }
 
     /**
@@ -71,6 +90,7 @@ public class SearchTree<K extends Comparable<K>, V> {
      *
      * @return list's value if element exists, null if doesn't
      */
+    @Override
     public boolean contains(K key) {
         Node<K, V> currentNode = root;
         while (currentNode != null) {
@@ -85,20 +105,14 @@ public class SearchTree<K extends Comparable<K>, V> {
         return false;
     }
 
-    private boolean inOrder(Node<K, V> localRoot, V value) {
-        if (localRoot != null) {
-            boolean leftResult = inOrder(localRoot.leftChildren, value);
-            if (leftResult) {
-                return true;
-            }
-            if (localRoot.value.equals(value)) {
-                return true;
-            } else {
-                return inOrder(localRoot.rightChildren, value);
-            }
-        } else {
-            return false;
-        }
+    /**
+     * Searching list's value by value
+     *
+     * @return list's value if element exists, null if doesn't
+     */
+    @Override
+    public boolean containsValue(V value) {
+        return inOrder(root, value);
     }
 
     /**
@@ -106,6 +120,7 @@ public class SearchTree<K extends Comparable<K>, V> {
      *
      * @param key for key removing
      */
+    @Override
     public void remove(K key) {
         Node<K, V> currentNode = root, parent = root;
         while (currentNode != null) {
@@ -137,6 +152,13 @@ public class SearchTree<K extends Comparable<K>, V> {
         }
     }
 
+    // TODO: 2/20/2018 finish it
+    @Override
+    public void removeValue(V value) {
+//        BiConsumer<Node<K, V>, Node<K, V>> function = (p, c) -> {
+//        }
+    }
+
     /**
      * Getting successor for deleting list with two children
      *
@@ -164,5 +186,47 @@ public class SearchTree<K extends Comparable<K>, V> {
             }
         }
         return successor;
+    }
+
+    private boolean inOrder(Node<K, V> localRoot, V value) {
+        if (localRoot != null) {
+            boolean leftResult = inOrder(localRoot.leftChildren, value);
+            if (leftResult) {
+                return true;
+            }
+            if (localRoot.value.equals(value)) {
+                return true;
+            } else {
+                return inOrder(localRoot.rightChildren, value);
+            }
+        } else {
+            return false;
+        }
+    }
+
+    //tree's bypassing (tree's traversals)
+
+    private void inOrder(Node<K, V> localRoot, BiConsumer<K, V> function) {
+        if (localRoot != null) {
+            inOrder(localRoot.leftChildren, function);
+            function.accept(localRoot.key, localRoot.value);
+            inOrder(localRoot.rightChildren, function);
+        }
+    }
+
+    private void fOrder(Node<K, V> localRoot, BiConsumer<K, V> function) {
+        if (localRoot != null) {
+            function.accept(localRoot.key, localRoot.value);
+            fOrder(localRoot.leftChildren, function);
+            fOrder(localRoot.rightChildren, function);
+        }
+    }
+
+    private void bOrder(Node<K, V> localRoot, BiConsumer<K, V> function) {
+        if (localRoot != null) {
+            bOrder(localRoot.leftChildren, function);
+            bOrder(localRoot.rightChildren, function);
+            function.accept(localRoot.key, localRoot.value);
+        }
     }
 }
