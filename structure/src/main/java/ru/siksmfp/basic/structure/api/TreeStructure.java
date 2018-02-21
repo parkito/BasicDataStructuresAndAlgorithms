@@ -18,4 +18,6 @@ public interface TreeStructure<K, V> {
     void remove(K key);
 
     void removeValue(V value);
+
+    int size();
 }

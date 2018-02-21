@@ -46,6 +46,7 @@ public class SearchTreeTest {
         tree.add(secondKey, secondValue);
         tree.add(thirdKey, thirdValue);
 
+        Assert.assertEquals(3, tree.size());
         Assert.assertTrue(tree.contains(firstKey));
         Assert.assertTrue(tree.contains(secondKey));
         Assert.assertTrue(tree.contains(thirdKey));
@@ -68,6 +69,7 @@ public class SearchTreeTest {
         tree.add(secondKey, secondValue);
         tree.add(thirdKey, thirdValue);
 
+        Assert.assertEquals(3, tree.size());
         Assert.assertTrue(tree.containsValue(firstValue));
         Assert.assertTrue(tree.containsValue(secondValue));
         Assert.assertTrue(tree.containsValue(thirdValue));
@@ -90,12 +92,14 @@ public class SearchTreeTest {
         tree.add(secondKey, secondValue);
         tree.add(thirdKey, thirdValue);
 
+        Assert.assertEquals(3, tree.size());
+
         tree.remove(thirdKey);
 
+        Assert.assertEquals(2, tree.size());
         Assert.assertTrue(tree.containsValue(firstValue));
         Assert.assertTrue(tree.containsValue(secondValue));
         Assert.assertFalse(tree.containsValue(thirdValue));
         Assert.assertFalse(tree.containsValue(fourthValue));
     }
-
 }

@@ -13,7 +13,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     /**
      * Model of node's tree
      */
-    public class Node {
+    private class Node {
         private K key;
         private V value;
         private Node leftChildren;
@@ -170,8 +170,9 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             } else if (parentNode.rightChildren != null && parentNode.rightChildren.key.equals(key)) {
                 nodeForDeleting = parentNode.rightChildren;
             }
-            removeNode(parentNode, nodeForDeleting);
         }
+        if (nodeForDeleting != null)
+            removeNode(parentNode, nodeForDeleting);
     }
 
     /**
@@ -185,6 +186,11 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         if (indexForRemoving != null) {
             remove(indexForRemoving);
         }
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     private Node findParent(Node localRoot, K key) {
@@ -228,13 +234,12 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             successor.rightChildren = rightNode;
         }
         size--;
-
     }
 
-    private void removeChildrenNode(Node parentNode, Node nodeForRemoving) {
-        if (parentNode.leftChildren != null && parentNode.leftChildren.key.equals(nodeForRemoving.key)) {
+    private void removeChildrenNode(Node parentNode, Node childrenNode) {
+        if (parentNode.leftChildren != null && parentNode.leftChildren.key.equals(childrenNode.key)) {
             parentNode.leftChildren = null;
-        } else if (parentNode.rightChildren != null && parentNode.rightChildren.key.equals(nodeForRemoving.key)) {
+        } else if (parentNode.rightChildren != null && parentNode.rightChildren.key.equals(childrenNode.key)) {
             parentNode.rightChildren = null;
         }
     }
