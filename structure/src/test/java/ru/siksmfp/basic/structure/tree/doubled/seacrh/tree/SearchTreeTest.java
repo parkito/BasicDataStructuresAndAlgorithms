@@ -30,4 +30,72 @@ public class SearchTreeTest {
         Assert.assertNotNull(thirdValue, tree.get(thirdKey));
     }
 
+    @Test
+    public void secondTest() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+        int firstKey = 1;
+        int secondKey = 2;
+        int thirdKey = 3;
+        int fourthKey = 4;
+
+        String firstValue = "1";
+        String secondValue = "2";
+        String thirdValue = "3";
+
+        tree.add(firstKey, firstValue);
+        tree.add(secondKey, secondValue);
+        tree.add(thirdKey, thirdValue);
+
+        Assert.assertTrue(tree.contains(firstKey));
+        Assert.assertTrue(tree.contains(secondKey));
+        Assert.assertTrue(tree.contains(thirdKey));
+        Assert.assertFalse(tree.contains(fourthKey));
+    }
+
+    @Test
+    public void thirdTest() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+        int firstKey = 1;
+        int secondKey = 2;
+        int thirdKey = 3;
+
+        String firstValue = "1";
+        String secondValue = "2";
+        String thirdValue = "3";
+        String fourthValue = "4";
+
+        tree.add(firstKey, firstValue);
+        tree.add(secondKey, secondValue);
+        tree.add(thirdKey, thirdValue);
+
+        Assert.assertTrue(tree.containsValue(firstValue));
+        Assert.assertTrue(tree.containsValue(secondValue));
+        Assert.assertTrue(tree.containsValue(thirdValue));
+        Assert.assertFalse(tree.containsValue(fourthValue));
+    }
+
+    @Test
+    public void fourthTest() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+        int firstKey = 1;
+        int secondKey = 2;
+        int thirdKey = 3;
+
+        String firstValue = "1";
+        String secondValue = "2";
+        String thirdValue = "3";
+        String fourthValue = "4";
+
+        tree.add(firstKey, firstValue);
+        tree.add(secondKey, secondValue);
+        tree.add(thirdKey, thirdValue);
+
+        tree.remove(thirdKey);
+
+        Assert.assertTrue(tree.containsValue(firstValue));
+        Assert.assertTrue(tree.containsValue(secondValue));
+        Assert.assertFalse(tree.containsValue(thirdValue));
+        Assert.assertFalse(tree.containsValue(fourthValue));
+    }
+
 }

@@ -27,7 +27,14 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
 
         public String toString() {
-            return "Node{key " + key + ", value " + value + ", left child " + leftChildren + ", right child " + rightChildren + "}";
+            String leftChildrenKey = leftChildren == null ? "null" : leftChildren.key == null ? "null" : leftChildren.key.toString();
+            String leftChildrenValue = leftChildren == null ? "null" : leftChildren.value == null ? "null" : leftChildren.value.toString();
+            String rightChildrenKey = rightChildren == null ? "null" : rightChildren.key == null ? "null" : rightChildren.key.toString();
+            String rightChildrenValue = rightChildren == null ? "null" : rightChildren.value == null ? "null" : rightChildren.value.toString();
+
+            return "Node{key " + key + ", value " + value
+                    + ", left child (" + leftChildrenKey + ";" + leftChildrenValue + ")"
+                    + "; right child (" + rightChildrenKey + ";" + rightChildrenValue + ") }";
         }
     }
 
@@ -155,33 +162,15 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      */
     @Override
     public void remove(K key) {
-        Node currentNode = root, parent = root;
-        while (currentNode != null) {
-            if (currentNode.value.equals(key)) {
-                if (currentNode.leftChildren == null && currentNode.rightChildren == null) {
-                    currentNode = null;
-                } else if (currentNode.leftChildren == null) {
-                    if (currentNode.key.compareTo(parent.key) < 0) {
-                        parent.leftChildren = currentNode.rightChildren;
-                    } else {
-                        parent.rightChildren = currentNode.rightChildren;
-                    }
-                    currentNode = null;
-                } else if (currentNode.rightChildren != null) {
-                    if (currentNode.key.compareTo(parent.key) < 0) {
-                        parent.leftChildren = currentNode.leftChildren;
-                    } else {
-                        parent.rightChildren = currentNode.leftChildren;
-                    }
-                    currentNode = null;
-                } else {
-                    Node leftNode = currentNode.leftChildren;
-                    Node rightNode = currentNode.rightChildren;
-                    Node successor = findSuccessor(currentNode);
-                    successor.leftChildren = leftNode;
-                    successor.rightChildren = rightNode;
-                }
+        Node parentNode = findParent(root, key);
+        Node nodeForDeleting = null;
+        if (parentNode != null) {
+            if (parentNode.leftChildren != null && parentNode.leftChildren.key.equals(key)) {
+                nodeForDeleting = parentNode.leftChildren;
+            } else if (parentNode.rightChildren != null && parentNode.rightChildren.key.equals(key)) {
+                nodeForDeleting = parentNode.rightChildren;
             }
+            removeNode(parentNode, nodeForDeleting);
         }
     }
 
@@ -195,6 +184,58 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         K indexForRemoving = remove(root, value);
         if (indexForRemoving != null) {
             remove(indexForRemoving);
+        }
+    }
+
+    private Node findParent(Node localRoot, K key) {
+        if (localRoot != null) {
+            Node leftResult = findParent(localRoot.leftChildren, key);
+            if (leftResult != null) {
+                return leftResult;
+            } else if (localRoot.leftChildren != null && localRoot.leftChildren.key.equals(key)) {
+                return localRoot;
+            } else if (localRoot.rightChildren != null && localRoot.leftChildren.key.equals(key)) {
+                return localRoot;
+            } else {
+                return findParent(localRoot.rightChildren, key);
+            }
+        }
+        return null;
+    }
+
+    private void removeNode(Node parentNode, Node nodeForRemoving) {
+        if (nodeForRemoving.leftChildren == null && nodeForRemoving.rightChildren == null) {
+            removeChildrenNode(parentNode, nodeForRemoving);
+        } else if (nodeForRemoving.leftChildren == null) {
+            if (nodeForRemoving.key.compareTo(parentNode.key) < 0) {
+                parentNode.leftChildren = nodeForRemoving.rightChildren;
+            } else {
+                parentNode.rightChildren = nodeForRemoving.rightChildren;
+            }
+            removeChildrenNode(parentNode, nodeForRemoving);
+        } else if (nodeForRemoving.rightChildren == null) {
+            if (nodeForRemoving.key.compareTo(parentNode.key) < 0) {
+                parentNode.leftChildren = nodeForRemoving.leftChildren;
+            } else {
+                parentNode.rightChildren = nodeForRemoving.leftChildren;
+            }
+            removeChildrenNode(parentNode, nodeForRemoving);
+        } else {
+            Node leftNode = nodeForRemoving.leftChildren;
+            Node rightNode = nodeForRemoving.rightChildren;
+            Node successor = findSuccessor(nodeForRemoving);
+            successor.leftChildren = leftNode;
+            successor.rightChildren = rightNode;
+        }
+        size--;
+
+    }
+
+    private void removeChildrenNode(Node parentNode, Node nodeForRemoving) {
+        if (parentNode.leftChildren != null && parentNode.leftChildren.key.equals(nodeForRemoving.key)) {
+            parentNode.leftChildren = null;
+        } else if (parentNode.rightChildren != null && parentNode.rightChildren.key.equals(nodeForRemoving.key)) {
+            parentNode.rightChildren = null;
         }
     }
 
