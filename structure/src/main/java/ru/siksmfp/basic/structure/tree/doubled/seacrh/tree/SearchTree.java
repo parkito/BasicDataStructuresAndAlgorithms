@@ -152,11 +152,12 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
     }
 
-    // TODO: 2/20/2018 finish it
     @Override
     public void removeValue(V value) {
-//        BiConsumer<Node<K, V>, Node<K, V>> function = (p, c) -> {
-//        }
+        K indexForRemoving = remove(root, value);
+        if (indexForRemoving != null) {
+            remove(indexForRemoving);
+        }
     }
 
     /**
@@ -186,6 +187,22 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             }
         }
         return successor;
+    }
+
+    private K remove(Node<K, V> localRoot, V value) {
+        if (localRoot != null) {
+            K leftResult = remove(localRoot.leftChildren, value);
+            if (leftResult != null) {
+                return leftResult;
+            }
+            if (localRoot.value.equals(value)) {
+                return localRoot.key;
+            } else {
+                return remove(localRoot.rightChildren, value);
+            }
+        } else {
+            return null;
+        }
     }
 
     private boolean inOrder(Node<K, V> localRoot, V value) {
