@@ -9,6 +9,8 @@ public interface TreeStructure<K, V> {
 
     void strictAdd(K key, V value);
 
+    V get(K key);
+
     boolean contains(K key);
 
     boolean containsValue(V value);

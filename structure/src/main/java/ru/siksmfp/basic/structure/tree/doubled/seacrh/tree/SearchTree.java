@@ -10,12 +10,14 @@ import java.util.function.BiConsumer;
  * artem.karnov@t-systems.com
  **/
 public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
-
-    public class Node<K extends Comparable<K>, V> {
+    /**
+     * Model of node's tree
+     */
+    public class Node {
         private K key;
         private V value;
-        private Node<K, V> leftChildren;
-        private Node<K, V> rightChildren;
+        private Node leftChildren;
+        private Node rightChildren;
 
         private Node(K key, V value) {
             this.key = key;
@@ -29,7 +31,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
     }
 
-    private Node<K, V> root;
+    private Node root;
     private int size;
 
     public SearchTree() {
@@ -37,13 +39,14 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     }
 
     /**
-     * Addition list after max value
+     * Inserting element in tree
      *
-     * @param value value for adding
+     * @param key   key for ordering
+     * @param value value for storing
      */
     @Override
     public void add(K key, V value) {
-        Node<K, V> currentNode = root, parent = root;
+        Node currentNode = root, parent = root;
         while (currentNode != null) {
             parent = currentNode;
             if (currentNode.key.compareTo(key) < 0) {
@@ -52,7 +55,10 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                 currentNode = currentNode.rightChildren;
             }
         }
-        currentNode = new Node<>(key, value);
+        currentNode = new Node(key, value);
+        if (root == null) {
+            root = currentNode;
+        }
         size++;
         if (parent != null) {
             if (parent.key.compareTo(key) < 0)
@@ -63,9 +69,36 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
     }
 
+    /**
+     * Getting element by key
+     *
+     * @param key key for getting
+     * @return value of store element, null - if element isn't in tree
+     */
+    @Override
+    public V get(K key) {
+        Node currentNode = root;
+        while (currentNode != null) {
+            if (currentNode.key.compareTo(key) < 0) {
+                currentNode = currentNode.leftChildren;
+            } else if (currentNode.key.compareTo(key) > 0) {
+                currentNode = currentNode.rightChildren;
+            } else {
+                return currentNode.value;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Strict inserting element in tree
+     *
+     * @param key   key for ordering
+     * @param value value for storing
+     */
     @Override
     public void strictAdd(K key, V value) {
-        Node<K, V> currentNode = root, parent = root;
+        Node currentNode = root, parent = root;
         while (currentNode != null) {
             parent = currentNode;
             if (currentNode.key.compareTo(key) < 0) {
@@ -74,7 +107,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                 currentNode = currentNode.rightChildren;
             }
         }
-        currentNode = new Node<>((K) SystemUtils.clone(key), (V) SystemUtils.clone(value));
+        currentNode = new Node((K) SystemUtils.clone(key), (V) SystemUtils.clone(value));
         size++;
         if (parent != null) {
             if (parent.key.compareTo(key) < 0)
@@ -88,11 +121,11 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     /**
      * Searching list's value by key
      *
-     * @return list's value if element exists, null if doesn't
+     * @return true if element exists, false if doesn't
      */
     @Override
     public boolean contains(K key) {
-        Node<K, V> currentNode = root;
+        Node currentNode = root;
         while (currentNode != null) {
             if (currentNode.key.equals(key)) {
                 return true;
@@ -108,7 +141,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     /**
      * Searching list's value by value
      *
-     * @return list's value if element exists, null if doesn't
+     * @return true if element exists, false if doesn't
      */
     @Override
     public boolean containsValue(V value) {
@@ -122,7 +155,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      */
     @Override
     public void remove(K key) {
-        Node<K, V> currentNode = root, parent = root;
+        Node currentNode = root, parent = root;
         while (currentNode != null) {
             if (currentNode.value.equals(key)) {
                 if (currentNode.leftChildren == null && currentNode.rightChildren == null) {
@@ -142,9 +175,9 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                     }
                     currentNode = null;
                 } else {
-                    Node<K, V> leftNode = currentNode.leftChildren;
-                    Node<K, V> rightNode = currentNode.rightChildren;
-                    Node<K, V> successor = findSuccessor(currentNode);
+                    Node leftNode = currentNode.leftChildren;
+                    Node rightNode = currentNode.rightChildren;
+                    Node successor = findSuccessor(currentNode);
                     successor.leftChildren = leftNode;
                     successor.rightChildren = rightNode;
                 }
@@ -152,6 +185,11 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
     }
 
+    /**
+     * Removing element by value
+     *
+     * @param value value for removing
+     */
     @Override
     public void removeValue(V value) {
         K indexForRemoving = remove(root, value);
@@ -166,10 +204,10 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      * @param firstNode list for getting
      * @return successor
      */
-    private Node<K, V> findSuccessor(Node<K, V> firstNode) {
-        Node<K, V> successor = firstNode;
-        Node<K, V> successorParent = firstNode;
-        Node<K, V> current = firstNode.rightChildren;
+    private Node findSuccessor(Node firstNode) {
+        Node successor = firstNode;
+        Node successorParent = firstNode;
+        Node current = firstNode.rightChildren;
         while (current != null) {
             successorParent = successor;
             successor = current;
@@ -189,7 +227,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         return successor;
     }
 
-    private K remove(Node<K, V> localRoot, V value) {
+    private K remove(Node localRoot, V value) {
         if (localRoot != null) {
             K leftResult = remove(localRoot.leftChildren, value);
             if (leftResult != null) {
@@ -205,7 +243,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
     }
 
-    private boolean inOrder(Node<K, V> localRoot, V value) {
+    private boolean inOrder(Node localRoot, V value) {
         if (localRoot != null) {
             boolean leftResult = inOrder(localRoot.leftChildren, value);
             if (leftResult) {
@@ -223,7 +261,13 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
 
     //tree's bypassing (tree's traversals)
 
-    private void inOrder(Node<K, V> localRoot, BiConsumer<K, V> function) {
+    /**
+     * Symmetric traversal
+     *
+     * @param localRoot node for bypassing
+     * @param function  function fro node manipulation during bypassing
+     */
+    private void inOrder(Node localRoot, BiConsumer<K, V> function) {
         if (localRoot != null) {
             inOrder(localRoot.leftChildren, function);
             function.accept(localRoot.key, localRoot.value);
@@ -231,7 +275,13 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
     }
 
-    private void fOrder(Node<K, V> localRoot, BiConsumer<K, V> function) {
+    /**
+     * Forward traversal
+     *
+     * @param localRoot node for bypassing
+     * @param function  function fro node manipulation during bypassing
+     */
+    private void fOrder(Node localRoot, BiConsumer<K, V> function) {
         if (localRoot != null) {
             function.accept(localRoot.key, localRoot.value);
             fOrder(localRoot.leftChildren, function);
@@ -239,7 +289,13 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         }
     }
 
-    private void bOrder(Node<K, V> localRoot, BiConsumer<K, V> function) {
+    /**
+     * Backward traversal
+     *
+     * @param localRoot node for bypassing
+     * @param function  function fro node manipulation during bypassing
+     */
+    private void bOrder(Node localRoot, BiConsumer<K, V> function) {
         if (localRoot != null) {
             bOrder(localRoot.leftChildren, function);
             bOrder(localRoot.rightChildren, function);
