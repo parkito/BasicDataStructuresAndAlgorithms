@@ -1,23 +1,15 @@
 package ru.siksmfp.basic.structure.cloning.domain;
 
-import com.rits.cloning.IFreezable;
+import ru.siksmfp.basic.structure.utils.cloning.IFreezable;
 
-/**
- * @author kostantinos.kougios
- *
- * 15 Nov 2010
- */
-public class F implements IFreezable
-{
-	private boolean	frozen	= false;
+public class F implements IFreezable {
+    private boolean frozen = false;
 
-	public void setFrozen(final boolean frozen)
-	{
-		this.frozen = frozen;
-	}
+    public void setFrozen(final boolean frozen) {
+        this.frozen = frozen;
+    }
 
-	public boolean isFrozen()
-	{
-		return frozen;
-	}
+    public boolean isFrozen() {
+        return frozen;
+    }
 }

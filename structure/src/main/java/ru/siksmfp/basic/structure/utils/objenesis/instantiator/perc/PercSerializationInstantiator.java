@@ -1,12 +1,12 @@
 /**
  * Copyright 2006-2017 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +15,15 @@
  */
 package ru.siksmfp.basic.structure.utils.objenesis.instantiator.perc;
 
+import ru.siksmfp.basic.structure.utils.objenesis.ObjenesisException;
+import ru.siksmfp.basic.structure.utils.objenesis.instantiator.ObjectInstantiator;
+import ru.siksmfp.basic.structure.utils.objenesis.instantiator.annotations.Instantiator;
+import ru.siksmfp.basic.structure.utils.objenesis.instantiator.annotations.Typology;
+
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import org.objenesis.ObjenesisException;
-import org.objenesis.instantiator.ObjectInstantiator;
-import org.objenesis.instantiator.annotations.Instantiator;
-import org.objenesis.instantiator.annotations.Typology;
 
 /**
  * Instantiates a class by making a call to internal Perc private methods. It is only supposed to
@@ -38,63 +38,57 @@ import org.objenesis.instantiator.annotations.Typology;
 @Instantiator(Typology.SERIALIZATION)
 public class PercSerializationInstantiator<T> implements ObjectInstantiator<T> {
 
-   private Object[] typeArgs;
+    private Object[] typeArgs;
 
-   private final Method newInstanceMethod;
+    private final Method newInstanceMethod;
 
-   public PercSerializationInstantiator(Class<T> type) {
+    public PercSerializationInstantiator(Class<T> type) {
 
-      // Find the first unserializable parent class
-      Class<? super T> unserializableType = type;
+        // Find the first unserializable parent class
+        Class<? super T> unserializableType = type;
 
-      while(Serializable.class.isAssignableFrom(unserializableType)) {
-         unserializableType = unserializableType.getSuperclass();
-      }
+        while (Serializable.class.isAssignableFrom(unserializableType)) {
+            unserializableType = unserializableType.getSuperclass();
+        }
 
-      try {
-         // Get the special Perc method to call
-         Class<?> percMethodClass = Class.forName("COM.newmonics.PercClassLoader.Method");
+        try {
+            // Get the special Perc method to call
+            Class<?> percMethodClass = Class.forName("COM.newmonics.PercClassLoader.Method");
 
-         newInstanceMethod = ObjectInputStream.class.getDeclaredMethod("noArgConstruct",
-            new Class[] {Class.class, Object.class, percMethodClass});
-         newInstanceMethod.setAccessible(true);
+            newInstanceMethod = ObjectInputStream.class.getDeclaredMethod("noArgConstruct",
+                    new Class[]{Class.class, Object.class, percMethodClass});
+            newInstanceMethod.setAccessible(true);
 
-         // Create invoke params
-         Class<?> percClassClass = Class.forName("COM.newmonics.PercClassLoader.PercClass");
-         Method getPercClassMethod = percClassClass.getDeclaredMethod("getPercClass", Class.class);
-         Object someObject = getPercClassMethod.invoke(null, unserializableType);
-         Method findMethodMethod = someObject.getClass().getDeclaredMethod("findMethod",
-            new Class[] {String.class});
-         Object percMethod = findMethodMethod.invoke(someObject, "<init>()V");
+            // Create invoke params
+            Class<?> percClassClass = Class.forName("COM.newmonics.PercClassLoader.PercClass");
+            Method getPercClassMethod = percClassClass.getDeclaredMethod("getPercClass", Class.class);
+            Object someObject = getPercClassMethod.invoke(null, unserializableType);
+            Method findMethodMethod = someObject.getClass().getDeclaredMethod("findMethod",
+                    new Class[]{String.class});
+            Object percMethod = findMethodMethod.invoke(someObject, "<init>()V");
 
-         typeArgs = new Object[] {unserializableType, type, percMethod};
+            typeArgs = new Object[]{unserializableType, type, percMethod};
 
-      }
-      catch(ClassNotFoundException e) {
-         throw new ObjenesisException(e);
-      }
-      catch(NoSuchMethodException e) {
-         throw new ObjenesisException(e);
-      }
-      catch(InvocationTargetException e) {
-         throw new ObjenesisException(e);
-      }
-      catch(IllegalAccessException e) {
-         throw new ObjenesisException(e);
-      }
-   }
+        } catch (ClassNotFoundException e) {
+            throw new ObjenesisException(e);
+        } catch (NoSuchMethodException e) {
+            throw new ObjenesisException(e);
+        } catch (InvocationTargetException e) {
+            throw new ObjenesisException(e);
+        } catch (IllegalAccessException e) {
+            throw new ObjenesisException(e);
+        }
+    }
 
-   @SuppressWarnings("unchecked")
-   public T newInstance() {
-      try {
-         return (T) newInstanceMethod.invoke(null, typeArgs);
-      }
-      catch(IllegalAccessException e) {
-         throw new ObjenesisException(e);
-      }
-      catch(InvocationTargetException e) {
-         throw new ObjenesisException(e);
-      }
-   }
+    @SuppressWarnings("unchecked")
+    public T newInstance() {
+        try {
+            return (T) newInstanceMethod.invoke(null, typeArgs);
+        } catch (IllegalAccessException e) {
+            throw new ObjenesisException(e);
+        } catch (InvocationTargetException e) {
+            throw new ObjenesisException(e);
+        }
+    }
 
 }

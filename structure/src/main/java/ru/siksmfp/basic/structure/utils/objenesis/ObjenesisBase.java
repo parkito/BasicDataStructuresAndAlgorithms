@@ -17,7 +17,7 @@ package ru.siksmfp.basic.structure.utils.objenesis;
 
 import ru.siksmfp.basic.structure.utils.objenesis.instantiator.ObjectInstantiator;
 import ru.siksmfp.basic.structure.utils.objenesis.strategy.InstantiatorStrategy;
-import ru.siksmfp.basic.structure.utils.objenesis.strategy.StdInstantiatorStrategy;
+import ru.siksmfp.basic.structure.utils.objenesis.strategy.SerializingInstantiatorStrategy;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -44,17 +44,15 @@ public class ObjenesisBase implements Objenesis {
      *
      * @param strategy Strategy to use
      */
-    public ObjenesisBase(StdInstantiatorStrategy strategy) {
+    public ObjenesisBase(SerializingInstantiatorStrategy strategy) {
         this(strategy, true);
     }
 
     /**
      * Flexible constructor allowing to pick the strategy and if caching should be used
-     *
-     * @param strategy Strategy to use
-     * @param useCache If {@link ObjectInstantiator}s should be cached
-     */
-    public ObjenesisBase(StdInstantiatorStrategy strategy, boolean useCache) {
+     *  @param strategy Strategy to use
+     * @param useCache If {@link ObjectInstantiator}s should be cached*/
+    public ObjenesisBase(SerializingInstantiatorStrategy strategy, boolean useCache) {
         if (strategy == null) {
             throw new IllegalArgumentException("A strategy can't be null");
         }
