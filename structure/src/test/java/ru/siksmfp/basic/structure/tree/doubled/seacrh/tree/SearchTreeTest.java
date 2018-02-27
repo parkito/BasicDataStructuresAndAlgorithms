@@ -133,7 +133,6 @@ public class SearchTreeTest {
     }
 
     @Test
-    @Ignore
     public void sixthTest() {
         TreeStructure<Integer, InnerMutableClass> tree = new SearchTree<>();
 
