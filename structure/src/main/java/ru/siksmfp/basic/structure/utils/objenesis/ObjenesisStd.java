@@ -16,7 +16,7 @@
 package ru.siksmfp.basic.structure.utils.objenesis;
 
 
-import ru.siksmfp.basic.structure.utils.objenesis.strategy.SerializingInstantiatorStrategy;
+import ru.siksmfp.basic.structure.utils.objenesis.strategy.StdInstantiatorStrategy;
 
 /**
  * @author Henri Tremblay
@@ -24,10 +24,10 @@ import ru.siksmfp.basic.structure.utils.objenesis.strategy.SerializingInstantiat
 public class ObjenesisStd extends ObjenesisBase {
 
     public ObjenesisStd() {
-        super(new SerializingInstantiatorStrategy());
+        super(new StdInstantiatorStrategy());
     }
 
     public ObjenesisStd(boolean useCache) {
-        super(new SerializingInstantiatorStrategy(), useCache);
+        super(new StdInstantiatorStrategy(), useCache);
     }
 }
