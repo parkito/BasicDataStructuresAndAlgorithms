@@ -1,7 +1,7 @@
 package ru.siksmfp.basic.structure.utils.cloning;
 
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
+import ru.siksmfp.basic.structure.utils.objenesis.Objenesis;
+import ru.siksmfp.basic.structure.utils.objenesis.ObjenesisStd;
 
 public class ObjenesisInstantiationStrategy implements IInstantiationStrategy {
     private final Objenesis objenesis = new ObjenesisStd();
