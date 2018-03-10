@@ -125,8 +125,8 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             } else {
                 rightLeftRotation(node.parent.parent);
                 node.isRed = false;
-//                node.rightChildren.isRed = true;   is needed?
-//                node.leftChildren.isRed = false;
+                node.rightChildren.isRed = true;   //is needed?
+                node.leftChildren.isRed = false;
             }
         } else {
             if (node.parent.isLeftChild) {
@@ -139,14 +139,36 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             } else {
                 leftRightRotation(node.parent.parent);
                 node.isRed = false;
-//                node.rightChildren.isRed = true;   is needed?
-//                node.leftChildren.isRed = false;
+                node.rightChildren.isRed = true;   //is needed?
+                node.leftChildren.isRed = false;
             }
         }
     }
 
-    private void leftRotation(Node parent) {
-
+    private void leftRotation(Node node) {
+        Node temp = node.rightChildren;
+        node.rightChildren = temp.leftChildren;
+        if (node.rightChildren != null) {
+            node.rightChildren.parent = node;
+            node.rightChildren.isLeftChild = false;
+        }
+        if (node.parent == null) {
+            //root
+            root = temp;
+            temp.parent = null;
+        }else {
+            temp.parent = node.parent;
+            if (node.isLeftChild) {
+                temp.isLeftChild = true;
+                temp.parent.leftChildren = temp;
+            }else {
+                temp.isLeftChild = false;
+                temp.parent.rightChildren = temp;
+            }
+            temp.leftChildren = node;
+            node.isLeftChild = true;
+            node.parent = temp;
+        }
     }
 
     private void leftRightRotation(Node parent) {
