@@ -44,6 +44,35 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     private Node root;
     private int size;
 
+    //Rebalance
+
+    //Black aunt - rotation
+    //Red aunt - color flip
+
+    //Result of rotation
+
+        //Black
+    //Red       //Red
+
+    //Result of color flip
+
+          //Red
+    //Black     //Black
+
+
+    //Rotation
+
+           //y                                                //x
+       //x      //c         -----> right rotate         //a       //y
+    //a   //b               <----- left rotate                //b    //c
+
+    //Color flip
+
+            //Black        <-->           //Red
+        //Red     //Red              //Black    //Black
+    //Red                        //Red
+
+
     @Override
     public void add(K key, V value) {
         Node node = new Node(key, value);
@@ -156,12 +185,12 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             //root
             root = temp;
             temp.parent = null;
-        }else {
+        } else {
             temp.parent = node.parent;
             if (node.isLeftChild) {
                 temp.isLeftChild = true;
                 temp.parent.leftChildren = temp;
-            }else {
+            } else {
                 temp.isLeftChild = false;
                 temp.parent.rightChildren = temp;
             }
@@ -171,16 +200,79 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         }
     }
 
-    private void leftRightRotation(Node parent) {
-
+    private void rightRotation(Node node) {
+        Node temp = node.leftChildren;
+        node.leftChildren = temp.rightChildren;
+        if (node.leftChildren != null) {
+            node.leftChildren.parent = node;
+            node.leftChildren.isLeftChild = false;
+        }
+        if (node.parent == null) {
+            //root
+            root = temp;
+            temp.parent = null;
+        } else {
+            temp.parent = node.parent;
+            if (node.isLeftChild) {
+                temp.isLeftChild = true;
+                temp.parent.rightChildren = temp;
+            } else {
+                temp.isLeftChild = false;
+                temp.parent.leftChildren = temp;
+            }
+            temp.rightChildren = node;
+            node.isLeftChild = true;
+            node.parent = temp;
+        }
     }
 
-    private void rightLeftRotation(Node parent) {
-
+    private void leftRightRotation(Node node) {
+        leftRotation(node.leftChildren);
+        rightRotation(node.parent);
     }
 
-    private void rightRotation(Node parent) {
+    private void rightLeftRotation(Node node) {
+        rightLeftRotation(node.rightChildren);
+        leftRotation(node.parent);
+    }
 
+    private int height() {
+        if (root == null) {
+            return 0;
+        } else {
+            return height(root) - 1;
+        }
+    }
+
+    private int height(Node node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int leftHeight = height(node.leftChildren) + 1;
+            int rightHeight = height(node.rightChildren) + 1;
+            if (leftHeight > rightHeight) {
+                return leftHeight;
+            } else {
+                return rightHeight;
+            }
+        }
+    }
+
+    private int blackNodes(Node node) {
+        if (node == null) {
+            return 1;
+        } else {
+            int rightBlackNodes = blackNodes(node.rightChildren);
+            int leftBlackNodes = blackNodes(node.leftChildren);
+            if (rightBlackNodes != leftBlackNodes) {
+                throw new IllegalStateException("Tree isn't balanced");
+            }
+
+            if (!node.isRed) {
+                leftBlackNodes++;
+            }
+            return leftBlackNodes;
+        }
     }
 
 
@@ -216,6 +308,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 }
