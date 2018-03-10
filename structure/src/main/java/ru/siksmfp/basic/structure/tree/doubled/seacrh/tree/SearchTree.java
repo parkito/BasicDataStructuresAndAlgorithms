@@ -18,6 +18,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         private V value;
         private Node leftChildren;
         private Node rightChildren;
+        private Node parent;
 
         private Node(K key, V value) {
             this.key = key;
@@ -63,6 +64,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             }
         }
         currentNode = new Node(key, value);
+        currentNode.parent = parent;
         if (root == null) {
             root = currentNode;
         }
@@ -84,6 +86,11 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      */
     @Override
     public V get(K key) {
+        Node result = getNode(key);
+        return result == null ? null : result.value;
+    }
+
+    private Node getNode(K key) {
         Node currentNode = root;
         while (currentNode != null) {
             if (currentNode.key.compareTo(key) < 0) {
@@ -91,7 +98,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             } else if (currentNode.key.compareTo(key) > 0) {
                 currentNode = currentNode.rightChildren;
             } else {
-                return currentNode.value;
+                return currentNode;
             }
         }
         return null;
@@ -115,6 +122,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             }
         }
         currentNode = new Node((K) SystemUtils.clone(key), (V) SystemUtils.clone(value));
+        currentNode.parent = parent;
         size++;
         if (parent != null) {
             if (parent.key.compareTo(key) < 0)
@@ -160,19 +168,22 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      *
      * @param key for key removing
      */
+    // TODO: 3/11/2018 improve it
     @Override
     public void remove(K key) {
-        Node parentNode = findParent(root, key);
-        Node nodeForDeleting = null;
-        if (parentNode != null) {
-            if (parentNode.leftChildren != null && parentNode.leftChildren.key.equals(key)) {
-                nodeForDeleting = parentNode.leftChildren;
-            } else if (parentNode.rightChildren != null && parentNode.rightChildren.key.equals(key)) {
-                nodeForDeleting = parentNode.rightChildren;
+        Node nodeForDeleting = getNode(key);
+        if (nodeForDeleting == null) {
+            return;
+        }
+        if (nodeForDeleting.parent != null) {
+            if (nodeForDeleting.parent.leftChildren != null && nodeForDeleting.parent.leftChildren.key.equals(key)) {
+                nodeForDeleting = nodeForDeleting.parent.leftChildren;
+            } else if (nodeForDeleting.parent.rightChildren != null && nodeForDeleting.parent.rightChildren.key.equals(key)) {
+                nodeForDeleting = nodeForDeleting.parent.rightChildren;
             }
         }
         if (nodeForDeleting != null)
-            removeNode(parentNode, nodeForDeleting);
+            removeNode(nodeForDeleting);
     }
 
     /**
@@ -215,38 +226,38 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         return null;
     }
 
-    private void removeNode(Node parentNode, Node nodeForRemoving) {
-        if (nodeForRemoving.leftChildren == null && nodeForRemoving.rightChildren == null) {
-            removeChildrenNode(parentNode, nodeForRemoving);
-        } else if (nodeForRemoving.leftChildren == null) {
-            if (nodeForRemoving.key.compareTo(parentNode.key) < 0) {
-                parentNode.leftChildren = nodeForRemoving.rightChildren;
+    private void removeNode(Node node) {
+        if (node.leftChildren == null && node.rightChildren == null) {
+            removeChildrenNode(node);
+        } else if (node.leftChildren == null) {
+            if (node.key.compareTo(node.parent.key) < 0) {
+                node.parent.leftChildren = node.rightChildren;
             } else {
-                parentNode.rightChildren = nodeForRemoving.rightChildren;
+                node.parent.rightChildren = node.rightChildren;
             }
-            removeChildrenNode(parentNode, nodeForRemoving);
-        } else if (nodeForRemoving.rightChildren == null) {
-            if (nodeForRemoving.key.compareTo(parentNode.key) < 0) {
-                parentNode.leftChildren = nodeForRemoving.leftChildren;
+            removeChildrenNode(node);
+        } else if (node.rightChildren == null) {
+            if (node.key.compareTo(node.parent.key) < 0) {
+                node.parent.leftChildren = node.leftChildren;
             } else {
-                parentNode.rightChildren = nodeForRemoving.leftChildren;
+                node.parent.rightChildren = node.leftChildren;
             }
-            removeChildrenNode(parentNode, nodeForRemoving);
+            removeChildrenNode(node);
         } else {
-            Node leftNode = nodeForRemoving.leftChildren;
-            Node rightNode = nodeForRemoving.rightChildren;
-            Node successor = findSuccessor(nodeForRemoving);
+            Node leftNode = node.leftChildren;
+            Node rightNode = node.rightChildren;
+            Node successor = findSuccessor(node);
             successor.leftChildren = leftNode;
             successor.rightChildren = rightNode;
         }
         size--;
     }
 
-    private void removeChildrenNode(Node parentNode, Node childrenNode) {
-        if (parentNode.leftChildren != null && parentNode.leftChildren.key.equals(childrenNode.key)) {
-            parentNode.leftChildren = null;
-        } else if (parentNode.rightChildren != null && parentNode.rightChildren.key.equals(childrenNode.key)) {
-            parentNode.rightChildren = null;
+    private void removeChildrenNode(Node node) {
+        if (node.parent.leftChildren != null && node.parent.leftChildren.key.equals(node.key)) {
+            node.parent.leftChildren = null;
+        } else if (node.parent.rightChildren != null && node.parent.rightChildren.key.equals(node.key)) {
+            node.parent.rightChildren = null;
         }
     }
 
