@@ -7,6 +7,38 @@ import ru.siksmfp.basic.structure.api.TreeStructure;
  * @email artem.karnov@t-systems.com
  */
 public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
+
+    /*
+    Rebalance
+
+    Black aunt - rotation
+    Red aunt - color flip
+
+    Result of rotation
+
+        Black
+    Red       Red
+
+    Result of color flip
+
+          Red
+    Black     Black
+
+
+    Rotation
+
+           y                                            x
+       x      c         -----> right rotate         a       y
+    a    b              <----- left rotate               b     c
+
+    Color flip
+
+            Black        <-->           Red
+        Red      Red              Black     Black
+    Red                        Red
+
+    */
+
     /**
      * Model of node's tree
      */
@@ -35,7 +67,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             String rightChildrenKey = rightChildren == null ? "null" : rightChildren.key == null ? "null" : rightChildren.key.toString();
             String rightChildrenValue = rightChildren == null ? "null" : rightChildren.value == null ? "null" : rightChildren.value.toString();
 
-            return "Node{key " + key + ", value " + value
+            return "Node{key " + key + ", value " + value + ", color " + isRed
                     + ", left child (" + leftChildrenKey + ";" + leftChildrenValue + ")"
                     + "; right child (" + rightChildrenKey + ";" + rightChildrenValue + ") }";
         }
@@ -43,34 +75,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
     private Node root;
     private int size;
-
-    //Rebalance
-
-    //Black aunt - rotation
-    //Red aunt - color flip
-
-    //Result of rotation
-
-        //Black
-    //Red       //Red
-
-    //Result of color flip
-
-          //Red
-    //Black     //Black
-
-
-    //Rotation
-
-           //y                                                //x
-       //x      //c         -----> right rotate         //a       //y
-    //a   //b               <----- left rotate                //b    //c
-
-    //Color flip
-
-            //Black        <-->           //Red
-        //Red     //Red              //Black    //Black
-    //Red                        //Red
 
 
     @Override
@@ -84,6 +88,54 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             add(root, node);
         }
         size++;
+    }
+
+    @Override
+    public void strictAdd(K key, V value) {
+
+    }
+
+    @Override
+    public V get(K key) {
+        return null;
+    }
+
+    @Override
+    public boolean contains(K key) {
+        return false;
+    }
+
+    @Override
+    public boolean containsValue(V value) {
+        return false;
+    }
+
+    @Override
+    public void remove(K key) {
+
+    }
+
+    @Override
+    public void removeValue(V value) {
+
+    }
+
+    @Override
+    public int height() {
+        if (root == null) {
+            return 0;
+        } else {
+            return height(root) - 1;
+        }
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    public int blackHeight() {
+        return blackNodes(root);
     }
 
     private void add(Node parent, Node node) {
@@ -232,16 +284,8 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     }
 
     private void rightLeftRotation(Node node) {
-        rightLeftRotation(node.rightChildren);
+        rightRotation(node.rightChildren);
         leftRotation(node.parent);
-    }
-
-    private int height() {
-        if (root == null) {
-            return 0;
-        } else {
-            return height(root) - 1;
-        }
     }
 
     private int height(Node node) {
@@ -273,41 +317,5 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             }
             return leftBlackNodes;
         }
-    }
-
-
-    @Override
-    public void strictAdd(K key, V value) {
-
-    }
-
-    @Override
-    public V get(K key) {
-        return null;
-    }
-
-    @Override
-    public boolean contains(K key) {
-        return false;
-    }
-
-    @Override
-    public boolean containsValue(V value) {
-        return false;
-    }
-
-    @Override
-    public void remove(K key) {
-
-    }
-
-    @Override
-    public void removeValue(V value) {
-
-    }
-
-    @Override
-    public int size() {
-        return size;
     }
 }

@@ -189,6 +189,12 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     }
 
     @Override
+    public int height() {
+        // TODO: 3/11/2018  
+        return 0;
+    }
+
+    @Override
     public int size() {
         return size;
     }

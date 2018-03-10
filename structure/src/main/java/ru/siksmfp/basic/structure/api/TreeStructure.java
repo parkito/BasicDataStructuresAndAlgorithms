@@ -19,5 +19,7 @@ public interface TreeStructure<K extends Comparable<K>, V> {
 
     void removeValue(V value);
 
+    int height();
+
     int size();
 }
