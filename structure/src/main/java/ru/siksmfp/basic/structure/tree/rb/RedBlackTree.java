@@ -285,7 +285,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         node.leftChildren = temp.rightChildren;
         if (node.leftChildren != null) {
             node.leftChildren.parent = node;
-            node.leftChildren.isLeftChild = false;
+            node.leftChildren.isLeftChild = true;
         }
         if (node.parent == null) {
             //root
@@ -293,27 +293,27 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             temp.parent = null;
         } else {
             temp.parent = node.parent;
-            if (node.isLeftChild) {
-                temp.isLeftChild = true;
+            if (!node.isLeftChild) {
+                temp.isLeftChild = false;
                 temp.parent.rightChildren = temp;
             } else {
-                temp.isLeftChild = false;
+                temp.isLeftChild = true;
                 temp.parent.leftChildren = temp;
             }
             temp.rightChildren = node;
-            node.isLeftChild = true;
+            node.isLeftChild = false;
             node.parent = temp;
         }
     }
 
     private void leftRightRotation(Node node) {
         leftRotation(node.leftChildren);
-        rightRotation(node.parent);
+        rightRotation(node);
     }
 
     private void rightLeftRotation(Node node) {
         rightRotation(node.rightChildren);
-        leftRotation(node.parent);
+        leftRotation(node);
     }
 
     private int height(Node node) {
