@@ -8,36 +8,43 @@ import ru.siksmfp.basic.structure.api.TreeStructure;
  */
 public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
 
-    /*
-    Rebalance
-
-    Black aunt - rotation
-    Red aunt - color flip
-
-    Result of rotation
-
-        Black
-    Red       Red
-
-    Result of color flip
-
-          Red
-    Black     Black
-
-
-    Rotation
-
-           y                                            x
-       x      c         -----> right rotate         a       y
-    a    b              <----- left rotate               b     c
-
-    Color flip
-
-            Black        <-->           Red
-        Red      Red              Black     Black
-    Red                        Red
-
-    */
+   //    Rebalance
+   //
+   //    Black aunt - rotation
+   //    Red aunt - color flip
+   //
+   //    Result of rotation
+   //
+   //        Black
+   //    Red       Red
+   //
+   //    Result of color flip
+   //
+   //          Red
+   //    Black     Black
+   //
+   //
+   //    Rotations
+   //
+   //    Right                                Left
+   //                3    --->     2                 1       --->        2
+   //              2            1    3                 2              1     3
+   //            1                                       3
+   //
+   //
+   //   Left-right                            Right-left
+   //
+   //                5   --->     4                3      --->       4
+   //              3            3   5                5            3     5
+   //                4                             4
+   //
+   //
+   //    Color flip
+   //
+   //            Black        <-->           Red
+   //        Red      Red              Black     Black
+   //    Red                        Red
+   //
 
     /**
      * Model of node's tree
@@ -139,25 +146,41 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         return blackNodes(root);
     }
 
-    private void add(Node parent, Node node) {
-        if (node.key.compareTo(parent.key) > 0) {
-            if (parent.rightChildren == null) {
-                parent.rightChildren = node;
-                node.parent = parent;
+    // 1) Find place for inserting (binary tree rules)
+    // 2) Insert red node
+    // 3) Do balancing
+    //      1) If uncle is red
+    //       |---1) Do color flip of parent, uncle and grand father
+    //       |---2) Do color flip of grand father relative until root
+    //       2) If uncle is black
+    //        |---1) Do rotation
+    //        |    |---1) Depends on situation we can do
+    //        |         |---1) Right rotation
+    //        |         |---2) Left rotation
+    //        |         |---3) Left-right rotation
+    //        |         |---4) Right-left rotation
+    //        |---2) Do color flip
+
+    private void add(Node root, Node node) {
+        if (node.key.compareTo(root.key) > 0) {
+            if (root.rightChildren == null) {
+                root.rightChildren = node;
+                node.parent = root;
                 node.isLeftChild = false;
             } else {
-                add(parent.rightChildren, node);
+                add(root.rightChildren, node);
             }
-        } else if (node.key.compareTo(parent.key) < 0) {
-            if (parent.leftChildren == null) {
-                parent.leftChildren = node;
-                node.parent = parent;
+        } else if (node.key.compareTo(root.key) < 0) {
+            if (root.leftChildren == null) {
+                root.leftChildren = node;
+                node.parent = root;
                 node.isLeftChild = true;
             } else {
-                add(parent.leftChildren, node);
+                add(root.leftChildren, node);
             }
         } else {
-            parent.value = node.value;
+            //If node with key already exist we just update value
+            root.value = node.value;
         }
         balanceTree(node);
     }
@@ -172,21 +195,25 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     }
 
     private void correctTree(Node node) {
+        //left subtree after grand father
         if (node.parent.isLeftChild) {
+            // Right uncle is null or grand father is black
             if (node.parent.parent.rightChildren == null || !node.parent.parent.isRed) {
                 rotate(node);
             }
-
+            //Color flip around grand father
             if (node.parent.parent != null) {
                 node.parent.parent.rightChildren.isRed = false;
                 node.parent.parent.isRed = true;
                 node.parent.isRed = false;
             }
+            //right subtree after grand father
         } else {
+            // Left uncle is null or grand father is black
             if (node.parent.parent.leftChildren == null || !node.parent.parent.isRed) {
                 rotate(node);
             }
-
+            //Color flip around grand father
             if (node.parent.parent != null) {
                 node.parent.parent.leftChildren.isRed = false;
                 node.parent.parent.isRed = true;
