@@ -15,16 +15,46 @@ public class RedBlackTreeTest {
     private String secondValue = "2";
     private Integer thirdKey = 3;
     private String thirdValue = "3";
+    private Integer fourthKey = 4;
+    private String fourthValue = "4";
+    private Integer fifthKey = 5;
+    private String fifthValue = "5";
 
 
+    //
+    //    1                 2
+    //      2      ->    1    3
+    //        3
+    //
     @Test
-    public void firstTest() {
+    public void leftRotation() {
         TreeStructure<Integer, String> tree = new RedBlackTree<>();
         tree.add(firstKey, firstValue);
         tree.add(secondKey, secondValue);
         tree.add(thirdKey, thirdValue);
 
         Assert.assertEquals(3, tree.size());
+        Assert.assertEquals(firstValue, tree.get(firstKey));
+        Assert.assertEquals(secondValue, tree.get(secondKey));
+        Assert.assertEquals(thirdValue, tree.get(thirdKey));
     }
 
+
+    //
+    //          4                3
+    //       3       ->       2     4
+    //     2
+    //
+    @Test
+    public void rightRotation() {
+        TreeStructure<Integer, String> tree = new RedBlackTree<>();
+        tree.add(fourthKey, fourthValue);
+        tree.add(thirdKey, thirdValue);
+        tree.add(secondKey, secondValue);
+
+        Assert.assertEquals(3, tree.size());
+        Assert.assertEquals(fourthValue, tree.get(fourthKey));
+        Assert.assertEquals(thirdValue, tree.get(thirdKey));
+        Assert.assertEquals(secondValue, tree.get(secondKey));
+    }
 }

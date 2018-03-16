@@ -8,43 +8,43 @@ import ru.siksmfp.basic.structure.api.TreeStructure;
  */
 public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
 
-   //    Rebalance
-   //
-   //    Black aunt - rotation
-   //    Red aunt - color flip
-   //
-   //    Result of rotation
-   //
-   //        Black
-   //    Red       Red
-   //
-   //    Result of color flip
-   //
-   //          Red
-   //    Black     Black
-   //
-   //
-   //    Rotations
-   //
-   //    Right                                Left
-   //                3    --->     2                 1       --->        2
-   //              2            1    3                 2              1     3
-   //            1                                       3
-   //
-   //
-   //   Left-right                            Right-left
-   //
-   //                5   --->     4                3      --->       4
-   //              3            3   5                5            3     5
-   //                4                             4
-   //
-   //
-   //    Color flip
-   //
-   //            Black        <-->           Red
-   //        Red      Red              Black     Black
-   //    Red                        Red
-   //
+    //    Rebalance
+    //
+    //    Black aunt - rotation
+    //    Red aunt - color flip
+    //
+    //    Result of rotation
+    //
+    //        Black
+    //    Red       Red
+    //
+    //    Result of color flip
+    //
+    //          Red
+    //    Black     Black
+    //
+    //
+    //    Rotations
+    //
+    //    Right                                Left
+    //                3    --->     2                 1       --->        2
+    //              2            1    3                 2              1     3
+    //            1                                       3
+    //
+    //
+    //   Left-right                            Right-left
+    //
+    //                5   --->     4                3      --->       4
+    //              3            3   5                5            3     5
+    //                4                             4
+    //
+    //
+    //    Color flip
+    //
+    //            Black        <-->           Red
+    //        Red      Red              Black     Black
+    //    Red                        Red
+    //
 
     /**
      * Model of node's tree
@@ -90,7 +90,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         Node node = new Node(key, value);
         if (root == null) {
             root = node;
-            root.parent = root; //may be null
+            root.parent = null; //may be null
             root.isRed = false;
         } else {
             add(root, node);
@@ -238,7 +238,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                 node.leftChildren.isRed = false;
             }
         } else {
-            if (node.parent.isLeftChild) {
+            if (!node.parent.isLeftChild) {
                 leftRotation(node.parent.parent);
                 node.isRed = true;
                 node.parent.isRed = false;
@@ -274,10 +274,10 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                 temp.isLeftChild = false;
                 temp.parent.rightChildren = temp;
             }
-            temp.leftChildren = node;
-            node.isLeftChild = true;
-            node.parent = temp;
         }
+        temp.leftChildren = node;
+        node.isLeftChild = true;
+        node.parent = temp;
     }
 
     private void rightRotation(Node node) {
@@ -285,7 +285,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         node.leftChildren = temp.rightChildren;
         if (node.leftChildren != null) {
             node.leftChildren.parent = node;
-            node.leftChildren.isLeftChild = true;
+            node.rightChildren.isLeftChild = true;
         }
         if (node.parent == null) {
             //root
@@ -300,10 +300,10 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                 temp.isLeftChild = true;
                 temp.parent.leftChildren = temp;
             }
-            temp.rightChildren = node;
-            node.isLeftChild = false;
-            node.parent = temp;
         }
+        temp.rightChildren = node;
+        node.isLeftChild = false;
+        node.parent = temp;
     }
 
     private void leftRightRotation(Node node) {
