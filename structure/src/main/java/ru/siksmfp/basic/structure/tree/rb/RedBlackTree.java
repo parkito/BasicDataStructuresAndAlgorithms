@@ -144,7 +144,15 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
     @Override
     public boolean containsValue(V value) {
-        return false;
+        return inOrder(root, value);
+    }
+
+    private boolean inOrder(Node localRoot, V value) {
+        if (localRoot == null) return false;
+        if (localRoot.value == value) return true;
+        if (localRoot.value != null && localRoot.value.equals(value)) return true;
+
+        return inOrder(localRoot.leftChildren, value) || inOrder(localRoot.rightChildren, value);
     }
 
     @Override

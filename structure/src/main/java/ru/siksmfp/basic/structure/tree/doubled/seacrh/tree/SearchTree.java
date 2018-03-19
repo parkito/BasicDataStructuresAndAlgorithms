@@ -210,22 +210,6 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         return size;
     }
 
-    private Node findParent(Node localRoot, K key) {
-        if (localRoot != null) {
-            Node leftResult = findParent(localRoot.leftChildren, key);
-            if (leftResult != null) {
-                return leftResult;
-            } else if (localRoot.leftChildren != null && localRoot.leftChildren.key.equals(key)) {
-                return localRoot;
-            } else if (localRoot.rightChildren != null && localRoot.leftChildren.key.equals(key)) {
-                return localRoot;
-            } else {
-                return findParent(localRoot.rightChildren, key);
-            }
-        }
-        return null;
-    }
-
     private void removeNode(Node node) {
         if (node.leftChildren == null && node.rightChildren == null) {
             removeChildrenNode(node);
@@ -291,6 +275,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     }
 
     private K remove(Node localRoot, V value) {
+        //todo simplify it
         if (localRoot != null) {
             K leftResult = remove(localRoot.leftChildren, value);
             if (leftResult != null) {
@@ -307,19 +292,11 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     }
 
     private boolean inOrder(Node localRoot, V value) {
-        if (localRoot != null) {
-            boolean leftResult = inOrder(localRoot.leftChildren, value);
-            if (leftResult) {
-                return true;
-            }
-            if (localRoot.value.equals(value)) {
-                return true;
-            } else {
-                return inOrder(localRoot.rightChildren, value);
-            }
-        } else {
-            return false;
-        }
+        if (localRoot == null) return false;
+        if (localRoot.value == value) return true;
+        if (localRoot.value != null && localRoot.value.equals(value)) return true;
+
+        return inOrder(localRoot.leftChildren, value) || inOrder(localRoot.rightChildren, value);
     }
 
     //tree's bypassing (tree's traversals)
