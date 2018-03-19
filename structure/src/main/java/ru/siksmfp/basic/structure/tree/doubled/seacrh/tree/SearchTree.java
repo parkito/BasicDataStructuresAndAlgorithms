@@ -121,7 +121,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                 currentNode = currentNode.rightChildren;
             }
         }
-        currentNode = new Node((K) SystemUtils.clone(key), (V) SystemUtils.clone(value));
+        currentNode = new Node(SystemUtils.clone(key), SystemUtils.clone(value));
         currentNode.parent = parent;
         size++;
         if (parent != null) {
@@ -171,19 +171,10 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     // TODO: 3/11/2018 improve it
     @Override
     public void remove(K key) {
-        Node nodeForDeleting = getNode(key);
-        if (nodeForDeleting == null) {
-            return;
+        Node node = getNode(key);
+        if (node != null) {
+            removeNode(node);
         }
-        if (nodeForDeleting.parent != null) {
-            if (nodeForDeleting.parent.leftChildren != null && nodeForDeleting.parent.leftChildren.key.equals(key)) {
-                nodeForDeleting = nodeForDeleting.parent.leftChildren;
-            } else if (nodeForDeleting.parent.rightChildren != null && nodeForDeleting.parent.rightChildren.key.equals(key)) {
-                nodeForDeleting = nodeForDeleting.parent.rightChildren;
-            }
-        }
-        if (nodeForDeleting != null)
-            removeNode(nodeForDeleting);
     }
 
     /**
@@ -238,7 +229,10 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     }
 
     private void removeChildrenNode(Node node) {
-        if (node.parent.leftChildren != null && node.parent.leftChildren.key.equals(node.key)) {
+        if (node.parent == null) {
+            node.parent = null;
+            root = node;
+        } else if (node.parent.leftChildren != null && node.parent.leftChildren.key.equals(node.key)) {
             node.parent.leftChildren = null;
         } else if (node.parent.rightChildren != null && node.parent.rightChildren.key.equals(node.key)) {
             node.parent.rightChildren = null;

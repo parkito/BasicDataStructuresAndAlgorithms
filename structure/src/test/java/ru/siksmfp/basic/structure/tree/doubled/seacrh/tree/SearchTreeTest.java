@@ -1,7 +1,6 @@
 package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.TreeStructure;
 
@@ -55,7 +54,7 @@ public class SearchTreeTest {
     }
 
     @Test
-    public void firstTest() {
+    public void add() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
 
         tree.add(FIRST_KEY, FIRST_VALUE);
@@ -68,7 +67,7 @@ public class SearchTreeTest {
     }
 
     @Test
-    public void secondTest() {
+    public void contains() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
 
         tree.add(FIRST_KEY, FIRST_VALUE);
@@ -83,7 +82,7 @@ public class SearchTreeTest {
     }
 
     @Test
-    public void thirdTest() {
+    public void containsValue() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
 
         tree.add(FIRST_KEY, FIRST_VALUE);
@@ -98,7 +97,7 @@ public class SearchTreeTest {
     }
 
     @Test
-    public void fourthTest() {
+    public void removeByKey() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
 
         tree.add(FIRST_KEY, FIRST_VALUE);
@@ -117,7 +116,26 @@ public class SearchTreeTest {
     }
 
     @Test
-    public void fifthTest() {
+    public void removeFirst() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+
+        tree.add(FIRST_KEY, FIRST_VALUE);
+        tree.add(SECOND_KEY, SECOND_VALUE);
+
+        tree.remove(SECOND_KEY);
+
+        Assert.assertEquals(1, tree.size());
+        Assert.assertTrue(tree.containsValue(FIRST_VALUE));
+
+        tree.remove(FIRST_KEY);
+
+        Assert.assertEquals(0, tree.size());
+
+
+    }
+
+    @Test
+    public void removeValue() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
 
         tree.add(FIRST_KEY, FIRST_VALUE);
@@ -133,7 +151,7 @@ public class SearchTreeTest {
     }
 
     @Test
-    public void sixthTest() {
+    public void strictAdd() {
         TreeStructure<Integer, InnerMutableClass> tree = new SearchTree<>();
 
         String stringValue1 = "Value1";
