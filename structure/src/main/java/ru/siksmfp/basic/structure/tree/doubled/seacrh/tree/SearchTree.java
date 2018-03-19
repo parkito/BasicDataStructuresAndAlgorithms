@@ -86,22 +86,8 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      */
     @Override
     public V get(K key) {
-        Node result = getNode(key);
+        Node result = getNodeByKey(key);
         return result == null ? null : result.value;
-    }
-
-    private Node getNode(K key) {
-        Node currentNode = root;
-        while (currentNode != null) {
-            if (currentNode.key.compareTo(key) < 0) {
-                currentNode = currentNode.leftChildren;
-            } else if (currentNode.key.compareTo(key) > 0) {
-                currentNode = currentNode.rightChildren;
-            } else {
-                return currentNode;
-            }
-        }
-        return null;
     }
 
     /**
@@ -168,10 +154,9 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      *
      * @param key for key removing
      */
-    // TODO: 3/11/2018 improve it
     @Override
     public void remove(K key) {
-        Node node = getNode(key);
+        Node node = getNodeByKey(key);
         if (node != null) {
             removeNode(node);
         }
@@ -184,9 +169,9 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      */
     @Override
     public void removeValue(V value) {
-        K indexForRemoving = remove(root, value);
-        if (indexForRemoving != null) {
-            remove(indexForRemoving);
+        Node nodeForRemoving = getNodeByValue(root, value);
+        if (nodeForRemoving != null) {
+            removeNode(nodeForRemoving);
         }
     }
 
@@ -219,6 +204,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             }
             removeChildrenNode(node);
         } else {
+            //Incorrect!!!
             Node leftNode = node.leftChildren;
             Node rightNode = node.rightChildren;
             Node successor = findSuccessor(node);
@@ -242,13 +228,13 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     /**
      * Getting successor for deleting list with two children
      *
-     * @param firstNode list for getting
+     * @param node list for getting
      * @return successor
      */
-    private Node findSuccessor(Node firstNode) {
-        Node successor = firstNode;
-        Node successorParent = firstNode;
-        Node current = firstNode.rightChildren;
+    private Node findSuccessor(Node node) {
+        Node successor = node;
+        Node successorParent = node;
+        Node current = node.rightChildren;
         while (current != null) {
             successorParent = successor;
             successor = current;
@@ -268,18 +254,32 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         return successor;
     }
 
-    private K remove(Node localRoot, V value) {
-        //todo simplify it
+    private Node getNodeByKey(K key) {
+        Node currentNode = root;
+        while (currentNode != null) {
+            if (currentNode.key.compareTo(key) < 0) {
+                currentNode = currentNode.leftChildren;
+            } else if (currentNode.key.compareTo(key) > 0) {
+                currentNode = currentNode.rightChildren;
+            } else {
+                return currentNode;
+            }
+        }
+        return null;
+    }
+
+    private Node getNodeByValue(Node localRoot, V value) {
         if (localRoot != null) {
-            K leftResult = remove(localRoot.leftChildren, value);
+            if (localRoot.value.equals(value)) {
+                return localRoot;
+            }
+
+            Node leftResult = getNodeByValue(localRoot.leftChildren, value);
             if (leftResult != null) {
                 return leftResult;
             }
-            if (localRoot.value.equals(value)) {
-                return localRoot.key;
-            } else {
-                return remove(localRoot.rightChildren, value);
-            }
+
+            return getNodeByValue(localRoot.rightChildren, value);
         } else {
             return null;
         }
