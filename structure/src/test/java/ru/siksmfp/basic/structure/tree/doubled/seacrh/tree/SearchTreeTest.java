@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.TreeStructure;
 
+import java.util.Random;
+
 /**
  * @author Artem Karnov @date 2/21/2018.
  * @email artem.karnov@t-systems.com
@@ -113,6 +115,28 @@ public class SearchTreeTest {
         Assert.assertTrue(tree.containsValue(SECOND_VALUE));
         Assert.assertFalse(tree.containsValue(THIRD_VALUE));
         Assert.assertFalse(tree.containsValue(FOURTH_VALUE));
+    }
+
+    @Test
+    public void removeAllElements() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+        int treeSize = 5;
+        for (int i = 0; i < treeSize; i++) {
+            tree.add(i, String.valueOf(i));
+        }
+
+        Random random = new Random();
+        int actualSize = treeSize;
+        for (int i = 0; i < treeSize; i++) {
+            int randomPosition = random.nextInt(treeSize + 1);
+            if (tree.containsValue(String.valueOf(randomPosition))) {
+                actualSize--;
+            }
+            tree.remove(randomPosition);
+            Assert.assertEquals(actualSize, tree.size());
+            Assert.assertFalse(tree.containsValue(String.valueOf(randomPosition)));
+        }
+
     }
 
     @Test

@@ -19,6 +19,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         private Node leftChildren;
         private Node rightChildren;
         private Node parent;
+        private boolean isLeftChildren;
 
         private Node(K key, V value) {
             this.key = key;
@@ -33,7 +34,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             String rightChildrenKey = rightChildren == null ? "null" : rightChildren.key == null ? "null" : rightChildren.key.toString();
             String rightChildrenValue = rightChildren == null ? "null" : rightChildren.value == null ? "null" : rightChildren.value.toString();
 
-            return "Node{key " + key + ", value " + value
+            return "Node{key " + key + ", value " + value + " isLeft " + isLeftChildren
                     + ", left child (" + leftChildrenKey + ";" + leftChildrenValue + ")"
                     + "; right child (" + rightChildrenKey + ";" + rightChildrenValue + ") }";
         }
@@ -57,25 +58,28 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         Node currentNode = root, parent = root;
         while (currentNode != null) {
             parent = currentNode;
-            if (currentNode.key.compareTo(key) < 0) {
+            if (key.compareTo(currentNode.key) < 0) {
                 currentNode = currentNode.leftChildren;
             } else {
                 currentNode = currentNode.rightChildren;
             }
         }
         currentNode = new Node(key, value);
-        currentNode.parent = parent;
         if (root == null) {
             root = currentNode;
+            root.isLeftChildren = false;
+            root.parent = null;
+        } else {
+            if (key.compareTo(parent.key) < 0) {
+                parent.leftChildren = currentNode;
+                currentNode.isLeftChildren = true;
+            } else {
+                parent.rightChildren = currentNode;
+                currentNode.isLeftChildren = false;
+            }
+            currentNode.parent = parent;
         }
         size++;
-        if (parent != null) {
-            if (parent.key.compareTo(key) < 0)
-                parent.leftChildren = currentNode;
-            else {
-                parent.rightChildren = currentNode;
-            }
-        }
     }
 
     /**
@@ -99,22 +103,28 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     @Override
     public void strictAdd(K key, V value) {
         Node currentNode = root, parent = root;
+        boolean isLeftChildren = false;
         while (currentNode != null) {
             parent = currentNode;
             if (currentNode.key.compareTo(key) < 0) {
                 currentNode = currentNode.leftChildren;
+                isLeftChildren = true;
             } else {
+                isLeftChildren = false;
                 currentNode = currentNode.rightChildren;
             }
         }
         currentNode = new Node(SystemUtils.clone(key), SystemUtils.clone(value));
         currentNode.parent = parent;
+        currentNode.isLeftChildren = isLeftChildren;
         size++;
         if (parent != null) {
-            if (parent.key.compareTo(key) < 0)
+            if (parent.key.compareTo(key) < 0) {
                 parent.leftChildren = currentNode;
-            else {
+                currentNode.isLeftChildren = true;
+            } else {
                 parent.rightChildren = currentNode;
+                currentNode.isLeftChildren = false;
             }
         }
     }
@@ -177,7 +187,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
 
     @Override
     public int height() {
-        // TODO: 3/11/2018  
+        // TODO: 3/11/2018
         return 0;
     }
 
@@ -190,28 +200,75 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         if (node.leftChildren == null && node.rightChildren == null) {
             removeChildrenNode(node);
         } else if (node.leftChildren == null) {
-            if (node.key.compareTo(node.parent.key) < 0) {
-                node.parent.leftChildren = node.rightChildren;
+            if (node.parent == null) {
+                root = root.rightChildren;
             } else {
-                node.parent.rightChildren = node.rightChildren;
+                if (node.key.compareTo(node.parent.key) < 0) {
+                    node.parent.leftChildren = node.rightChildren;
+                } else {
+                    node.parent.rightChildren = node.rightChildren;
+                }
+                removeChildrenNode(node);
             }
-            removeChildrenNode(node);
         } else if (node.rightChildren == null) {
-            if (node.key.compareTo(node.parent.key) < 0) {
-                node.parent.leftChildren = node.leftChildren;
+            if (node.parent == null) {
+                root = root.rightChildren;
             } else {
-                node.parent.rightChildren = node.leftChildren;
+                if (node.key.compareTo(node.parent.key) < 0) {
+                    node.parent.leftChildren = node.leftChildren;
+                } else {
+                    node.parent.rightChildren = node.leftChildren;
+                }
+                removeChildrenNode(node);
             }
-            removeChildrenNode(node);
         } else {
-            //Incorrect!!!
-            Node leftNode = node.leftChildren;
-            Node rightNode = node.rightChildren;
-            Node successor = findSuccessor(node);
-            successor.leftChildren = leftNode;
-            successor.rightChildren = rightNode;
+            Node replacer = findReplacer(node);
+            //replacer has children
+            if (replacer.rightChildren != null) {
+                //delete replacer from old position
+                //his children become paren't children
+                if (replacer.isLeftChildren) {
+                    replacer.parent.leftChildren = replacer.rightChildren;
+                } else {
+                    replacer.parent.rightChildren = replacer.rightChildren;
+                }
+                //set left children
+                replacer.leftChildren = node.leftChildren;
+                //set right children
+                if (replacer != node.rightChildren) {
+                    replacer.rightChildren = node.rightChildren;
+                }
+                //replace deleting node by replacer
+                replaceNode(node, replacer);
+            } else {
+                //replacer has no children
+                //delete replace from old position
+                removeChildrenNode(replacer);
+                //set left children
+                replacer.leftChildren = node.leftChildren;
+                //set right children
+                if (replacer != node.rightChildren) {
+                    replacer.rightChildren = node.rightChildren;
+                } else {
+                    replacer.rightChildren = null;
+                }
+                //replace deleting node by replacer
+                replaceNode(node, replacer);
+            }
         }
         size--;
+    }
+
+    private void replaceNode(Node node, Node replacer) {
+        if (node.parent == null) {
+            root = replacer;
+        } else {
+            if (node.isLeftChildren) {
+                node.parent.leftChildren = replacer;
+            } else {
+                node.parent.rightChildren = replacer;
+            }
+        }
     }
 
     private void removeChildrenNode(Node node) {
@@ -231,35 +288,20 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      * @param node list for getting
      * @return successor
      */
-    private Node findSuccessor(Node node) {
-        Node successor = node;
-        Node successorParent = node;
-        Node current = node.rightChildren;
-        while (current != null) {
-            successorParent = successor;
-            successor = current;
-            if (current.leftChildren != null) {
-                current = current.leftChildren;
-            } else {
-                current = current.rightChildren;
-            }
+    private Node findReplacer(Node node) {
+        Node replacer = node.rightChildren;
+        while (replacer.leftChildren != null) {
+            replacer = replacer.leftChildren;
         }
-        if (successorParent != successor) {
-            if (successor.leftChildren == successor) {
-                successorParent.leftChildren = null;
-            } else {
-                successorParent.rightChildren = null;
-            }
-        }
-        return successor;
+        return replacer;
     }
 
     private Node getNodeByKey(K key) {
         Node currentNode = root;
         while (currentNode != null) {
-            if (currentNode.key.compareTo(key) < 0) {
+            if (key.compareTo(currentNode.key) < 0) {
                 currentNode = currentNode.leftChildren;
-            } else if (currentNode.key.compareTo(key) > 0) {
+            } else if (key.compareTo(currentNode.key) > 0) {
                 currentNode = currentNode.rightChildren;
             } else {
                 return currentNode;
