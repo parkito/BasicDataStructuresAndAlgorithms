@@ -57,4 +57,17 @@ public class RedBlackTreeTest {
         Assert.assertEquals(thirdValue, tree.get(thirdKey));
         Assert.assertEquals(secondValue, tree.get(secondKey));
     }
+
+    @Test
+    public void containsKey() {
+        TreeStructure<Integer, String> tree = new RedBlackTree<>();
+        tree.add(firstKey, firstValue);
+        tree.add(secondKey, secondValue);
+        tree.add(thirdKey, thirdValue);
+
+        Assert.assertTrue(tree.contains(firstKey));
+        Assert.assertTrue(tree.contains(secondKey));
+        Assert.assertTrue(tree.contains(thirdKey));
+        Assert.assertFalse(tree.contains(fourthKey));
+    }
 }

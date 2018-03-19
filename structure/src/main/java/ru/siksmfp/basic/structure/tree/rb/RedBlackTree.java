@@ -1,6 +1,7 @@
 package ru.siksmfp.basic.structure.tree.rb;
 
 import ru.siksmfp.basic.structure.api.TreeStructure;
+import ru.siksmfp.basic.structure.utils.SystemUtils;
 
 /**
  * @author Artem Karnov @date 3/8/2018.
@@ -90,7 +91,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         Node node = new Node(key, value);
         if (root == null) {
             root = node;
-            root.parent = null; //may be null
+            root.parent = null;
             root.isRed = false;
         } else {
             add(root, node);
@@ -100,16 +101,44 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
     @Override
     public void strictAdd(K key, V value) {
-
+        Node node = new Node(SystemUtils.clone(key), SystemUtils.clone(value));
+        if (root == null) {
+            root = node;
+            root.parent = null;
+            root.isRed = false;
+        } else {
+            add(root, node);
+        }
+        size++;
     }
 
     @Override
     public V get(K key) {
+        Node node = root;
+        while (node != null) {
+            if (node.key.compareTo(key) == 0) {
+                return node.value;
+            } else if (node.key.compareTo(key) > 0) {
+                node = node.leftChildren;
+            } else {
+                node = node.rightChildren;
+            }
+        }
         return null;
     }
 
     @Override
     public boolean contains(K key) {
+        Node node = root;
+        while (node != null) {
+            if (node.key.compareTo(key) == 0) {
+                return true;
+            } else if (node.key.compareTo(key) > 0) {
+                node = node.leftChildren;
+            } else {
+                node = node.rightChildren;
+            }
+        }
         return false;
     }
 
@@ -224,31 +253,31 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
     private void rotate(Node node) {
         if (node.isLeftChild) {
-            if (node.parent.isLeftChild) {
-                rightRotation(node.parent.parent);
-                node.isRed = true;
+            if (node.parent.isLeftChild) {                               //A
+                rightRotation(node.parent.parent);                          //B
+                node.isRed = true;                                             //C
                 node.parent.isRed = false;
                 if (node.parent.rightChildren != null) {
                     node.parent.rightChildren.isRed = true;
                 }
-            } else {
-                rightLeftRotation(node.parent.parent);
-                node.isRed = false;
+            } else {                                                           //A
+                rightLeftRotation(node.parent.parent);                      //B
+                node.isRed = false;                                            //C
                 node.rightChildren.isRed = true;   //is needed?
                 node.leftChildren.isRed = false;
             }
         } else {
-            if (!node.parent.isLeftChild) {
-                leftRotation(node.parent.parent);
-                node.isRed = true;
+            if (!node.parent.isLeftChild) {                                       //A
+                leftRotation(node.parent.parent);                              //B
+                node.isRed = true;                                          //C
                 node.parent.isRed = false;
                 if (node.parent.leftChildren != null) {
                     node.parent.leftChildren.isRed = true;
                 }
             } else {
-                leftRightRotation(node.parent.parent);
-                node.isRed = false;
-                node.rightChildren.isRed = true;   //is needed?
+                leftRightRotation(node.parent.parent);                            //A
+                node.isRed = false;                                                   //B
+                node.rightChildren.isRed = true;                                   //C
                 node.leftChildren.isRed = false;
             }
         }
