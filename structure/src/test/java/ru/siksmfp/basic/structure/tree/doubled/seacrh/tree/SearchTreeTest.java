@@ -118,7 +118,7 @@ public class SearchTreeTest {
     }
 
     @Test
-    public void removeAllElements() {
+    public void removeAllElementsAscending() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
         int treeSize = 5;
         for (int i = 0; i < treeSize; i++) {
@@ -128,7 +128,7 @@ public class SearchTreeTest {
         Random random = new Random();
         int actualSize = treeSize;
         for (int i = 0; i < treeSize; i++) {
-            int randomPosition = random.nextInt(treeSize + 1);
+            int randomPosition = random.nextInt(treeSize + 1) - 1;
             if (tree.containsValue(String.valueOf(randomPosition))) {
                 actualSize--;
             }

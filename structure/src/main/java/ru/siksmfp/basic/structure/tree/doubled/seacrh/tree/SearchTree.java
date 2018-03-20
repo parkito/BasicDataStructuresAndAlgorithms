@@ -92,7 +92,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         while (currentNode != null) {
             if (currentNode.key.equals(key)) {
                 return true;
-            } else if (currentNode.key.compareTo(key) < 0) {
+            } else if (key.compareTo(currentNode.key) < 0) {
                 currentNode = currentNode.leftChildren;
             } else {
                 currentNode = currentNode.rightChildren;
@@ -154,24 +154,28 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         } else if (node.leftChildren == null) {
             if (node.parent == null) {
                 root = root.rightChildren;
+                root.parent = null;
             } else {
-                if (node.key.compareTo(node.parent.key) < 0) {
+                if (node.isLeftChildren) {
                     node.parent.leftChildren = node.rightChildren;
+                    node.rightChildren.parent = node.parent;
                 } else {
                     node.parent.rightChildren = node.rightChildren;
+                    node.rightChildren = node.parent;
                 }
-                removeChildrenNode(node);
             }
         } else if (node.rightChildren == null) {
             if (node.parent == null) {
-                root = root.rightChildren;
+                root = root.leftChildren;
+                root.parent = null;
             } else {
-                if (node.key.compareTo(node.parent.key) < 0) {
+                if (node.isLeftChildren) {
                     node.parent.leftChildren = node.leftChildren;
+                    node.leftChildren = node.parent;
                 } else {
                     node.parent.rightChildren = node.leftChildren;
+                    node.leftChildren = node.parent;
                 }
-                removeChildrenNode(node);
             }
         } else {
             Node replacer = findReplacer(node);
@@ -252,12 +256,9 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     }
 
     private void removeChildrenNode(Node node) {
-        if (node.parent == null) {
-            node.parent = null;
-            root = node;
-        } else if (node.parent.leftChildren != null && node.parent.leftChildren.key.equals(node.key)) {
+        if (node.isLeftChildren) {
             node.parent.leftChildren = null;
-        } else if (node.parent.rightChildren != null && node.parent.rightChildren.key.equals(node.key)) {
+        } else {
             node.parent.rightChildren = null;
         }
     }
