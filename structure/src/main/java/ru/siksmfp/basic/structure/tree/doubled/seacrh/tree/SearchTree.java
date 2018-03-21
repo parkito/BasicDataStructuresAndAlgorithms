@@ -259,7 +259,9 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         if (node.isLeftChildren) {
             node.parent.leftChildren = null;
         } else {
-            node.parent.rightChildren = null;
+            if (node.parent != null) {
+              node.parent.rightChildren = null;
+            }
         }
     }
 
