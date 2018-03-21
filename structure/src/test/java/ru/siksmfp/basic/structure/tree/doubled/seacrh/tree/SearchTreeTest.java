@@ -141,12 +141,12 @@ public class SearchTreeTest {
     }
 
     @Test
-    @Ignore //I implemented incorrect adding
+//    @Ignore //I implemented incorrect adding
     public void removeAllElementsRandom() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
         Random random = new Random();
 
-        int treeSize = 6, actualSize = 0;
+        int treeSize = 5, actualSize = 0;
         for (int i = treeSize; i > 0; i--) {
             int rand = random.nextInt(treeSize);
             if (!tree.contains(rand)) {
