@@ -1,6 +1,7 @@
 package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.TreeStructure;
 
@@ -20,6 +21,8 @@ public class SearchTreeTest {
     private static final String SECOND_VALUE = "2";
     private static final String THIRD_VALUE = "3";
     private static final String FOURTH_VALUE = "4";
+    private static final int BIG_TREE_SIZE = 10000;
+
 
     class InnerMutableClass {
         String stringField;
@@ -120,23 +123,39 @@ public class SearchTreeTest {
     @Test
     public void removeAllElementsAscending() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
-        int treeSize = 5;
-        for (int i = 0; i < treeSize; i++) {
+        for (int i = 0; i < BIG_TREE_SIZE; i++) {
             tree.add(i, String.valueOf(i));
         }
 
-        Random random = new Random();
-        int actualSize = treeSize;
-        for (int i = 0; i < treeSize; i++) {
-            int randomPosition = random.nextInt(treeSize + 1) - 1;
-            if (tree.containsValue(String.valueOf(randomPosition))) {
-                actualSize--;
-            }
-            tree.remove(randomPosition);
-            Assert.assertEquals(actualSize, tree.size());
-            Assert.assertFalse(tree.containsValue(String.valueOf(randomPosition)));
+        randomRemoveTreeCheck(tree, BIG_TREE_SIZE, BIG_TREE_SIZE);
+    }
+
+    @Test
+    public void removeAllElementsDescending() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+        for (int i = BIG_TREE_SIZE; i > 0; i--) {
+            tree.add(i, String.valueOf(i));
         }
 
+        randomRemoveTreeCheck(tree, BIG_TREE_SIZE, BIG_TREE_SIZE);
+    }
+
+    @Test
+    @Ignore //I implemented incorrect adding
+    public void removeAllElementsRandom() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+        Random random = new Random();
+
+        int treeSize = 6, actualSize = 0;
+        for (int i = treeSize; i > 0; i--) {
+            int rand = random.nextInt(treeSize);
+            if (!tree.contains(rand)) {
+                actualSize++;
+            }
+            tree.add(rand, String.valueOf(rand));
+        }
+
+        randomRemoveTreeCheck(tree, treeSize, actualSize);
     }
 
     @Test
@@ -154,8 +173,6 @@ public class SearchTreeTest {
         tree.remove(FIRST_KEY);
 
         Assert.assertEquals(0, tree.size());
-
-
     }
 
     @Test
@@ -202,5 +219,18 @@ public class SearchTreeTest {
         Assert.assertEquals(doubleValue3, tree.get(FIRST_KEY).getDoubleField(), INFELICITY);
         Assert.assertEquals(stringValue2, tree.get(SECOND_KEY).getStringField());
         Assert.assertEquals(doubleValue2, tree.get(SECOND_KEY).getDoubleField(), INFELICITY);
+    }
+
+    private void randomRemoveTreeCheck(TreeStructure<Integer, String> tree, int treeSize, int actualSize) {
+        Random random = new Random();
+        for (int i = treeSize; i > 0; i--) {
+            int randomPosition = random.nextInt(treeSize);
+            if (tree.containsValue(String.valueOf(randomPosition))) {
+                actualSize--;
+            }
+            tree.remove(randomPosition);
+            Assert.assertEquals(actualSize, tree.size());
+            Assert.assertFalse(tree.containsValue(String.valueOf(randomPosition)));
+        }
     }
 }
