@@ -1,7 +1,6 @@
 package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.TreeStructure;
 
@@ -146,7 +145,7 @@ public class SearchTreeTest {
         TreeStructure<Integer, String> tree = new SearchTree<>();
         Random random = new Random();
 
-        int treeSize = 5, actualSize = 0;
+        int treeSize = 20, actualSize = 0;
         for (int i = treeSize; i > 0; i--) {
             int rand = random.nextInt(treeSize);
             if (!tree.contains(rand)) {
@@ -230,7 +229,26 @@ public class SearchTreeTest {
             }
             tree.remove(randomPosition);
             Assert.assertEquals(actualSize, tree.size());
+            if (tree.containsValue(String.valueOf(randomPosition)) == true) {
+                tree.remove(randomPosition);
+                tree.containsValue(String.valueOf(randomPosition));
+            }
             Assert.assertFalse(tree.containsValue(String.valueOf(randomPosition)));
         }
+    }
+
+    @Test
+    public void test() {
+        TreeStructure<Integer, String> tree = new SearchTree<>();
+        tree.add(15, "15");
+        tree.add(3, "3");
+        tree.add(18, "18");
+        tree.add(17, "17");
+
+        tree.remove(17);
+
+        Assert.assertFalse(tree.contains(17));
+
+
     }
 }

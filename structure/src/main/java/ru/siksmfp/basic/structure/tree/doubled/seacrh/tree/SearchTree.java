@@ -89,7 +89,6 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         } else {
             addNode(new Node(SystemUtils.clone(key), SystemUtils.clone(value)));
         }
-
     }
 
     /**
@@ -162,7 +161,11 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
     // TODO: 3/21/2018 There is bug. Tree isn't balanced. 5 -- 1 -- 4
     private void removeNodeWithBalance(Node node) {
         if (node.leftChild == null && node.rightChild == null) {
-            detachCurrentNode(node);
+            if (node.parent == null) {
+                root = null;
+            } else {
+                detachCurrentNode(node);
+            }
         } else if (node.leftChild == null) {
             if (node.parent == null) {
                 root = root.rightChild;
@@ -170,6 +173,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
             } else {
                 if (node.isLeftChild) {
                     node.parent.leftChild = node.rightChild;
+                    node.rightChild.isLeftChild = true;
                 } else {
                     node.parent.rightChild = node.rightChild;
                 }
@@ -184,6 +188,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                     node.parent.leftChild = node.leftChild;
                 } else {
                     node.parent.rightChild = node.leftChild;
+                    node.leftChild.isLeftChild = false;
                 }
                 node.leftChild.parent = node.parent;
             }
@@ -195,24 +200,27 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                 //his child become paren't child
                 if (replacer.isLeftChild) {
                     replacer.parent.leftChild = replacer.rightChild;
+                    replacer.rightChild.isLeftChild = true;
                 } else {
                     replacer.parent.rightChild = replacer.rightChild;
                 }
-                //set children of deleting node to replacer
-                replacer.leftChild = node.leftChild;
-                replacer.rightChild = node.rightChild;
-                //replace deleting node by replacer
-                replaceNode(node, replacer);
             } else {
                 //replacer has no children
                 //delete replace from old position
                 detachCurrentNode(replacer);
-                //set children of deleting node to replacer
-                replacer.leftChild = node.leftChild;
-                replacer.rightChild = node.rightChild;
-                //replace deleting node by replacer
-                replaceNode(node, replacer);
             }
+
+            //set children of deleting node to replacer
+            replacer.leftChild = node.leftChild;
+            replacer.rightChild = node.rightChild;
+            if (node.leftChild != null) {
+                node.leftChild.parent = replacer;
+            }
+            if (node.rightChild != null) {
+                node.rightChild.parent = replacer;
+            }
+            //replace deleting node by replacer
+            replaceNode(node, replacer);
         }
         size--;
     }
@@ -251,8 +259,10 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         } else {
             if (node.isLeftChild) {
                 node.parent.leftChild = replacer;
+                replacer.isLeftChild = true;
             } else {
                 node.parent.rightChild = replacer;
+                replacer.isLeftChild = false;
             }
         }
         replacer.parent = node.parent;
