@@ -145,7 +145,7 @@ public class SearchTreeTest {
         TreeStructure<Integer, String> tree = new SearchTree<>();
         Random random = new Random();
 
-        int treeSize = 20, actualSize = 0;
+        int treeSize = 101, actualSize = 0;
         for (int i = treeSize; i > 0; i--) {
             int rand = random.nextInt(treeSize);
             if (!tree.contains(rand)) {
@@ -240,14 +240,27 @@ public class SearchTreeTest {
     @Test
     public void test() {
         TreeStructure<Integer, String> tree = new SearchTree<>();
+        tree.add(10, "10");
         tree.add(15, "15");
-        tree.add(3, "3");
+        tree.add(13, "13");
+        tree.add(17, "17");
+        tree.add(12, "12");
+        tree.add(14, "14");
+        tree.add(16, "16");
         tree.add(18, "18");
         tree.add(17, "17");
+        tree.add(3, "3");
+        tree.add(8, "8");
+        tree.add(2, "2");
+        tree.add(4, "4");
+        tree.add(7, "7");
+        tree.add(9, "9");
 
-        tree.remove(17);
 
-        Assert.assertFalse(tree.contains(17));
+        int a = 12;
+        tree.remove(a);
+
+        Assert.assertFalse(tree.contains(a));
 
 
     }

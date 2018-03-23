@@ -259,13 +259,12 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         } else {
             if (node.isLeftChild) {
                 node.parent.leftChild = replacer;
-                replacer.isLeftChild = true;
             } else {
                 node.parent.rightChild = replacer;
-                replacer.isLeftChild = false;
             }
         }
         replacer.parent = node.parent;
+        replacer.isLeftChild = node.isLeftChild;
     }
 
     private void detachCurrentNode(Node node) {
