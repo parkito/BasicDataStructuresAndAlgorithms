@@ -200,6 +200,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                 //his child become paren't child
                 if (replacer.isLeftChild) {
                     replacer.parent.leftChild = replacer.rightChild;
+                    replacer.rightChild.parent = replacer.parent;
                     replacer.rightChild.isLeftChild = true;
                 } else {
                     replacer.parent.rightChild = replacer.rightChild;
