@@ -8,7 +8,6 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  * @email artem.karnov@t-systems.com
  */
 public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
-
     //    Rebalance
     //
     //    Black aunt - rotation
@@ -74,7 +73,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             String leftChildrenValue = leftChildren == null ? "null" : leftChildren.value == null ? "null" : leftChildren.value.toString();
             String rightChildrenKey = rightChildren == null ? "null" : rightChildren.key == null ? "null" : rightChildren.key.toString();
             String rightChildrenValue = rightChildren == null ? "null" : rightChildren.value == null ? "null" : rightChildren.value.toString();
-            String color = isRed == true ? "Red" : "Black";
+            String color = isRed ? "Red" : "Black";
 
             return "Node{key " + key + ", value " + value + ", color " + color
                     + ", left child (" + leftChildrenKey + ";" + leftChildrenValue + ")"
@@ -84,7 +83,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
     private Node root;
     private int size;
-
 
     @Override
     public void add(K key, V value) {
@@ -197,7 +195,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     //        |         |---3) Left-right rotation
     //        |         |---4) Right-left rotation
     //        |---2) Do color flip
-
     private void add(Node root, Node node) {
         if (node.key.compareTo(root.key) > 0) {
             if (root.rightChildren == null) {
@@ -381,6 +378,14 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                 leftBlackNodes++;
             }
             return leftBlackNodes;
+        }
+    }
+
+    private Node sibling(Node node) {
+        if (node.isLeftChild) {
+            return node.parent.rightChildren;
+        } else {
+            return node.parent.leftChildren;
         }
     }
 }

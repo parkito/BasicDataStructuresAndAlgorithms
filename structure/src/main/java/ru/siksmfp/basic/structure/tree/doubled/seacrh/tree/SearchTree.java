@@ -158,7 +158,6 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
         return size;
     }
 
-    // TODO: 3/21/2018 There is bug. Tree isn't balanced. 5 -- 1 -- 4
     private void removeNodeWithBalance(Node node) {
         if (node.leftChild == null && node.rightChild == null) {
             if (node.parent == null) {

@@ -15,12 +15,14 @@ public class SearchTreeTest {
     private static final int SECOND_KEY = 2;
     private static final int THIRD_KEY = 3;
     private static final int FOURTH_KEY = 4;
-    private static final double INFELICITY = 0.001;
+
     private static final String FIRST_VALUE = "1";
     private static final String SECOND_VALUE = "2";
     private static final String THIRD_VALUE = "3";
     private static final String FOURTH_VALUE = "4";
-    private static final int BIG_TREE_SIZE = 10000;
+
+    private static final int BIG_TREE_SIZE = 9000;
+    private static final double INFELICITY = 0.001;
 
 
     class InnerMutableClass {
@@ -228,10 +230,6 @@ public class SearchTreeTest {
             }
             tree.remove(randomPosition);
             Assert.assertEquals(actualSize, tree.size());
-            if (tree.containsValue(String.valueOf(randomPosition)) == true) {
-                tree.remove(randomPosition);
-                tree.containsValue(String.valueOf(randomPosition));
-            }
             Assert.assertFalse(tree.containsValue(String.valueOf(randomPosition)));
         }
     }

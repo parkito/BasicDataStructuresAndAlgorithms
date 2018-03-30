@@ -10,22 +10,17 @@ import ru.siksmfp.basic.structure.api.TreeStructure;
  */
 public class RedBlackTreeTest {
     private Integer firstKey = 1;
-    private String firstValue = "1";
     private Integer secondKey = 2;
-    private String secondValue = "2";
     private Integer thirdKey = 3;
-    private String thirdValue = "3";
     private Integer fourthKey = 4;
-    private String fourthValue = "4";
     private Integer fifthKey = 5;
+
+    private String firstValue = "1";
+    private String secondValue = "2";
+    private String thirdValue = "3";
+    private String fourthValue = "4";
     private String fifthValue = "5";
 
-
-    //
-    //    1                 2
-    //      2      ->    1    3
-    //        3
-    //
     @Test
     public void leftRotation() {
         TreeStructure<Integer, String> tree = new RedBlackTree<>();
@@ -39,12 +34,6 @@ public class RedBlackTreeTest {
         Assert.assertEquals(thirdValue, tree.get(thirdKey));
     }
 
-
-    //
-    //          4                3
-    //       3       ->       2     4
-    //     2
-    //
     @Test
     public void rightRotation() {
         TreeStructure<Integer, String> tree = new RedBlackTree<>();
