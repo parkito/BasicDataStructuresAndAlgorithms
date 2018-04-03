@@ -192,35 +192,35 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
                 node.leftChild.parent = node.parent;
             }
         } else {
-            Node replacer = findReplacer(node);
-            //replacer has right child
-            if (replacer.rightChild != null) {
-                //delete replacer from old position
+            Node successor = findSuccessor(node);
+            //successor has right child
+            if (successor.rightChild != null) {
+                //delete successor from old position
                 //his child become paren't child
-                if (replacer.isLeftChild) {
-                    replacer.parent.leftChild = replacer.rightChild;
-                    replacer.rightChild.parent = replacer.parent;
-                    replacer.rightChild.isLeftChild = true;
+                if (successor.isLeftChild) {
+                    successor.parent.leftChild = successor.rightChild;
+                    successor.rightChild.parent = successor.parent;
+                    successor.rightChild.isLeftChild = true;
                 } else {
-                    replacer.parent.rightChild = replacer.rightChild;
+                    successor.parent.rightChild = successor.rightChild;
                 }
             } else {
-                //replacer has no children
+                //successor has no children
                 //delete replace from old position
-                detachCurrentNode(replacer);
+                detachCurrentNode(successor);
             }
 
-            //set children of deleting node to replacer
-            replacer.leftChild = node.leftChild;
-            replacer.rightChild = node.rightChild;
+            //set children of deleting node to successor
+            successor.leftChild = node.leftChild;
+            successor.rightChild = node.rightChild;
             if (node.leftChild != null) {
-                node.leftChild.parent = replacer;
+                node.leftChild.parent = successor;
             }
             if (node.rightChild != null) {
-                node.rightChild.parent = replacer;
+                node.rightChild.parent = successor;
             }
-            //replace deleting node by replacer
-            replaceNode(node, replacer);
+            //replace deleting node by successor
+            replaceNode(node, successor);
         }
         size--;
     }
@@ -283,7 +283,7 @@ public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, 
      * @param node list for getting
      * @return successor
      */
-    private Node findReplacer(Node node) {
+    private Node findSuccessor(Node node) {
         Node replacer = node.rightChild;
         while (replacer.leftChild != null) {
             replacer = replacer.leftChild;
