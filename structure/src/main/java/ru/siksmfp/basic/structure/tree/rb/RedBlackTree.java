@@ -445,6 +445,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             } else {
                 if (node.isLeftChild) {
                     node.parent.leftChild = node.rightChild;
+                    node.rightChild.isLeftChild = true;
                 } else {
                     node.parent.rightChild = node.rightChild;
                 }
@@ -460,6 +461,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                     node.parent.leftChild = node.leftChild;
                 } else {
                     node.parent.rightChild = node.leftChild;
+                    node.leftChild.isLeftChild = false;
                 }
                 node.leftChild.parent = node.parent;
             }
@@ -472,7 +474,36 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                     successor.parent.leftChild = successor.rightChild;
                     successor.rightChild.parent = successor.parent;
                     successor.rightChild.isLeftChild = true;
+                } else {
+                    successor.parent.rightChild = successor.rightChild;
+                    successor.rightChild.parent = successor.parent;
                 }
+            } else {
+                //successor doesn't have his own children
+                //detach successor from his old position
+                if (successor.isLeftChild) {
+                    successor.parent.leftChild = null;
+                } else {
+                    successor.parent.rightChild = null;
+                }
+                //replace on successor
+                if (node == root) {
+                    successor.parent = null;
+                    root = successor;
+                } else {
+                    if (node.isLeftChild) {
+                        node.parent.leftChild = successor;
+                        successor.isLeftChild = true;
+                    } else {
+                        node.parent.rightChild = successor;
+                        successor.isLeftChild = false;
+                    }
+                }
+                successor.leftChild = node.leftChild;
+                node.leftChild.parent = successor;
+
+                successor.rightChild = node.rightChild;
+                node.rightChild.parent = successor;
             }
         }
 
