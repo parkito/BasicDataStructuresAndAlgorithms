@@ -155,7 +155,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
     @Override
     public void remove(K key) {
-
+        delete(root);
     }
 
     @Override
@@ -387,5 +387,123 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         } else {
             return node.parent.leftChildren;
         }
+    }
+
+    /**
+     * Getting successor for deleting list with two children
+     *
+     * @param node list for getting
+     * @return successor
+     */
+    private Node findReplacer(Node node) {
+        if (node.rightChildren != null) {
+            return treeMin(node);
+        }
+        Node y = node.parent;
+        while (y != null && node == y.rightChildren) {
+            node = y;
+            y = y.parent;
+        }
+        return y;
+    }
+
+    private Node treeMin(Node x) {
+        while (x.leftChildren != null) {
+            x = x.leftChildren;
+        }
+        return x;
+    }
+
+    private void delete(Node node) {
+        Node y;
+        if (node.leftChildren == null || node.rightChildren == null) {
+            y = node;
+        } else {
+            y = findReplacer(node);
+        }
+
+        Node x;
+        if (y.leftChildren != null) {
+            x = y.leftChildren;
+        } else {
+            x = y.rightChildren;
+        }
+
+        if (x != null) {
+            x.parent = y.parent;
+        }
+
+        if (y.parent == null) {
+            root = x;
+        } else if (y.equals(y.parent.leftChildren)) {
+            y.parent.leftChildren = x;
+        } else {
+            y.parent.rightChildren = x;
+        }
+
+        if (!y.equals(node)) {
+            node.key = y.key;
+        }
+
+        if (!y.isRed) {
+            fixUp(x);
+        }
+
+    }
+
+    private void fixUp(Node x) {
+        while (x != root || !x.isRed) {
+            Node w = null;
+            if (x == x.parent.leftChildren) {
+                w = x.parent.rightChildren;
+                if (w.isRed) {
+                    w.isRed = false;
+                    x.parent.isRed = true;
+                    leftRotation(x.parent);
+                    w = x.parent.rightChildren;
+                }
+
+                if (!w.leftChildren.isRed && !w.rightChildren.isRed) {
+                    w.isRed = true;
+                    x = x.parent;
+                } else if (!w.rightChildren.isRed) {
+                    w.leftChildren.isRed = false;
+                    w.isRed = true;
+                    rightRotation(w);
+                    w = x.parent.rightChildren;
+                }
+
+                w.isRed = x.parent.isRed;
+                x.parent.isRed = false;
+                w.rightChildren.isRed = false;
+                leftRotation(x.parent);
+                x = root;
+            } else {
+                w = x.parent.leftChildren;
+                if (w.isRed) {
+                    w.isRed = false;
+                    x.parent.isRed = true;
+                    rightRotation(x.parent);
+                    w = x.parent.leftChildren;
+                }
+
+                if (!w.rightChildren.isRed && !w.leftChildren.isRed) {
+                    w.isRed = true;
+                    x = x.parent;
+                } else if (!w.leftChildren.isRed) {
+                    w.rightChildren.isRed = false;
+                    w.isRed = true;
+                    leftRotation(w);
+                    w = x.parent.leftChildren;
+                }
+
+                w.isRed = x.parent.isRed;
+                x.parent.isRed = false;
+                w.leftChildren.isRed = false;
+                rightRotation(x.parent);
+                x = root;
+            }
+        }
+        x.isRed = false;
     }
 }

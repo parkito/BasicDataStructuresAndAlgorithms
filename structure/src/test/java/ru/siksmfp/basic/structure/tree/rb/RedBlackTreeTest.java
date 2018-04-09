@@ -72,4 +72,14 @@ public class RedBlackTreeTest {
         Assert.assertTrue(tree.containsValue(thirdValue));
         Assert.assertFalse(tree.containsValue(fourthValue));
     }
+
+    @Test
+    public void test() {
+        TreeStructure<Integer, String> tree = new RedBlackTree<>();
+        tree.add(firstKey, firstValue);
+        tree.add(secondKey, secondValue);
+        tree.add(thirdKey, thirdValue);
+
+       tree.remove(1);
+    }
 }

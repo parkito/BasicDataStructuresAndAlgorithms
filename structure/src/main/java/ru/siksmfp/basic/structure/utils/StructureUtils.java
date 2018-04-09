@@ -3,6 +3,8 @@ package ru.siksmfp.basic.structure.utils;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
+import java.util.List;
+
 /**
  * @author Artem Karnov @date 1/3/2018.
  * artem.karnov@t-systems.com
@@ -36,4 +38,5 @@ public class StructureUtils {
             throw new IncorrectIndexException("Index couldn't be more than size-1");
         }
     }
+
 }
