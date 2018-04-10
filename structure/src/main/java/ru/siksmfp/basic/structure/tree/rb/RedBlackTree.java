@@ -443,6 +443,12 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         return node;
     }
 
+    /**
+     * We look for successor, replace current element with it
+     * and do tree rebalancing start form successor's old position
+     *
+     * @param node - node for deletion
+     */
     private void deleteNode(Node node) {
         Node successor;
         if (node.leftChild == null || node.rightChild == null) {
@@ -476,64 +482,75 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         }
 
         if (successorChild != null && !successor.isRed) {
-            fixUp(successorChild);
+            correctDeletion(successorChild);
         }
 
         size--;
     }
 
-    private void fixUp(Node node) {
+    /**
+     * We bypass tree from down to up.
+     * After each step we can have 4 cases of rebalancing
+     *
+     * @param node
+     */
+    private void correctDeletion(Node node) {
         while (node != root || !node.isRed) {
             Node sibling;
             if (node == node.parent.leftChild) {
                 sibling = node.parent.rightChild;
+                // Case 1: node's sibling is red
                 if (sibling.isRed) {
                     sibling.isRed = false;
                     node.parent.isRed = true;
                     leftRotation(node.parent);
                     sibling = node.parent.rightChild;
                 }
-
+                //  Case 2: node's sibling is black, and both of sibling's children are black
                 if (!sibling.leftChild.isRed && !sibling.rightChild.isRed) {
                     sibling.isRed = true;
                     node = node.parent;
+                    //  Case 3: node's sibling is black, his left child is red, and his right child is black
                 } else if (!sibling.rightChild.isRed) {
                     sibling.leftChild.isRed = false;
                     sibling.isRed = true;
                     rightRotation(sibling);
                     sibling = node.parent.rightChild;
                 }
-
+                // Case 4: node's sibling is black, and his right child is red
                 sibling.isRed = node.parent.isRed;
                 node.parent.isRed = false;
                 sibling.rightChild.isRed = false;
                 leftRotation(node.parent);
                 node = root;
             } else {
-                sibling = node.parent.leftChild;
-
-                if (sibling.isRed) {
-                    sibling.isRed = false;
-                    node.parent.isRed = true;
+                if (node == node.parent.rightChild) {
+                    sibling = node.parent.leftChild;
+                    // Case 1: node's sibling is red
+                    if (sibling.isRed) {
+                        sibling.isRed = false;
+                        node.parent.isRed = true;
+                        rightRotation(node.parent);
+                        sibling = node.parent.leftChild;
+                    }
+                    //  Case 2: node's sibling is black, and both of sibling's children are black
+                    if (!sibling.rightChild.isRed && !sibling.leftChild.isRed) {
+                        sibling.isRed = true;
+                        node = node.parent;
+                        //  Case 3: node's sibling is black, his left child is red, and his right child is black
+                    } else if (!sibling.leftChild.isRed) {
+                        sibling.rightChild.isRed = false;
+                        sibling.isRed = true;
+                        leftRotation(sibling);
+                        sibling = node.parent.leftChild;
+                    }
+                    // Case 4: node's sibling is black, and his right child is red
+                    sibling.isRed = node.parent.isRed;
+                    node.parent.isRed = false;
+                    sibling.leftChild.isRed = false;
                     rightRotation(node.parent);
-                    sibling = node.parent.leftChild;
+                    node = root;
                 }
-
-                if (!sibling.rightChild.isRed && !sibling.leftChild.isRed) {
-                    sibling.isRed = true;
-                    node = node.parent;
-                } else if (!sibling.leftChild.isRed) {
-                    sibling.rightChild.isRed = false;
-                    sibling.isRed = true;
-                    leftRotation(sibling);
-                    sibling = node.parent.leftChild;
-                }
-
-                sibling.isRed = node.parent.isRed;
-                node.parent.isRed = false;
-                sibling.leftChild.isRed = false;
-                rightRotation(node.parent);
-                node = root;
             }
         }
         node.isRed = false;

@@ -24,7 +24,7 @@ public class TreeTest {
     private static final String THIRD_VALUE = "3";
     private static final String FOURTH_VALUE = "4";
 
-    private static final int BIG_TREE_SIZE = 9000;
+    private static final int BIG_TREE_SIZE = 10000;
     private static final double INFELICITY = 0.001;
 
     protected TreeStructure<Integer, String> tree;
@@ -211,15 +211,18 @@ public class TreeTest {
         Assert.assertEquals(doubleValue2, tree.get(SECOND_KEY).getDoubleField(), INFELICITY);
     }
 
-    private void randomRemoveTreeCheck(TreeStructure<Integer, String> tree, int treeSize, int actualSize) {
+    private void randomRemoveTreeCheck(TreeStructure<Integer, String> tree, int treeSize, int treeCounter) {
         Random random = new Random();
         for (int i = treeSize; i > 0; i--) {
             int randomPosition = random.nextInt(treeSize);
             if (tree.containsValue(String.valueOf(randomPosition))) {
-                actualSize--;
+                treeCounter--;
             }
             tree.remove(randomPosition);
-            Assert.assertEquals(actualSize, tree.size());
+            if (treeCounter!=tree.size()){
+                System.out.println(tree);
+            }
+            Assert.assertEquals(treeCounter, tree.size());
             Assert.assertFalse(tree.containsValue(String.valueOf(randomPosition)));
         }
     }
