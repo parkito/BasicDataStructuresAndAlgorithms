@@ -137,7 +137,6 @@ public class TreeTest {
 
     @Test
     public void removeAllElementsRandom() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
         Random random = new Random();
 
         int treeSize = BIG_TREE_SIZE, actualSize = 0;
