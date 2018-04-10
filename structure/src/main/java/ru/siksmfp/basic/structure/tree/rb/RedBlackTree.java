@@ -445,7 +445,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             } else {
                 if (node.isLeftChild) {
                     node.parent.leftChild = node.rightChild;
-                    node.rightChild.isLeftChild = true;
                 } else {
                     node.parent.rightChild = node.rightChild;
                 }
@@ -461,7 +460,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                     node.parent.leftChild = node.leftChild;
                 } else {
                     node.parent.rightChild = node.leftChild;
-                    node.leftChild.isLeftChild = false;
                 }
                 node.leftChild.parent = node.parent;
             }
@@ -474,36 +472,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                     successor.parent.leftChild = successor.rightChild;
                     successor.rightChild.parent = successor.parent;
                     successor.rightChild.isLeftChild = true;
-                } else {
-                    successor.parent.rightChild = successor.rightChild;
-                    successor.rightChild.parent = successor.parent;
                 }
-            } else {
-                //successor doesn't have his own children
-                //detach successor from his old position
-                if (successor.isLeftChild) {
-                    successor.parent.leftChild = null;
-                } else {
-                    successor.parent.rightChild = null;
-                }
-                //replace on successor
-                if (node == root) {
-                    successor.parent = null;
-                    root = successor;
-                } else {
-                    if (node.isLeftChild) {
-                        node.parent.leftChild = successor;
-                        successor.isLeftChild = true;
-                    } else {
-                        node.parent.rightChild = successor;
-                        successor.isLeftChild = false;
-                    }
-                }
-                successor.leftChild = node.leftChild;
-                node.leftChild.parent = successor;
-
-                successor.rightChild = node.rightChild;
-                node.rightChild.parent = successor;
             }
         }
 
@@ -530,11 +499,11 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
      * @return successor
      */
     private Node findReplacer(Node node) {
-        if (node.rightChildren != null) {
+        if (node.rightChild != null) {
             return treeMin(node);
         }
         Node y = node.parent;
-        while (y != null && node == y.rightChildren) {
+        while (y != null && node == y.rightChild) {
             node = y;
             y = y.parent;
         }
@@ -542,25 +511,25 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     }
 
     private Node treeMin(Node x) {
-        while (x.leftChildren != null) {
-            x = x.leftChildren;
+        while (x.leftChild != null) {
+            x = x.leftChild;
         }
         return x;
     }
 
     private void delete(Node node) {
         Node y;
-        if (node.leftChildren == null || node.rightChildren == null) {
+        if (node.leftChild == null || node.rightChild == null) {
             y = node;
         } else {
             y = findReplacer(node);
         }
 
         Node x;
-        if (y.leftChildren != null) {
-            x = y.leftChildren;
+        if (y.leftChild != null) {
+            x = y.leftChild;
         } else {
-            x = y.rightChildren;
+            x = y.leftChild;
         }
 
         if (x != null) {
@@ -569,10 +538,10 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
         if (y.parent == null) {
             root = x;
-        } else if (y.equals(y.parent.leftChildren)) {
-            y.parent.leftChildren = x;
+        } else if (y.equals(y.parent.leftChild)) {
+            y.parent.leftChild = x;
         } else {
-            y.parent.rightChildren = x;
+            y.parent.rightChild = x;
         }
 
         if (!y.equals(node)) {
@@ -588,52 +557,52 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     private void fixUp(Node x) {
         while (x != root || !x.isRed) {
             Node w = null;
-            if (x == x.parent.leftChildren) {
-                w = x.parent.rightChildren;
+            if (x == x.parent.leftChild) {
+                w = x.parent.rightChild;
                 if (w.isRed) {
                     w.isRed = false;
                     x.parent.isRed = true;
                     leftRotation(x.parent);
-                    w = x.parent.rightChildren;
+                    w = x.parent.rightChild;
                 }
 
-                if (!w.leftChildren.isRed && !w.rightChildren.isRed) {
+                if (!w.leftChild.isRed && !w.rightChild.isRed) {
                     w.isRed = true;
                     x = x.parent;
-                } else if (!w.rightChildren.isRed) {
-                    w.leftChildren.isRed = false;
+                } else if (!w.rightChild.isRed) {
+                    w.leftChild.isRed = false;
                     w.isRed = true;
                     rightRotation(w);
-                    w = x.parent.rightChildren;
+                    w = x.parent.rightChild;
                 }
 
                 w.isRed = x.parent.isRed;
                 x.parent.isRed = false;
-                w.rightChildren.isRed = false;
+                w.rightChild.isRed = false;
                 leftRotation(x.parent);
                 x = root;
             } else {
-                w = x.parent.leftChildren;
+                w = x.parent.leftChild;
                 if (w.isRed) {
                     w.isRed = false;
                     x.parent.isRed = true;
                     rightRotation(x.parent);
-                    w = x.parent.leftChildren;
+                    w = x.parent.leftChild;
                 }
 
-                if (!w.rightChildren.isRed && !w.leftChildren.isRed) {
+                if (!w.rightChild.isRed && !w.leftChild.isRed) {
                     w.isRed = true;
                     x = x.parent;
-                } else if (!w.leftChildren.isRed) {
-                    w.rightChildren.isRed = false;
+                } else if (!w.leftChild.isRed) {
+                    w.rightChild.isRed = false;
                     w.isRed = true;
                     leftRotation(w);
-                    w = x.parent.leftChildren;
+                    w = x.parent.leftChild;
                 }
 
                 w.isRed = x.parent.isRed;
                 x.parent.isRed = false;
-                w.leftChildren.isRed = false;
+                w.leftChild.isRed = false;
                 rightRotation(x.parent);
                 x = root;
             }
