@@ -1,8 +1,9 @@
-package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
+package ru.siksmfp.basic.structure.tree;
 
 import org.junit.Assert;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.TreeStructure;
+import ru.siksmfp.basic.structure.tree.doubled.seacrh.tree.SearchTree;
 
 import java.util.Random;
 
@@ -10,7 +11,7 @@ import java.util.Random;
  * @author Artem Karnov @date 2/21/2018.
  * @email artem.karnov@t-systems.com
  */
-public class SearchTreeTest {
+public class TreeTest {
     private static final int FIRST_KEY = 1;
     private static final int SECOND_KEY = 2;
     private static final int THIRD_KEY = 3;
@@ -24,8 +25,9 @@ public class SearchTreeTest {
     private static final int BIG_TREE_SIZE = 9000;
     private static final double INFELICITY = 0.001;
 
+    protected TreeStructure<Integer, String> tree;
 
-    class InnerMutableClass {
+    private class InnerMutableClass {
         String stringField;
         Double doubleField;
 
@@ -61,8 +63,6 @@ public class SearchTreeTest {
 
     @Test
     public void add() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
-
         tree.add(FIRST_KEY, FIRST_VALUE);
         tree.add(SECOND_KEY, SECOND_VALUE);
         tree.add(THIRD_KEY, THIRD_VALUE);
@@ -74,8 +74,6 @@ public class SearchTreeTest {
 
     @Test
     public void contains() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
-
         tree.add(FIRST_KEY, FIRST_VALUE);
         tree.add(SECOND_KEY, SECOND_VALUE);
         tree.add(THIRD_KEY, THIRD_VALUE);
@@ -89,8 +87,6 @@ public class SearchTreeTest {
 
     @Test
     public void containsValue() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
-
         tree.add(FIRST_KEY, FIRST_VALUE);
         tree.add(SECOND_KEY, SECOND_VALUE);
         tree.add(THIRD_KEY, THIRD_VALUE);
@@ -104,8 +100,6 @@ public class SearchTreeTest {
 
     @Test
     public void removeByKey() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
-
         tree.add(FIRST_KEY, FIRST_VALUE);
         tree.add(SECOND_KEY, SECOND_VALUE);
         tree.add(THIRD_KEY, THIRD_VALUE);
@@ -123,7 +117,6 @@ public class SearchTreeTest {
 
     @Test
     public void removeAllElementsAscending() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
         for (int i = 0; i < BIG_TREE_SIZE; i++) {
             tree.add(i, String.valueOf(i));
         }
@@ -133,7 +126,6 @@ public class SearchTreeTest {
 
     @Test
     public void removeAllElementsDescending() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
         for (int i = BIG_TREE_SIZE; i > 0; i--) {
             tree.add(i, String.valueOf(i));
         }
@@ -160,8 +152,6 @@ public class SearchTreeTest {
 
     @Test
     public void removeFirst() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
-
         tree.add(FIRST_KEY, FIRST_VALUE);
         tree.add(SECOND_KEY, SECOND_VALUE);
 
@@ -177,8 +167,6 @@ public class SearchTreeTest {
 
     @Test
     public void removeValue() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
-
         tree.add(FIRST_KEY, FIRST_VALUE);
         tree.add(SECOND_KEY, SECOND_VALUE);
         tree.add(THIRD_KEY, THIRD_VALUE);

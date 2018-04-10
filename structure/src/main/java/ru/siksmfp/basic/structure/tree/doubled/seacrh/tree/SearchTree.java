@@ -10,6 +10,7 @@ import java.util.function.BiConsumer;
  * artem.karnov@t-systems.com
  **/
 public class SearchTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
+
     /**
      * Model of node's tree
      */

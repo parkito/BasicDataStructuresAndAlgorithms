@@ -426,57 +426,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         }
     }
 
-    private void deleteNode(Node node) {
-        if (node.leftChild == null && node.rightChild == null) {
-            if (node == root) {
-                root = null;
-            } else {
-                if (node.isLeftChild) {
-                    node.parent.leftChild = null;
-                } else {
-                    node.parent.rightChild = null;
-                }
-            }
-        } else if (node.leftChild == null) {
-            //node has no right child
-            if (node == root) {
-                node.parent = null;
-                root = node.rightChild;
-            } else {
-                if (node.isLeftChild) {
-                    node.parent.leftChild = node.rightChild;
-                } else {
-                    node.parent.rightChild = node.rightChild;
-                }
-                node.rightChild.parent = node.parent;
-            }
-        } else if (node.rightChild == null) {
-            //node has no right left children
-            if (node == root) {
-                root.parent = null;
-                root = node.leftChild;
-            } else {
-                if (node.isLeftChild) {
-                    node.parent.leftChild = node.leftChild;
-                } else {
-                    node.parent.rightChild = node.leftChild;
-                }
-                node.leftChild.parent = node.parent;
-            }
-        } else {
-            //node has two children
-            Node successor = findSuccessor(node);
-            //successor has his own right child
-            if (successor.rightChild != null) {
-                if (successor.isLeftChild) {
-                    successor.parent.leftChild = successor.rightChild;
-                    successor.rightChild.parent = successor.parent;
-                    successor.rightChild.isLeftChild = true;
-                }
-            }
-        }
-
-    }
 
     /**
      * Getting successor for deleting list with two children
@@ -485,20 +434,6 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
      * @return successor
      */
     private Node findSuccessor(Node node) {
-        Node replacer = node.rightChild;
-        while (replacer.leftChild != null) {
-            replacer = replacer.leftChild;
-        }
-        return replacer;
-    }
-
-    /**
-     * Getting successor for deleting list with two children
-     *
-     * @param node list for getting
-     * @return successor
-     */
-    private Node findReplacer(Node node) {
         if (node.rightChild != null) {
             return treeMin(node);
         }
@@ -510,48 +445,50 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
         return y;
     }
 
-    private Node treeMin(Node x) {
-        while (x.leftChild != null) {
-            x = x.leftChild;
+    private Node treeMin(Node node) {
+        while (node.leftChild != null) {
+            node = node.leftChild;
         }
-        return x;
+        return node;
     }
 
-    private void delete(Node node) {
-        Node y;
+    private void deleteNode(Node node) {
+        Node successor;
         if (node.leftChild == null || node.rightChild == null) {
-            y = node;
+            successor = node;
         } else {
-            y = findReplacer(node);
+            successor = findSuccessor(node);
         }
 
-        Node x;
-        if (y.leftChild != null) {
-            x = y.leftChild;
+        Node successorChild;
+        if (successor.leftChild != null) {
+            successorChild = successor.leftChild;
         } else {
-            x = y.leftChild;
+            successorChild = successor.rightChild;
         }
 
-        if (x != null) {
-            x.parent = y.parent;
+        if (successorChild != null) {
+            successorChild.parent = successor.parent;
         }
 
-        if (y.parent == null) {
-            root = x;
-        } else if (y.equals(y.parent.leftChild)) {
-            y.parent.leftChild = x;
+        if (successor.parent == null) {
+            root = successorChild;
+        } else if (successor.equals(successor.parent.leftChild)) {
+            successor.parent.leftChild = successorChild;
         } else {
-            y.parent.rightChild = x;
+            successor.parent.rightChild = successorChild;
         }
 
-        if (!y.equals(node)) {
-            node.key = y.key;
+        if (!successor.equals(node)) {
+            node.key = successor.key;
+            node.value = successor.value;
         }
 
-        if (!y.isRed) {
-            fixUp(x);
+        if (successorChild != null && !successor.isRed) {
+            fixUp(successorChild);
         }
 
+        size--;
     }
 
     private void fixUp(Node x) {
