@@ -1,9 +1,10 @@
 package ru.siksmfp.basic.structure.tree;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.TreeStructure;
-import ru.siksmfp.basic.structure.tree.doubled.seacrh.tree.SearchTree;
+import ru.siksmfp.basic.structure.tree.bynary.seacrh.tree.SearchTree;
 
 import java.util.Random;
 
@@ -11,6 +12,7 @@ import java.util.Random;
  * @author Artem Karnov @date 2/21/2018.
  * @email artem.karnov@t-systems.com
  */
+@Ignore
 public class TreeTest {
     private static final int FIRST_KEY = 1;
     private static final int SECOND_KEY = 2;

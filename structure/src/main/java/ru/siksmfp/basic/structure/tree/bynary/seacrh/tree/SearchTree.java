@@ -1,4 +1,4 @@
-package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
+package ru.siksmfp.basic.structure.tree.bynary.seacrh.tree;
 
 import ru.siksmfp.basic.structure.api.TreeStructure;
 import ru.siksmfp.basic.structure.utils.SystemUtils;

@@ -1,4 +1,4 @@
-package ru.siksmfp.basic.structure.tree.doubled.seacrh.tree;
+package ru.siksmfp.basic.structure.tree.bynary.seacrh.tree;
 
 import org.junit.Before;
 import ru.siksmfp.basic.structure.tree.TreeTest;
