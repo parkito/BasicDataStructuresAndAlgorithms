@@ -426,14 +426,14 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
      */
     private Node findSuccessor(Node node) {
         if (node.rightChild != null) {
-            return treeMin(node);
+            return treeMin(node.rightChild);
         }
-        Node y = node.parent;
-        while (y != null && node == y.rightChild) {
-            node = y;
-            y = y.parent;
+        Node parentNode = node.parent;
+        while (parentNode != null && !node.isLeftChild) {
+            node = parentNode;
+            parentNode = parentNode.parent;
         }
-        return y;
+        return parentNode;
     }
 
     private Node treeMin(Node node) {
@@ -470,13 +470,13 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
 
         if (successor.parent == null) {
             root = successorChild;
-        } else if (successor.equals(successor.parent.leftChild)) {
+        } else if (successor.isLeftChild) {
             successor.parent.leftChild = successorChild;
         } else {
             successor.parent.rightChild = successorChild;
         }
 
-        if (!successor.equals(node)) {
+        if (successor != node) {
             node.key = successor.key;
             node.value = successor.value;
         }
@@ -497,7 +497,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     private void correctDeletion(Node node) {
         while (node != root || !node.isRed) {
             Node sibling;
-            if (node == node.parent.leftChild) {
+            if (node.isLeftChild) {
                 sibling = node.parent.rightChild;
                 // Case 1: node's sibling is red
                 if (sibling.isRed) {
