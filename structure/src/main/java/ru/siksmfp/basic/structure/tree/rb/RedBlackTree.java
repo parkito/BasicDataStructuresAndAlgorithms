@@ -226,7 +226,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
     }
 
     private void balanceTree(Node node) {
-        if (!node.equals(root)) {
+        if (node != root) {
             if (node.isRed && node.parent.isRed) {
                 correctTree(node);
             }
@@ -274,7 +274,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             } else {                                                           //A
                 rightLeftRotation(node.parent.parent);                      //B
                 node.isRed = false;                                            //C
-                node.rightChild.isRed = true;   //is needed?
+                node.rightChild.isRed = true;
                 node.leftChild.isRed = false;
             }
         } else {

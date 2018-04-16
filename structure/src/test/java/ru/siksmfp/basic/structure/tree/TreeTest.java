@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.TreeStructure;
-import ru.siksmfp.basic.structure.tree.bynary.seacrh.tree.SearchTree;
 
 import java.util.Random;
 
@@ -28,8 +27,9 @@ public class TreeTest {
     private static final double INFELICITY = 0.001;
 
     protected TreeStructure<Integer, String> tree;
+    protected TreeStructure<Integer, InnerMutableClass> iTree;
 
-    private class InnerMutableClass {
+    public class InnerMutableClass {
         String stringField;
         Double doubleField;
 
@@ -137,7 +137,6 @@ public class TreeTest {
 
     @Test
     public void removeAllElementsRandom() {
-        TreeStructure<Integer, String> tree = new SearchTree<>();
         Random random = new Random();
 
         int treeSize = BIG_TREE_SIZE, actualSize = 0;
@@ -183,8 +182,6 @@ public class TreeTest {
 
     @Test
     public void strictAdd() {
-        TreeStructure<Integer, InnerMutableClass> tree = new SearchTree<>();
-
         String stringValue1 = "Value1";
         String stringValue2 = "Value2";
         String stringValue3 = "Value3";
@@ -195,8 +192,8 @@ public class TreeTest {
         InnerMutableClass innerMutableClass1 = new InnerMutableClass(stringValue1, doubleValue1);
         InnerMutableClass innerMutableClass2 = new InnerMutableClass(stringValue2, doubleValue2);
 
-        tree.add(FIRST_KEY, innerMutableClass1);
-        tree.strictAdd(SECOND_KEY, innerMutableClass2);
+        iTree.add(FIRST_KEY, innerMutableClass1);
+        iTree.strictAdd(SECOND_KEY, innerMutableClass2);
 
         innerMutableClass1.setStringField(stringValue3);
         innerMutableClass1.setDoubleField(doubleValue3);
@@ -204,11 +201,11 @@ public class TreeTest {
         innerMutableClass2.setStringField(stringValue3);
         innerMutableClass2.setDoubleField(doubleValue3);
 
-        Assert.assertEquals(2, tree.size());
-        Assert.assertEquals(stringValue3, tree.get(FIRST_KEY).getStringField());
-        Assert.assertEquals(doubleValue3, tree.get(FIRST_KEY).getDoubleField(), INFELICITY);
-        Assert.assertEquals(stringValue2, tree.get(SECOND_KEY).getStringField());
-        Assert.assertEquals(doubleValue2, tree.get(SECOND_KEY).getDoubleField(), INFELICITY);
+        Assert.assertEquals(2, iTree.size());
+        Assert.assertEquals(stringValue3, iTree.get(FIRST_KEY).getStringField());
+        Assert.assertEquals(doubleValue3, iTree.get(FIRST_KEY).getDoubleField(), INFELICITY);
+        Assert.assertEquals(stringValue2, iTree.get(SECOND_KEY).getStringField());
+        Assert.assertEquals(doubleValue2, iTree.get(SECOND_KEY).getDoubleField(), INFELICITY);
     }
 
     private void randomRemoveTreeCheck(TreeStructure<Integer, String> tree, int treeSize, int treeCounter) {
