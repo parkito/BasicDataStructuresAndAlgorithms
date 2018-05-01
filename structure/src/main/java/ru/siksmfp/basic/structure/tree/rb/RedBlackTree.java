@@ -74,10 +74,13 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
             String rightChildrenKey = rightChild == null ? "null" : rightChild.key == null ? "null" : rightChild.key.toString();
             String rightChildrenValue = rightChild == null ? "null" : rightChild.value == null ? "null" : rightChild.value.toString();
             String color = isRed ? "Red" : "Black";
+            String parentKey = parent == null ? "null" : parent.key.toString();
+            String parentColor = parent == null ? "null" : parent.isRed ? "Red" : "Black";
 
             return "Node{key " + key + ", value " + value + ", color " + color
                     + ", left child (" + leftChildrenKey + ";" + leftChildrenValue + ")"
-                    + "; right child (" + rightChildrenKey + ";" + rightChildrenValue + ") }";
+                    + "; right child (" + rightChildrenKey + ";" + rightChildrenValue + ")"
+                    + " parent (" + parentKey + ";" + parentColor + ") }";
         }
     }
 
