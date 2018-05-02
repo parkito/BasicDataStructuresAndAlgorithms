@@ -7,6 +7,8 @@ import ru.siksmfp.basic.structure.utils.SystemUtils;
  * @author Artem Karnov @date 3/8/2018.
  * @email artem.karnov@t-systems.com
  */
+// TODO: 5/1/2018 rewrite this structure
+@Deprecated
 public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K, V> {
     //    Rebalance
     //
@@ -278,7 +280,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                 rightLeftRotation(node.parent.parent);                      //B
                 node.isRed = false;                                            //C
                 node.rightChild.isRed = true;
-                node.leftChild.isRed = false;
+                node.leftChild.isRed = true;
             }
         } else {
             if (!node.parent.isLeftChild) {                                       //A
@@ -292,7 +294,7 @@ public class RedBlackTree<K extends Comparable<K>, V> implements TreeStructure<K
                 leftRightRotation(node.parent.parent);                            //A
                 node.isRed = false;                                                   //B
                 node.rightChild.isRed = true;                                   //C
-                node.leftChild.isRed = false;
+                node.leftChild.isRed = true;
             }
         }
     }
