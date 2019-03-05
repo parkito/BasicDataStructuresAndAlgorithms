@@ -22,9 +22,9 @@ public class DoublyLinkedList<T> implements ListStructure<T> {
     /**
      * Class represents list of elements
      *
-     * @param <T> object type for storing in list
+     * @param <L> object type for storing in list
      */
-    private class List<T> {
+    private class List<L> {
         public T data;
         public List next;
         public List previous;

@@ -1,6 +1,5 @@
 package ru.siksmfp.basic.structure.queue;
 
-
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.array.DynamicArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;

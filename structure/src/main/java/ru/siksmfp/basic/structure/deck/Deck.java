@@ -89,7 +89,7 @@ public class Deck<T> {
     }
 
     /**
-     * Checking com.saiu.ru.siksmfp.basic.structure.deck on elements presence
+     * Checking deck on elements presence
      *
      * @return true - if deck has elements, false - if deck is empty
      */
