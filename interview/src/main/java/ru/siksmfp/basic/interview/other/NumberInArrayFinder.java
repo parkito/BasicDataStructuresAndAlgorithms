@@ -6,7 +6,7 @@ package ru.siksmfp.basic.interview.other;
  * artem.karnov@t-systems.com
  */
 
-import ru.siksmfp.basic.structure.array.fixed.FixedArray;
+import ru.siksmfp.basic.structure.array.FixedArray;
 
 /**
  * Find one of the numbers which exists in each of three nondecreasing arrays x[p], y[q], z[r].

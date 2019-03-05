@@ -1,8 +1,7 @@
 package ru.siksmfp.basic.structure.stack;
 
 import ru.siksmfp.basic.structure.api.ArrayStructure;
-import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
-import ru.siksmfp.basic.structure.array.g.GArray;
+import ru.siksmfp.basic.structure.array.DynamicArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.StructureUtils;
 import ru.siksmfp.basic.structure.utils.SystemUtils;
@@ -26,12 +25,12 @@ public class Stack<T> {
      */
     public Stack() {
         size = 0;
-        array = new GArray<>(INITIAL_STACK_SIZE);
+        array = new DynamicArray<>(INITIAL_STACK_SIZE);
     }
 
     public Stack(int size) {
         this.size = 0;
-        array = new GArray<>(size);
+        array = new DynamicArray<>(size);
     }
 
     /**

@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.siksmfp.basic.algorithm.sort.Sort;
 import ru.siksmfp.basic.algorithm.sort.SortDirection;
-import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
+import ru.siksmfp.basic.structure.array.DynamicArray;
 
 /**
  * @author Artem Karnov @date 21.04.2017.

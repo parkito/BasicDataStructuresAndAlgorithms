@@ -10,7 +10,6 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>ru.siksmfp.basic</groupId>
     <artifactId>structure</artifactId>
     <version>1.0</version>
 

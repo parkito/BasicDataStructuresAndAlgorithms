@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.api.Iterator;
-import ru.siksmfp.basic.structure.array.g.GArray;
+import ru.siksmfp.basic.structure.array.DynamicArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 
 import static junit.framework.TestCase.assertEquals;
@@ -164,7 +164,7 @@ public class SimpleLinkedListTest {
     public void interationOnAllElements() {
         SimpleLinkedList<Integer> simpleLinkedList = new SimpleLinkedList<>(1, 2, 3, 4, 5);
         Iterator<Integer> iterator = simpleLinkedList.getIterator();
-        ArrayStructure<Integer> array = new GArray<>();
+        ArrayStructure<Integer> array = new DynamicArray<>();
 
         while (iterator.hasNext()) {
             array.add(iterator.next());

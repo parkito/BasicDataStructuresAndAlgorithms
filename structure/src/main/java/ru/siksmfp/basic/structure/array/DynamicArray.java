@@ -1,4 +1,4 @@
-package ru.siksmfp.basic.structure.array.dynamic;
+package ru.siksmfp.basic.structure.array;
 
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.api.Iterator;
@@ -152,7 +152,7 @@ public class DynamicArray<T> implements ArrayStructure<T> {
     @Override
     public void remove(int index) {
         StructureUtils.checkingIndex(index, size());
-        leftShift(index);
+        StructureUtils.leftShift(index, array);
         size--;
     }
 
@@ -165,7 +165,7 @@ public class DynamicArray<T> implements ArrayStructure<T> {
     @Override
     public void strictRemove(int index) {
         StructureUtils.checkingIndex(index, size());
-        strictLeftShift(index);
+        StructureUtils.strictLeftShift(index, array);
         size--;
     }
 
@@ -255,46 +255,6 @@ public class DynamicArray<T> implements ArrayStructure<T> {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            result.append(array[i]);
-            result.append(", ");
-        }
-        if (result.length() > 1) {
-            result.delete(result.length() - 2, result.length());
-        }
-        return "DynamicArray{" + result.toString() + "}";
-    }
-
-    /**
-     * DynamicArray left shifting
-     * <p>
-     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
-     * Then we have [1] [3] [4] [NULL]
-     *
-     * @param startWithIndex first index for shifting
-     */
-    private void leftShift(int startWithIndex) {
-        for (int i = startWithIndex; i < size() - 1; i++) {
-            array[i] = array[i + 1];
-        }
-        array[size() - 1] = null;
-    }
-
-    /**
-     * DynamicArray left shifting
-     * <p>
-     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
-     * Then we have [1] [3] [4] [NULL]
-     * <p>
-     * Strict means for copying we use deep clone mechanism
-     *
-     * @param startWithIndex first index for shifting
-     */
-    private void strictLeftShift(int startWithIndex) {
-        for (int i = startWithIndex; i < size() - 1; i++) {
-            array[i] = SystemUtils.clone(array[i + 1]);
-        }
-        array[size() - 1] = null;
+        return StructureUtils.arrayToString(size, array);
     }
 }

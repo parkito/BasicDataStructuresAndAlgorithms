@@ -2,6 +2,7 @@ package ru.siksmfp.basic.structure.array.dynamic;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.siksmfp.basic.structure.array.DynamicArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 
 /**

@@ -3,8 +3,6 @@ package ru.siksmfp.basic.structure.utils;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
-import java.util.List;
-
 /**
  * @author Artem Karnov @date 1/3/2018.
  * artem.karnov@t-systems.com
@@ -39,4 +37,48 @@ public class StructureUtils {
         }
     }
 
+    public static String arrayToString(int size, Object[] array) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            result.append(array[i]);
+            result.append(", ");
+        }
+        if (result.length() > 1) {
+            result.delete(result.length() - 2, result.length());
+        }
+        return "Array{" + result.toString() + "}";
+    }
+
+    /**
+     * Array left shifting
+     * <p>
+     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
+     * Then we have [1] [3] [4] [NULL]
+     * <p>
+     * Strict means for copying we use deep clone mechanism
+     *
+     * @param startWithIndex first index for shifting
+     */
+
+    public static void strictLeftShift(int startWithIndex, Object[] array) {
+        for (int i = startWithIndex; i < array.length - 1; i++) {
+            array[i] = SystemUtils.clone(array[i + 1]);
+        }
+        array[array.length - 1] = null;
+    }
+
+    /**
+     * Array left shifting
+     * <p>
+     * Consider [1] [2] [3] [4]. We have to shift array since index = 1
+     * Then we have [1] [3] [4] [NULL]
+     *
+     * @param startWithIndex first index for shifting
+     */
+    public static void leftShift(int startWithIndex, Object[] array) {
+        for (int i = startWithIndex; i < array.length - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        array[array.length - 1] = null;
+    }
 }

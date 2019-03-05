@@ -2,6 +2,7 @@ package ru.siksmfp.basic.structure.array.fixed;
 
 import org.junit.Assert;
 import org.junit.Test;
+import ru.siksmfp.basic.structure.array.FixedArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectIndexException;
 
 /**

@@ -1,6 +1,6 @@
 package ru.siksmfp.basic.structure.deck;
 
-import ru.siksmfp.basic.structure.array.dynamic.DynamicArray;
+import ru.siksmfp.basic.structure.array.DynamicArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
 /**

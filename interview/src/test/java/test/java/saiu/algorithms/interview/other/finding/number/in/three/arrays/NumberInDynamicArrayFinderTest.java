@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import ru.siksmfp.basic.interview.other.NumberInArrayFinder;
-import ru.siksmfp.basic.structure.array.fixed.FixedArray;
+import ru.siksmfp.basic.structure.array.FixedArray;
 
 /**
  * @author Artem Karnov @date 25.02.17.

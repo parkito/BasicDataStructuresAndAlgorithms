@@ -3,8 +3,8 @@ package ru.siksmfp.basic.structure.hash.table.chain;
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.api.HashTable;
 import ru.siksmfp.basic.structure.api.ListStructure;
-import ru.siksmfp.basic.structure.array.fixed.FixedArray;
-import ru.siksmfp.basic.structure.list.linked.g.GLinkedList;
+import ru.siksmfp.basic.structure.array.FixedArray;
+import ru.siksmfp.basic.structure.list.linked.simple.SimpleLinkedList;
 import ru.siksmfp.basic.structure.utils.math.Math;
 
 import java.util.function.Function;
@@ -91,7 +91,7 @@ public class ChainHashTable<K, V> implements HashTable<K, V> {
     public void add(K key, V value) {
         int index = applyHashing(key);
         if (array.get(index) == null) {
-            array.add(index, new GLinkedList<>(new Node<>(key, value)));
+            array.add(index, new SimpleLinkedList<>(new Node<>(key, value)));
         } else {
             array.get(index).add(new Node<>(key, value));
         }

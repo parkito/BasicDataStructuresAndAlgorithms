@@ -3,7 +3,7 @@ package ru.siksmfp.basic.structure.hash.table.open.adress.linear.prob;
 
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 import ru.siksmfp.basic.structure.api.HashTable;
-import ru.siksmfp.basic.structure.array.fixed.FixedArray;
+import ru.siksmfp.basic.structure.array.FixedArray;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.utils.math.Math;
 
