@@ -3,7 +3,9 @@ package ru.siksmfp.basic.algorithm.sort.algorithm;
 import ru.siksmfp.basic.algorithm.sort.SortDirection;
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 
-public interface SortAlgorithm<T extends Comparable<? super T>> {
+public class RedixSort<T> implements SortAlgorithm  {
+    @Override
+    public void sort(ArrayStructure structure, SortDirection direction) {
 
-    void sort(ArrayStructure<T> structure, SortDirection direction);
+    }
 }
