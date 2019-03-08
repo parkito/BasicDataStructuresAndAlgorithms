@@ -2,10 +2,6 @@ package ru.siksmfp.basic.algorithm.sort;
 
 import ru.siksmfp.basic.structure.api.ArrayStructure;
 
-/**
- * @author Artem Karnov @date 21.04.2017.
- * artem.karnov@t-systems.com
- */
 public class Sort {
 
     private Sort() {
