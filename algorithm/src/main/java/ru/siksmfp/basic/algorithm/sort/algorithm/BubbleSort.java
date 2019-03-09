@@ -10,16 +10,12 @@ public class BubbleSort<T extends Comparable<? super T>> implements SortAlgorith
 
     @Override
     public void sort(ArrayStructure<T> structure, SortDirection direction) {
-        int swap=0, comp=0;
         for (int i = 0; i < structure.size(); i++) {
             for (int j = 0; j < structure.size() - i - 1; j++) {
-                comp++;
                 if (shallSort(structure.get(j), structure.get(j + 1), direction)) {
                     swap(structure, j, j + 1);
-                    swap++;
                 }
             }
         }
-        System.out.println("Swap " + swap + " Comp "+ comp);
     }
 }

@@ -68,6 +68,30 @@ public class SortTest {
         Assert.assertEquals(1, array.get(0).intValue());
     }
 
+    public static void allSameAskElements(SortAlgorithm<Integer> algorithm) {
+        DynamicArray<Integer> array = new DynamicArray<>(3, 3, 3, 3, 3);
+
+        algorithm.sort(array, ASC);
+
+        Assert.assertEquals(3, array.get(0).intValue());
+        Assert.assertEquals(3, array.get(1).intValue());
+        Assert.assertEquals(3, array.get(2).intValue());
+        Assert.assertEquals(3, array.get(3).intValue());
+        Assert.assertEquals(3, array.get(4).intValue());
+    }
+
+    public static void allSameDeskElements(SortAlgorithm<Integer> algorithm) {
+        DynamicArray<Integer> array = new DynamicArray<>(3, 3, 3, 3, 3);
+
+        algorithm.sort(array, DESC);
+
+        Assert.assertEquals(3, array.get(0).intValue());
+        Assert.assertEquals(3, array.get(1).intValue());
+        Assert.assertEquals(3, array.get(2).intValue());
+        Assert.assertEquals(3, array.get(3).intValue());
+        Assert.assertEquals(3, array.get(4).intValue());
+    }
+
     public static void performanceTest1(SortAlgorithm<Integer> algorithm) {
         DynamicArray<Integer> array = new DynamicArray<>(TEN_THOUSANDS + 1);
         for (int i = TEN_THOUSANDS; i >= 0; i--) {

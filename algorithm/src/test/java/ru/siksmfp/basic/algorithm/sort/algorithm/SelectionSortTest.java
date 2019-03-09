@@ -3,57 +3,57 @@ package ru.siksmfp.basic.algorithm.sort.algorithm;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BubbleSortTest {
+public class SelectionSortTest {
 
-    private SortAlgorithm<Integer> bubbleSort;
+    private SortAlgorithm<Integer> selectionSort;
 
     @Before
     public void setUp() {
-        bubbleSort = new BubbleSort<>();
+        selectionSort = new SelectionSort<>();
     }
 
     @Test
     public void ascOrderTest() {
-        SortTest.ascOrderTest(bubbleSort);
+        SortTest.ascOrderTest(selectionSort);
     }
 
     @Test
     public void descOrderTest() {
-        SortTest.descOrderTest(bubbleSort);
+        SortTest.descOrderTest(selectionSort);
     }
 
     @Test
     public void mixArrayOrderTest() {
-        SortTest.mixArrayOrderTest(bubbleSort);
+        SortTest.mixArrayOrderTest(selectionSort);
     }
 
     @Test
     public void emptyArrayTest() {
-        SortTest.emptyArrayTest(bubbleSort);
+        SortTest.emptyArrayTest(selectionSort);
     }
 
     @Test
     public void oneElementArrayTest() {
-        SortTest.oneElementArrayTest(bubbleSort);
+        SortTest.oneElementArrayTest(selectionSort);
     }
 
     @Test
     public void allTheSameAskTest() {
-        SortTest.allSameAskElements(bubbleSort);
+        SortTest.allSameAskElements(selectionSort);
     }
 
     @Test
     public void allTheSameDescTest() {
-        SortTest.allSameAskElements(bubbleSort);
+        SortTest.allSameAskElements(selectionSort);
     }
 
     @Test
     public void performanceTest1() {
-        SortTest.performanceTest1(bubbleSort);
+        SortTest.performanceTest1(selectionSort);
     }
 
     @Test
     public void performanceTest2() {
-        SortTest.performanceTest2(bubbleSort);
+        SortTest.performanceTest2(selectionSort);
     }
 }

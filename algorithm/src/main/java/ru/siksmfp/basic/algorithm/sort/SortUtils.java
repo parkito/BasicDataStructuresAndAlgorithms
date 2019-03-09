@@ -14,9 +14,19 @@ public class SortUtils {
         }
     }
 
-    public static <T extends Comparable> void swap(ArrayStructure<T> structure, int index1, int index2) {
+    public static <T extends Comparable<? super T>> void swap(ArrayStructure<T> structure, int index1, int index2) {
         T temp = structure.get(index1);
         structure.add(index1, structure.get(index2));
         structure.add(index2, temp);
+    }
+
+    public static <T extends Comparable<? super T>> int findMax(ArrayStructure<T> structure, int from, int to) {
+        int localMax = from;
+            for (int i = from + 1; i < to; i++) {
+            if (structure.get(i).compareTo(structure.get(localMax)) > 0) {
+                localMax = i;
+            }
+        }
+        return localMax;
     }
 }

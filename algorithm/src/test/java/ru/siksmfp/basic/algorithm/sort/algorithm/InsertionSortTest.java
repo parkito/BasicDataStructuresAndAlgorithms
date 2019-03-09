@@ -38,6 +38,16 @@ public class InsertionSortTest {
     }
 
     @Test
+    public void allTheSameAskTest() {
+        SortTest.allSameAskElements(insertionSort);
+    }
+
+    @Test
+    public void allTheSameDescTest() {
+        SortTest.allSameAskElements(insertionSort);
+    }
+
+    @Test
     public void performanceTest1() {
         SortTest.performanceTest1(insertionSort);
     }
