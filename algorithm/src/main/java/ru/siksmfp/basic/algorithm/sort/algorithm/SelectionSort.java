@@ -13,8 +13,10 @@ public class SelectionSort<T extends Comparable<? super T>> implements SortAlgor
     public void sort(ArrayStructure<T> structure, SortDirection direction) {
         if (direction == ASC) {
             for (int i = structure.size() - 1; i >= 0; i--) {
-                int localMax = findMax(structure, 0, i);
-                swap(structure, i, localMax);
+                int localMax = findMax(structure, 0, i + 1);
+                if (localMax != i) {
+                    swap(structure, i, localMax);
+                }
             }
         } else {
             for (int i = 0; i < structure.size(); i++) {
