@@ -9,6 +9,9 @@ public class MergeSort<T extends Comparable<? super T>> implements SortAlgorithm
 
     @Override
     public void sort(ArrayStructure<T> structure, SortDirection direction) {
+        if (structure.isEmpty()) {
+            return;
+        }
         ArrayStructure<T> fixed = new FixedArray<T>(structure.size());
         recMerge(structure, fixed, direction, 0, structure.size() - 1);
     }
@@ -29,7 +32,7 @@ public class MergeSort<T extends Comparable<? super T>> implements SortAlgorithm
     private void merge(ArrayStructure<T> arr, ArrayStructure<T> fixed, SortDirection direction, int from, int mid, int to) {
         int i = 0;
         int lowerBound = from;
-        int upperBound = to;
+        int upperBound = mid;
         int curMid = mid - 1;
         int elements = to - from + 1;
 

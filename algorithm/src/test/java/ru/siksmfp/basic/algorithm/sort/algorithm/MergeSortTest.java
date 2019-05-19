@@ -56,4 +56,9 @@ public class MergeSortTest {
     public void performanceTest2() {
         SortTest.performanceTest2(mergeSort);
     }
+
+    @Test
+    public void performanceTest3() {
+        SortTest.performanceTest3(mergeSort);
+    }
 }
