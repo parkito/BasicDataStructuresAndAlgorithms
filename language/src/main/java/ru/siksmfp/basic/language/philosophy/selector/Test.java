@@ -8,13 +8,14 @@ public class Test {
         String hostName = "localhost";
         int port = 2141;
 
-        Process server = Server.startNewServerProcess(hostName, port);
+        Server server = Server.startNewServerProcess(hostName, port);
         Client client = Client.startNewClient(hostName, port);
 
-        String resp1 = client.sendMessage("hello");
-        String resp2 = client.sendMessage("world");
+        client.send("one");
+        String resp1 = client.receive();
+        System.out.println(resp1);
 
         server.destroy();
-        client.stop();
+        client.destroy();
     }
 }

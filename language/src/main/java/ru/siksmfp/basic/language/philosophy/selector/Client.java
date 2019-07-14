@@ -6,50 +6,48 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 class Client {
-    private static SocketChannel client;
-    private static ByteBuffer buffer;
-    private static Client instance;
+    private SocketChannel client;
 
-    public static Client start() {
-        if (instance == null)
-            instance = new Client() ;
-
-        return instance;
-    }
-
-    public static void stop() throws IOException {
-        client.close();
-        buffer = null;
-    }
-
-    private Client() {
+    private Client(String hostName, int port) {
         try {
-            client = SocketChannel.open(new InetSocketAddress("localhost", 5454));
-            buffer = ByteBuffer.allocate(256);
+            client = SocketChannel.open(new InetSocketAddress(hostName, port));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static Client startNewClient(String hostName, int port) {
-        return null;
+        return new Client(hostName, port);
     }
 
-    public String sendMessage(String msg) {
-        buffer = ByteBuffer.wrap(msg.getBytes());
-        String response = null;
+    public void destroy() throws IOException {
+        client.close();
+    }
+
+    public void send(String message) {
+        ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
         try {
             client.write(buffer);
-            buffer.clear();
-            client.read(buffer);
-            response = new String(buffer.array()).trim();
-            System.out.println("response=" + response);
-            buffer.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return response;
+    }
 
+    public String receive() {
+        try {
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            client.read(buffer);
+            return new String(buffer.array());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void main(String[] args) {
+        Client client = Client.startNewClient("localhost", 2141);
+        client.send("message");
+        System.out.println(client.receive());
     }
 }
 
