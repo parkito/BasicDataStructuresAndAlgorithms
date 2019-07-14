@@ -46,7 +46,7 @@ class Client {
 
     public static void main(String[] args) {
         Client client = Client.startNewClient("localhost", 2141);
-        client.send("message");
+        client.send("message1");
         System.out.println(client.receive());
     }
 }

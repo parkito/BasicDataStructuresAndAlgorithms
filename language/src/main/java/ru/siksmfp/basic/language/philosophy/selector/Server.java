@@ -48,7 +48,7 @@ public class Server {
                     iter.remove();
                 }
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -69,14 +69,11 @@ public class Server {
 
     private static void answerWithEcho(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        ByteBuffer buffer = ByteBuffer.allocate(100);
         client.read(buffer);
-        System.out.println("Message received " + new String(buffer.array()));
 
-        buffer = ByteBuffer.wrap("Message accepted".getBytes());
-        buffer.flip();
-        client.write(buffer);
-        buffer.clear();
+        System.out.println("Message received " + new String(buffer.array()));
+        client.write(ByteBuffer.wrap("Message accepted".getBytes()));
     }
 
     public static void main(String[] args) {
