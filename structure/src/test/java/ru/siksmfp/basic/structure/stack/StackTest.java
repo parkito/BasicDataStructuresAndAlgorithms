@@ -5,10 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
-/**
- * Created by Artyom Karnov on 18.11.16.
- * artyom-karnov@yandex.ru
- **/
 public class StackTest {
     Stack<Integer> stack;
 

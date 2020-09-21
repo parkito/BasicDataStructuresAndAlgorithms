@@ -6,10 +6,7 @@ import ru.siksmfp.basic.structure.api.HashTable;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 import ru.siksmfp.basic.structure.hash.table.binary.BinaryProbHashTable;
 
-/**
- * @author Artem Karnov @date 1/25/2018.
- * @email artem.karnov@t-systems.com
- */
+
 public class LinearProbHashTableTest {
     @Test
     public void firstTest() {

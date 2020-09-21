@@ -3,10 +3,7 @@ package ru.siksmfp.basic.structure.utils.math;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @author Artem Karnov @date 1/25/2018.
- * @email artem.karnov@t-systems.com
- */
+
 public class MathTest {
 
     @Test

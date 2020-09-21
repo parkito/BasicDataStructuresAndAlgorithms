@@ -5,10 +5,7 @@ import org.junit.Test;
 import ru.siksmfp.basic.structure.api.HashTable;
 import ru.siksmfp.basic.structure.exceptions.IncorrectSizeException;
 
-/**
- * @author Artem Karnov @date 1/25/2018.
- * @email artem.karnov@t-systems.com
- */
+
 public class BinaryProbHashTableTest {
     @Test
     public void firstTest() {

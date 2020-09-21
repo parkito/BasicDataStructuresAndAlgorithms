@@ -1,9 +1,5 @@
 package ru.siksmfp.basic.structure.api;
 
-/**
- * @author Artem Karnov @date 1/4/2018.
- * artem.karnov@t-systems.com
- */
 public interface ArrayStructure<T> {
     void add(int index, T element);
 
