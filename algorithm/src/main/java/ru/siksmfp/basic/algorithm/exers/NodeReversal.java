@@ -7,19 +7,16 @@ public class NodeReversal
     public static <T> Node<T> reverse(Node<T> node)
     {
         Node<T> first = null;
-        Node<T> next;
 
-        while (node.next != null)
+        while (node != null)
         {
-            next = node.next;
+            Node<T> next = node.next;
             node.next = first;
             first = node;
             node = next;
         }
 
-        node.next = first;
-
-        return node;
+        return first;
     }
 }
 
