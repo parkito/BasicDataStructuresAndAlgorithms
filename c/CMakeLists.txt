@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
-project(cli VERSION 0.0.1)
-
+project(algo VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -11,6 +10,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-std=c++2a)
 message("Version ${CMAKE_CXX_COMPILER_VERSION}")
 
+configure_file(Test/Tester/Cmake.h.in ${PROJECT_SOURCE_DIR}/Test/Tester/Cmake.h)
 
-add_executable(main Source/Main.cpp)
+include_directories(Source/01_string_length
+        Test/Cases
+        Test/Tester
+        )
+
+add_executable(test1 Test/Tester/TestRunner.cpp)
+
 
