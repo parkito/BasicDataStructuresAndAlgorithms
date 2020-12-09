@@ -9,8 +9,16 @@ protected:
         return cmake_dir() + "/Resource/01_string_length/";
     }
 
+    std::string to_string(const std::vector<std::string> &vec) {
+        if (vec.empty()) {
+            return "";
+        } else {
+            return vec[0];
+        }
+    }
+
     std::vector<std::string> test_case(std::vector<std::string> &vector) override {
-        size_t result = StringLength().stringLength(vector[0]);
+        size_t result = StringLength().stringLength(to_string(vector));
         return {std::to_string(result)};
     }
 };
