@@ -12,11 +12,13 @@ message("Version ${CMAKE_CXX_COMPILER_VERSION}")
 
 configure_file(Test/Tester/Cmake.h.in ${PROJECT_SOURCE_DIR}/Test/Tester/Cmake.h)
 
-include_directories(Source/01_string_length
+include_directories(
+        Source/01_string_length
+        Source/02_hk_dynamic_array
         Test/Cases
         Test/Tester
-        )
+)
 
-add_executable(test1 Test/Tester/TestRunner.cpp)
+add_executable(test1 Test/TestRunner.cpp)
 
 

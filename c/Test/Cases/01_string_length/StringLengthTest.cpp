@@ -9,7 +9,7 @@ protected:
         return cmake_dir() + "/Resource/01_string_length/";
     }
 
-    std::string to_string(const std::vector<std::string> &vec) {
+    static std::string to_string(const std::vector<std::string> &vec) {
         if (vec.empty()) {
             return "";
         } else {
