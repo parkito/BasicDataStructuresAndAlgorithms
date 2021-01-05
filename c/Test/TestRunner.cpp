@@ -2,7 +2,8 @@
 #include "02_hk_dynamic_array/DynamicArrayTest.cpp"
 
 int main() {
-    StringLengthTest().run_tests();
+    StringLengthTest test1 = StringLengthTest();
+    test1.run_tests();
 
-    DynamicArrayTest().run_tests();
+//    DynamicArrayTest().run_tests();
 }
