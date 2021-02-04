@@ -1,6 +1,4 @@
-#include "StringLength.h"
-#include "Tester.h"
-#include "Cmake.h"
+#include "../../Tester/Tester.h"
 
 class StringLengthTest : public Tester {
 protected:

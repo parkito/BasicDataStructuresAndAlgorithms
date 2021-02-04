@@ -10,10 +10,21 @@ add_compile_options(-std=c++2a)
 
 configure_file(Test/Tester/Cmake.h.in ${PROJECT_SOURCE_DIR}/Test/Tester/Cmake.h)
 
-include_directories(
+add_library(
+        algo_lib
+        SHARED
+        Source/01_string_length/StringLength.cpp
+        Source/02_hk_dynamic_array/DynamicArray.cpp
+        Test/Cases/01_string_length/StringLengthTest.cpp
+        Test/Tester/Tester.cpp
+)
+target_include_directories(
+        algo_lib
+        PUBLIC
         Source/01_string_length
         Source/02_hk_dynamic_array
-        Test/Cases
+        Test/Cases/01_string_length
+        Test/Cases/02_hk_dynamic_array
         Test/Tester
 )
 
