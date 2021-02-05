@@ -2,7 +2,7 @@
 #include "StringLengthTest.h"
 
 std::string StringLengthTest::test_dir() {
-    return cmake_dir() + "/Resource/01_string_length/";
+    return std::string(SOURCE_DIR_LOCATION) + "/Resource/01_string_length/";
 }
 
 std::vector<std::string> StringLengthTest::test_case(std::vector<std::string> &vector) {

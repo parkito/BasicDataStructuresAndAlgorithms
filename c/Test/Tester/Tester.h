@@ -4,7 +4,8 @@
 #include <memory>
 #include <map>
 #include "TestSuite.h"
-#include "Cmake.h"
+#include "SourceDirLocation.h"
+#include <iostream>
 
 class Tester {
 public:
