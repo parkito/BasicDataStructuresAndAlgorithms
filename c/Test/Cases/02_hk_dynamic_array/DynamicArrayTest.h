@@ -1,6 +1,5 @@
 #include "DynamicArray.h"
 #include "Tester.h"
-#include "Cmake.h"
 
 class DynamicArrayTest : public Tester {
 

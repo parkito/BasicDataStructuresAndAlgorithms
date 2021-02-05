@@ -1,4 +1,4 @@
-#include "../../Tester/Tester.h"
+#include "Tester.h"
 
 class StringLengthTest : public Tester {
 protected:

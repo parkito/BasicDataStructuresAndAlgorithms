@@ -1,12 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 #include <memory>
 #include <map>
 #include "TestSuite.h"
-
-#define SOURCE_DIR "${CMAKE_SOURCE_DIR}"
+#include "Cmake.h"
 
 class Tester {
 public:

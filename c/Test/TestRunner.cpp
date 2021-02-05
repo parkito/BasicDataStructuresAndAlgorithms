@@ -1,4 +1,5 @@
-#include "Cases/01_string_length/StringLengthTest.h"
+#include <DynamicArrayTest.h>
+#include <StringLengthTest.h>
 
 int main() {
     StringLengthTest test1 = StringLengthTest();

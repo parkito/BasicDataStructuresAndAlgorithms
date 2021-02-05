@@ -1,6 +1,5 @@
 #include "DynamicArrayTest.h"
 
-
 std::string DynamicArrayTest::test_dir() {
     return cmake_dir() + "/Resource/02_hk_dynamic_array/";
 }

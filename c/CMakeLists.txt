@@ -16,6 +16,7 @@ add_library(
         Source/01_string_length/StringLength.cpp
         Source/02_hk_dynamic_array/DynamicArray.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
+        Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
 )
 target_include_directories(
@@ -28,6 +29,12 @@ target_include_directories(
         Test/Tester
 )
 
-add_executable(test1 Test/TestRunner.cpp)
+add_executable(algo Test/TestRunner.cpp)
 
+target_link_libraries(
+        algo
+        PRIVATE
+        algo_lib
+)
 
+#cmake -H. -Bcmake-build-debug && cd cmake-build-debug && make all

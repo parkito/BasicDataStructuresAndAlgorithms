@@ -16,7 +16,7 @@ int find_new_last_answer(const std::shared_ptr<std::vector<int>> &vector, const 
 }
 
 void print_new_last_answer(const int &lastAnswer) {
-    cout << std::endl << lastAnswer;
+    std::cout << std::endl << lastAnswer;
 }
 
 std::vector<int> DynamicArray::dynamicArray(int n, std::vector<std::vector<int>> queries) {

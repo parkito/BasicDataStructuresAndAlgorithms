@@ -1,5 +1,4 @@
 #include <StringLength.h>
-#include <Cmake.h>
 #include "StringLengthTest.h"
 
 std::string StringLengthTest::test_dir() {
