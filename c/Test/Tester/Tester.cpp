@@ -89,6 +89,7 @@ std::vector<std::string> Tester::read_file(const std::string &path) {
 }
 
 void Tester::run_tests() {
+    std::cout << test_dir() << std::endl;
     const auto &testSuits = to_file_map(test_dir());
     for (auto const&[key, value]:testSuits) {
         std::vector<std::string> in = read_file(value->in);

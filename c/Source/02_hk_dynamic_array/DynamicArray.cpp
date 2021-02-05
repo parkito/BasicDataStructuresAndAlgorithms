@@ -39,7 +39,6 @@ std::vector<int> DynamicArray::dynamicArray(int n, std::vector<std::vector<int>>
         } else if (type == 2) {
             lastAnswer = find_new_last_answer(curSeq, y);
             result.push_back(lastAnswer);
-            print_new_last_answer(lastAnswer);
         }
     }
 
