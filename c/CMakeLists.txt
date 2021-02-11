@@ -30,6 +30,7 @@ target_include_directories(
 )
 
 add_executable(algo Test/TestRunner.cpp)
+add_executable(03 Source/03_reverse_array/ReverseArray.cpp)
 
 target_link_libraries(
         algo
