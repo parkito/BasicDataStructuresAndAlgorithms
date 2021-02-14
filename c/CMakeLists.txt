@@ -17,6 +17,7 @@ add_library(
         Source/02_hk_dynamic_array/DynamicArray.cpp
         Source/03_reverse_array/ReverseArray.cpp
         Source/04_left_shift/LeftShift.cpp
+        Source/05_matching_strings/MatchingStrings.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -35,6 +36,7 @@ target_include_directories(
 add_executable(algo Test/TestRunner.cpp)
 add_executable(03 Source/03_reverse_array/ReverseArray.cpp)
 add_executable(04 Source/04_left_shift/LeftShift.cpp)
+add_executable(05 Source/05_matching_strings/MatchingStrings.cpp)
 
 target_link_libraries(
         algo
