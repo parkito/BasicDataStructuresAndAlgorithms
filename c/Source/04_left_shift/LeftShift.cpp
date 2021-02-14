@@ -6,8 +6,8 @@ std::vector<int> rotateLeft(int d, std::vector<int> arr) {
         return arr;
     }
     int newPos;
-    int replacedVal;
     int arrSize = (int) arr.size();
+    auto result = std::vector<int>(arrSize);
     for (int i = 0; i < arrSize; ++i) {
         int diff = i - shifts;
         if (diff >= 0) {
@@ -15,21 +15,13 @@ std::vector<int> rotateLeft(int d, std::vector<int> arr) {
         } else {
             newPos = arrSize + diff;
         }
-
-        if (i == 0) {
-            replacedVal = arr[newPos];
-            arr[newPos] = arr[i];
-        } else {
-            int tmp = arr[newPos];
-            arr[newPos] = replacedVal;
-            replacedVal = tmp;
-        }
+        result[newPos] = arr[i];
     }
-    return arr;
+    return result;
 }
 
 int main() {
-    global::print(rotateLeft(4, {1, 2, 3, 4, 5}));
+    global::print(rotateLeft(10, {41, 73, 89, 7, 10, 1, 59, 58, 84, 77, 77, 97, 58, 1, 86, 58, 26, 10, 86, 51}));
     global::print(rotateLeft(1, {1, 2, 3, 4, 5}));
     global::print(rotateLeft(1, {1, 2}));
     global::print(rotateLeft(2, {1, 2}));
