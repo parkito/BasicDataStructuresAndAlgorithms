@@ -21,6 +21,7 @@ add_library(
         Source/06_plus_minus/PlusMinus.cpp
         Source/07_sales_by_match/SalesByMatch.cpp
         Source/08_counting_valley/CountingValley.cpp
+        Source/09_jumping_on_cloud/JumpingOnCloud.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -43,6 +44,7 @@ add_executable(05 Source/05_matching_strings/MatchingStrings.cpp)
 add_executable(06 Source/06_plus_minus/PlusMinus.cpp)
 add_executable(07 Source/07_sales_by_match/SalesByMatch.cpp)
 add_executable(08 Source/08_counting_valley/CountingValley.cpp)
+add_executable(09 Source/09_jumping_on_cloud/JumpingOnCloud.cpp)
 
 target_link_libraries(
         algo
