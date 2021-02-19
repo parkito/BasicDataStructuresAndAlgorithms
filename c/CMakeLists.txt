@@ -23,6 +23,7 @@ add_library(
         Source/08_counting_valley/CountingValley.cpp
         Source/09_jumping_on_cloud/JumpingOnCloud.cpp
         Source/10_repeated_string/RepeatedString.cpp
+        Source/11_new_year_chaos/NewYearChaos.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -47,6 +48,7 @@ add_executable(07 Source/07_sales_by_match/SalesByMatch.cpp)
 add_executable(08 Source/08_counting_valley/CountingValley.cpp)
 add_executable(09 Source/09_jumping_on_cloud/JumpingOnCloud.cpp)
 add_executable(10 Source/10_repeated_string/RepeatedString.cpp)
+add_executable(11 Source/11_new_year_chaos/NewYearChaos.cpp)
 
 target_link_libraries(
         algo
