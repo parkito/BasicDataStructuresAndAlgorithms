@@ -1,21 +1,15 @@
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include "../00_global/Global.h"
 
 void minimumBribes(std::vector<int> q) {
     int bribes = 0;
-    int donePos = 0;
-    std::map<int, int> map = std::map<int, int>{};
-    for (int i = 0; i < q.size() - 1;) {
-        if (q[i + 1] - q[i] == 1) {
-            i++;
-            if (q[donePos + 1] - q[donePos] == 1) {
-                donePos++;
-            }
-        } else if (q[i + 1] > q[i]) {
-            i++;
-        } else {
+    int donePosStart = 0;
+    int donePosEnd = q.size() - 1;
+    auto map = std::unordered_map<int, int>{};
+    for (int i = 0; donePosStart < donePosEnd;) {
+        if (q[i + 1] < q[i]) {
             if (map.find(q[i]) != map.end()) {
                 int elemMoves = ++map[q[i]];
                 if (elemMoves > 2) {
@@ -23,19 +17,20 @@ void minimumBribes(std::vector<int> q) {
                     return;
                 }
             } else {
-                map.insert(std::make_pair(q[i], 1));
+                map[q[i]] = 1;
             }
             bribes++;
             global::swap(q[i + 1], q[i]);
-            if (q[donePos + 1] - q[donePos] == 1) {
-                donePos++;
-            }
         }
-        if (i == q.size() - 1 && i != donePos) {
-            i = donePos;
+        i++;
+        if (q[donePosStart] == donePosStart) {
+            donePosStart++;
+        }
+        if (i == donePosEnd) {
+            donePosEnd--;
+            i = donePosStart;
         }
     }
-
     std::cout << bribes << std::endl;
 }
 
@@ -46,4 +41,5 @@ int main() {
     minimumBribes({2, 5, 1, 3, 4}); //Too chaotic
     minimumBribes({5, 1, 2, 3, 7, 8, 6, 4}); //Too chaotic
     minimumBribes({1, 2, 5, 3, 7, 8, 6, 4}); //7;
+    minimumBribes({2, 3, 1}); //2;
 }
