@@ -10,14 +10,9 @@ void minimumBribes(std::vector<int> q) {
     auto map = std::unordered_map<int, int>{};
     for (int i = 0; donePosStart < donePosEnd;) {
         if (q[i + 1] < q[i]) {
-            if (map.find(q[i]) != map.end()) {
-                int elemMoves = ++map[q[i]];
-                if (elemMoves > 2) {
-                    std::cout << "Too chaotic" << std::endl;
-                    return;
-                }
-            } else {
-                map[q[i]] = 1;
+            if (q[i] - i - 1 > 2) {
+                std::cout << "Too chaotic" << std::endl;
+                return;
             }
             bribes++;
             global::swap(q[i + 1], q[i]);
