@@ -1,29 +1,28 @@
 #include <iostream>
 #include <vector>
-#include <unordered_map>
-#include "../00_global/Global.h"
 
 void minimumBribes(std::vector<int> q) {
     int bribes = 0;
     int donePosStart = 0;
     int donePosEnd = q.size() - 1;
-    auto map = std::unordered_map<int, int>{};
-    for (int i = 0; donePosStart < donePosEnd;) {
-        if (q[i + 1] < q[i]) {
-            if (q[i] - i - 1 > 2) {
-                std::cout << "Too chaotic" << std::endl;
-                return;
-            }
-            bribes++;
-            global::swap(q[i + 1], q[i]);
-        }
-        i++;
-        if (q[donePosStart] == donePosStart) {
+    for (int i = 0; donePosStart < donePosEnd; ++i) {
+        if (q[donePosStart] == donePosStart + 1) {
             donePosStart++;
+        }
+        if (donePosStart == donePosEnd) {
+            break;
         }
         if (i == donePosEnd) {
             donePosEnd--;
             i = donePosStart;
+        }
+        if (q[i + 1] < q[i]) {
+            if (q[i] - i > 3) {
+                std::cout << "Too chaotic" << std::endl;
+                return;
+            }
+            bribes++;
+            std::swap(q[i + 1], q[i]);
         }
     }
     std::cout << bribes << std::endl;
