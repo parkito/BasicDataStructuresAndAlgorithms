@@ -24,6 +24,7 @@ add_library(
         Source/09_jumping_on_cloud/JumpingOnCloud.cpp
         Source/10_repeated_string/RepeatedString.cpp
         Source/11_new_year_chaos/NewYearChaos.cpp
+        Source/12_ransom_note/RansomNote.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -49,6 +50,7 @@ add_executable(08 Source/08_counting_valley/CountingValley.cpp)
 add_executable(09 Source/09_jumping_on_cloud/JumpingOnCloud.cpp)
 add_executable(10 Source/10_repeated_string/RepeatedString.cpp)
 add_executable(11 Source/11_new_year_chaos/NewYearChaos.cpp)
+add_executable(12 Source/12_ransom_note/RansomNote.cpp)
 
 target_link_libraries(
         algo
