@@ -5,6 +5,7 @@
 
 std::vector<int> freqQuery(std::vector<std::vector<int>> queries) {
     std::unordered_map<int, int> map = std::unordered_map<int, int>();
+    std::unordered_map<int, int> occurMap = std::unordered_map<int, int>();
     int resultSize = 0;
     for (auto &vec:queries) {
         if (vec[0] == 3) {
@@ -17,58 +18,39 @@ std::vector<int> freqQuery(std::vector<std::vector<int>> queries) {
         auto command = vec[0];
         auto el = vec[1];
         if (command == 1) {
-            map[el]++;
+            auto occurrence = map[el]++;
+            occurMap[occurrence + 1]++;
+            if (occurrence > 0) {
+                occurMap[occurrence]--;
+            }
         } else if (command == 2) {
             auto foundIter = map.find(el);
             if (foundIter != map.end()) {
                 if (foundIter->second > 0) {
-                    foundIter->second--;
+                    auto occurrence = --foundIter->second;
+                    occurMap[occurrence + 1]--;
+                    if (occurrence > 0) {
+                        occurMap[occurrence]++;
+                    }
                 }
             }
+
         } else if (command == 3) {
-            bool isAdded = false;
-            for (auto &it : map) {
-                if (it.second == el) {
-                    result[rezIndex++] = 1;
-                    isAdded = true;
-                    break;
-                }
-            }
-            if (!isAdded) {
-                result[rezIndex++] = 0;
-            }
+            result[rezIndex++] = occurMap[el] > 0 ? 1 : 0;
         }
     }
+
     return result;
 }
 
 int main() {
     freqQuery({
-                      {1, 89},
-                      {3, 15},
-                      {1, 12},
-                      {1, 47},
-                      {1, 23},
-                      {1, 66},
-                      {2, 28},
+                      {1, 5},
+                      {1, 6},
                       {3, 2},
-                      {2, 15},
-                      {1, 16},
-                      {3, 16},
-                      {1, 17},
-                      {1, 73},
-                      {2, 44},
-                      {3, 14},
-                      {2, 30},
-                      {2, 38},
-                      {2, 4},
-                      {1, 4},
-                      {2, 35},
-                      {1, 28},
-                      {1, 9},
-                      {1, 68},
-                      {3, 1},
-                      {3, 33},
-                      {3, 5}
+                      {1, 10},
+                      {1, 10},
+                      {2, 5},
+                      {3, 2},
               });
 }
