@@ -27,6 +27,7 @@ add_library(
         Source/12_ransom_note/RansomNote.cpp
         Source/13_frequency_query/FrequencyQuery.cpp
         Source/14_bubble_sort/BubbleSort.cpp
+        Source/15_mark_and_toys/MarkAndToys.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -55,6 +56,7 @@ add_executable(11 Source/11_new_year_chaos/NewYearChaos.cpp)
 add_executable(12 Source/12_ransom_note/RansomNote.cpp)
 add_executable(13 Source/13_frequency_query/FrequencyQuery.cpp)
 add_executable(14 Source/14_bubble_sort/BubbleSort.cpp)
+add_executable(15 Source/15_mark_and_toys/MarkAndToys.cpp)
 
 target_link_libraries(
         algo
