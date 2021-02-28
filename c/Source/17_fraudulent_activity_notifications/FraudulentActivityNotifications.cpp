@@ -10,15 +10,25 @@ double median(const std::vector<int> &exp) {
     }
 }
 
-double to_median(std::vector<int> &arr) {
-    std::sort(arr.begin(), arr.end());
-    return median(arr);
+int replace(const int &from, const int &to, std::vector<int> &arr) {
+    for (int i = 0; i < arr.size(); ++i) {
+        if (arr[i] == from) {
+            arr[i] = to;
+            return i;
+        }
+    }
+    return -1;
 }
 
-void replace(const int &from, const int &to, std::vector<int> &arr) {
-    for (int &i : arr) {
-        if (i == from) {
-            i = to;
+void adjust_arr(int replaced, std::vector<int> &arr) {
+    for (;;) {
+        if (replaced + 1 < arr.size() && arr[replaced] > arr[replaced + 1]) {
+            std::swap(arr[replaced], arr[replaced + 1]);
+            replaced++;
+        } else if (replaced - 1 >= 0 && arr[replaced] < arr[replaced - 1]) {
+            std::swap(arr[replaced], arr[replaced - 1]);
+            replaced--;
+        } else {
             break;
         }
     }
@@ -27,16 +37,18 @@ void replace(const int &from, const int &to, std::vector<int> &arr) {
 int activityNotifications(std::vector<int> expenditure, int d) {
     int notifications = 0;
     std::vector<int> temp(&expenditure[0], &expenditure[d]);
-    int firstTo = expenditure[0];
-    for (int i = 0; i + d < expenditure.size(); ++i) {
-        double median = to_median(temp);
-        int currentDay = i + d;
-        int currentDaySum = expenditure[currentDay];
-        if (currentDaySum >= median * 2) {
+    std::sort(temp.begin(), temp.end());
+    int lastDay = expenditure.size() - d;
+    for (int i = 0; i < lastDay; ++i) {
+        double med = median(temp);
+        int currentDaySum = expenditure[i + d];
+        if (currentDaySum >= med * 2) {
             notifications++;
         }
-        replace(firstTo, currentDaySum, temp);
-        firstTo = currentDay;
+        if (i + 1 < lastDay) {
+            int replaced = replace(expenditure[i], currentDaySum, temp);
+            adjust_arr(replaced, temp);
+        }
     }
     return notifications;
 }
