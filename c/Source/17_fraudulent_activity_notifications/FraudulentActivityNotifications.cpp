@@ -29,7 +29,7 @@ void adjust_arr(int replaced, std::vector<int> &arr) {
             std::swap(arr[replaced], arr[replaced - 1]);
             replaced--;
         } else {
-            break;
+            return;
         }
     }
 }
@@ -40,14 +40,15 @@ int activityNotifications(std::vector<int> expenditure, int d) {
     std::sort(temp.begin(), temp.end());
     int lastDay = expenditure.size() - d;
     for (int i = 0; i < lastDay; ++i) {
-        double med = median(temp);
-        int currentDaySum = expenditure[i + d];
-        if (currentDaySum >= med * 2) {
+        int currentDay = expenditure[i + d];
+        if (currentDay >= median(temp) * 2) {
             notifications++;
         }
         if (i + 1 < lastDay) {
-            int replaced = replace(expenditure[i], currentDaySum, temp);
+            int replaced = replace(expenditure[i], currentDay, temp);
             adjust_arr(replaced, temp);
+        } else {
+            return notifications;
         }
     }
     return notifications;
