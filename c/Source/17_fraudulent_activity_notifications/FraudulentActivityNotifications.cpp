@@ -1,15 +1,6 @@
 #include <iostream>
 #include <vector>
 
-double median(const std::vector<int> &exp) {
-    if (exp.size() % 2 == 0) {
-        int middle = exp.size() / 2;
-        return double(exp[middle] + exp[middle - 1]) / 2;
-    } else {
-        return exp[exp.size() / 2];
-    }
-}
-
 int replace(const int &from, const int &to, std::vector<int> &arr) {
     for (int i = 0; i < arr.size(); ++i) {
         if (arr[i] == from) {
@@ -36,17 +27,27 @@ void adjust_arr(int replaced, std::vector<int> &arr) {
 
 int activityNotifications(std::vector<int> expenditure, int d) {
     int notifications = 0;
-    std::vector<int> temp(&expenditure[0], &expenditure[d]);
-    std::sort(temp.begin(), temp.end());
+    std::vector<int> dayWindow(&expenditure[0], &expenditure[d]);
+    std::sort(dayWindow.begin(), dayWindow.end());
     int lastDay = expenditure.size() - d;
+    int middle = dayWindow.size() / 2;
+    int *oneMed = &dayWindow[middle];
+    int *secMed = &dayWindow[middle - 1];
+    bool isComplexMed = dayWindow.size() % 2 == 0;
     for (int i = 0; i < lastDay; ++i) {
         int currentDay = expenditure[i + d];
-        if (currentDay >= median(temp) * 2) {
+        int median;
+        if (isComplexMed) {
+            median = *oneMed + *secMed;
+        } else {
+            median = *oneMed * 2;
+        }
+        if (currentDay >= median) {
             notifications++;
         }
         if (i + 1 < lastDay) {
-            int replaced = replace(expenditure[i], currentDay, temp);
-            adjust_arr(replaced, temp);
+            int replaced = replace(expenditure[i], currentDay, dayWindow);
+            adjust_arr(replaced, dayWindow);
         } else {
             return notifications;
         }
