@@ -1,11 +1,17 @@
 #include <iostream>
 #include <vector>
 
-int replace(const int &from, const int &to, std::vector<int> &arr) {
-    for (int i = 0; i < arr.size(); ++i) {
-        if (arr[i] == from) {
-            arr[i] = to;
-            return i;
+int replace(const int &from, const std::vector<int> &arr) {
+    int l = 0;
+    int r = arr.size();
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (arr[mid] < from) {
+            l = mid + 1;
+        } else if (arr[mid] > from) {
+            r = mid - 1;
+        } else {
+            return mid;
         }
     }
     return -1;
@@ -46,7 +52,8 @@ int activityNotifications(std::vector<int> expenditure, int d) {
             notifications++;
         }
         if (i + 1 < lastDay) {
-            int replaced = replace(expenditure[i], currentDay, dayWindow);
+            int replaced = replace(expenditure[i], dayWindow);
+            dayWindow[replaced] = currentDay;
             adjust_arr(replaced, dayWindow);
         } else {
             return notifications;
@@ -58,4 +65,5 @@ int activityNotifications(std::vector<int> expenditure, int d) {
 int main() {
     std::cout << activityNotifications({2, 3, 4, 2, 3, 6, 8, 4, 5}, 5) << std::endl; //2
     std::cout << activityNotifications({1, 2, 3, 4, 4}, 4) << std::endl; //0
+    std::cout << activityNotifications({10, 20, 30, 40, 50}, 3) << std::endl; //1
 };
