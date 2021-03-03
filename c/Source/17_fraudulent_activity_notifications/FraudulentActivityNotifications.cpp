@@ -1,66 +1,67 @@
 #include <iostream>
 #include <vector>
+#include <map>
 
-int replace(const int &from, const std::vector<int> &arr) {
-    int l = 0;
-    int r = arr.size();
-    while (l <= r) {
-        int mid = (l + r) / 2;
-        if (arr[mid] < from) {
-            l = mid + 1;
-        } else if (arr[mid] > from) {
-            r = mid - 1;
+void add(int el, std::map<int, int> &map) {
+    map[el]++;
+}
+
+void del(int el, std::map<int, int> &map) {
+    if (--map[el] == 0) {
+        map.erase(el);
+    }
+}
+
+double median(const std::map<int, int> &map, int firstMed, const bool isComplexMed) {
+    int sum = 0;
+    for (auto pair = map.begin(); pair != map.end(); pair++) {
+        if (sum + pair->second <= firstMed) {
+            sum += pair->second;
         } else {
-            return mid;
+            if (!isComplexMed) {
+                return pair->first;
+            } else {
+                firstMed++;
+                if (sum + pair->second > firstMed) {
+                    return pair->first;
+                }
+                return double(pair->first + (++pair)->first) / 2;
+            }
         }
     }
     return -1;
 }
 
-void adjust_arr(int replaced, std::vector<int> &arr) {
-    for (;;) {
-        if (replaced + 1 < arr.size() && arr[replaced] > arr[replaced + 1]) {
-            std::swap(arr[replaced], arr[replaced + 1]);
-            replaced++;
-        } else if (replaced - 1 >= 0 && arr[replaced] < arr[replaced - 1]) {
-            std::swap(arr[replaced], arr[replaced - 1]);
-            replaced--;
-        } else {
-            return;
-        }
-    }
-}
-
 int activityNotifications(std::vector<int> expenditure, int d) {
     int notifications = 0;
-    std::vector<int> dayWindow(&expenditure[0], &expenditure[d]);
-    std::sort(dayWindow.begin(), dayWindow.end());
+    int firstMed;
+    bool isComplexMed = d % 2 == 0;
+    if (isComplexMed) {
+        firstMed = (d / 2) - 1;
+    } else {
+        firstMed = d / 2;
+    }
+    std::map<int, int> map = std::map<int, int>();
+    for (int i = 0; i < d; ++i) {
+        add(expenditure[i], map);
+    }
     int lastDay = expenditure.size() - d;
-    int middle = dayWindow.size() / 2;
-    int *oneMed = &dayWindow[middle];
-    int *secMed = &dayWindow[middle - 1];
-    bool isComplexMed = dayWindow.size() % 2 == 0;
     for (int i = 0; i < lastDay; ++i) {
         int currentDay = expenditure[i + d];
-        int median;
-        if (isComplexMed) {
-            median = *oneMed + *secMed;
-        } else {
-            median = *oneMed * 2;
-        }
-        if (currentDay >= median) {
+        double med = median(map, firstMed, isComplexMed) * 2;
+        if (currentDay >= med) {
             notifications++;
         }
         if (i + 1 < lastDay) {
-            int replaced = replace(expenditure[i], dayWindow);
-            dayWindow[replaced] = currentDay;
-            adjust_arr(replaced, dayWindow);
+            add(currentDay, map);
+            del(expenditure[i], map);
         } else {
             return notifications;
         }
     }
     return notifications;
 }
+
 
 int main() {
     std::cout << activityNotifications({2, 3, 4, 2, 3, 6, 8, 4, 5}, 5) << std::endl; //2
