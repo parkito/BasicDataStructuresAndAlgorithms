@@ -19,6 +19,7 @@ merge(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int 
     for (int i = lo; i <= hi; ++i) {
         if (left > mid) {
             arr[i] = supArr[right++];
+            counter++;
         } else if (right > hi) {
             arr[i] = supArr[left++];
         } else if (supArr[right] < supArr[left]) {
@@ -26,7 +27,6 @@ merge(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int 
             counter++;
         } else {
             arr[i] = supArr[left++];
-            counter++;
         }
     }
 }
@@ -41,15 +41,26 @@ void sort(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const 
     merge(arr, supArr, lo, mid, hi, counter);
 }
 
+void sort2(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int &hi, long &counter) {
+    for (int i = 1; i < arr.size(); i = i + i) {
+        for (int j = 0; j < arr.size() - i; j += i + i) {
+            merge(arr, supArr, j, j + i - 1, std::min(j + i + i - 1, int(arr.size() - 1)), counter);
+        }
+    }
+}
+
 long countInversions(std::vector<int> arr) {
     std::vector<int> supArr(arr.size());
     long counter = 0;
-    sort(arr, supArr, 0, arr.size() - 1, counter);
+    sort2(arr, supArr, 0, arr.size() - 1, counter);
+//    global::print(arr);
     return counter;
 }
 
 int main() {
     std::cout << countInversions({2, 4, 1}) << std::endl; //2
-    std::cout << countInversions({1, 1, 1, 2, 2}) << std::endl; //0
-    std::cout << countInversions({2, 1, 3, 1, 2}) << std::endl; //4
+//    std::cout << countInversions({1, 1, 1, 2, 2}) << std::endl; //0
+//    std::cout << countInversions({2, 1, 3, 1, 2}) << std::endl; //4
+//    std::cout << countInversions({1, 5, 3, 7}) << std::endl; //1
+//    std::cout << countInversions({7, 5, 3, 1}) << std::endl; //6
 }
