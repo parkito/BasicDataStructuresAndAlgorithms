@@ -31,7 +31,8 @@ add_library(
         Source/16_comparator/Comparator.cpp
         Source/17_fraudulent_activity_notifications/FraudulentActivityNotifications.cpp
         Source/18_merge_sort_counting/MergeSortCounting.cpp
-        Ds/Sorting/Selection/Selection.cpp
+        Ds/Sorting/Selection.cpp
+        Ds/Sorting/Insertion.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -64,7 +65,8 @@ add_executable(15 Source/15_mark_and_toys/MarkAndToys.cpp)
 add_executable(16 Source/16_comparator/Comparator.cpp)
 add_executable(17 Source/17_fraudulent_activity_notifications/FraudulentActivityNotifications.cpp)
 add_executable(18 Source/18_merge_sort_counting/MergeSortCounting.cpp)
-add_executable(19 Ds/Sorting/Selection/Selection.cpp)
+add_executable(19 Ds/Sorting/Selection.cpp)
+add_executable(20 Ds/Sorting/Insertion.cpp)
 
 target_link_libraries(
         algo

@@ -1,16 +1,15 @@
 #include <iostream>
 #include <vector>
-#include "../../../Source/00_global/Global.h"
+#include "../../Source/00_global/Global.h"
 
 void sort(std::vector<int> &arr) {
-    for (int i = 0; i < arr.size() - 1; ++i) {
-        int min = i;
-        for (int j = i; j < arr.size(); ++j) {
-            if (arr[j] < arr[min]) {
-                min = j;
-            }
+    if (arr.size() <= 1) {
+        return;
+    }
+    for (int i = 1; i < arr.size(); ++i) {
+        for (int j = i; arr[j] < arr[j - 1]; ++j) {
+            std::swap(arr[j], arr[j - 1]);
         }
-        std::swap(arr[i], arr[min]);
     }
 }
 

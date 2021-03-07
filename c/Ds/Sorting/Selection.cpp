@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "../../../Source/00_global/Global.h"
+#include "../../Source/00_global/Global.h"
 
 void sort(std::vector<int> &arr) {
-    for (int i = 0; i < arr.size() - 1; ++i) {
+    for (int i = 0; i < arr.size(); ++i) {
         int min = i;
         for (int j = i; j < arr.size(); ++j) {
             if (arr[j] < arr[min]) {
