@@ -1,135 +1,56 @@
 #include <iostream>
 #include <vector>
-#include "../00_global/Global.h"
 
-void swap(std::vector<int> &arr, const int &i, const int &j, long &counter) {
-    auto tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
-    counter++;
+long _mergeSort(std::vector<int> &arr, std::vector<int> &temp, int left, int right);
+
+long merge(std::vector<int> &, std::vector<int> &temp, int left, int mid, int right);
+
+long mergeSort(std::vector<int> &arr) {
+    std::vector<int> tmp(arr.size());
+    return _mergeSort(arr, tmp, 0, arr.size() - 1);
 }
 
-void
-merge1(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int &mid, const int &hi, long &counter) {
-    for (int i = lo; i <= hi; ++i) {
-        supArr[i] = arr[i];
+long _mergeSort(std::vector<int> &arr, std::vector<int> &temp, int left, int right) {
+    int mid;
+    long inv_count = 0;
+    if (right > left) {
+        mid = (right + left) / 2;
+        inv_count += _mergeSort(arr, temp, left, mid);
+        inv_count += _mergeSort(arr, temp, mid + 1, right);
+        inv_count += merge(arr, temp, left, mid + 1, right);
     }
-    int left = lo;
-    int right = mid + 1;
-    for (int i = lo; i <= hi; ++i) {
-        if (left > mid) {
-            arr[i] = supArr[right++];
-        } else if (right > hi) {
-            arr[i] = supArr[left++];
-        } else if (supArr[right] < supArr[left]) {
-            arr[i] = supArr[right++];
-            counter += mid - i;
+    return inv_count;
+}
+
+long merge(std::vector<int> &arr, std::vector<int> &temp, int left, int mid, int right) {
+    long inv_count = 0;
+    int i = left;
+    int j = mid;
+    int k = left;
+
+    while ((i <= mid - 1) && (j <= right)) {
+        if (arr[i] <= arr[j]) {
+            temp[k++] = arr[i++];
         } else {
-            arr[i] = supArr[left++];
+            temp[k++] = arr[j++];
+            inv_count = inv_count + (mid - i);
         }
     }
-}
 
-void sort1(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int &hi, long &counter) {
-    if (hi <= lo) {
-        return;
-    }
-    int mid = lo + (hi - lo) / 2;
-    sort1(arr, supArr, lo, mid, counter);
-    sort1(arr, supArr, mid + 1, hi, counter);
-    merge1(arr, supArr, lo, mid, hi, counter);
-}
+    while (i <= mid - 1)
+        temp[k++] = arr[i++];
 
-void sort2(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int &hi, long &counter) {
-    for (int i = 1; i < arr.size(); i = i + i) {
-        for (int j = 0; j < arr.size() - i; j += i + i) {
-            merge1(arr, supArr, j, j + i - 1, std::min(j + i + i - 1, int(arr.size() - 1)), counter);
-        }
-    }
-}
+    while (j <= right)
+        temp[k++] = arr[j++];
 
-int startSort(std::vector<int> arr) {
-    long counter = 0;
-    std::vector<int> supArr(arr.size());
-    sort2(arr, supArr, 0, arr.size() - 1, counter);
-    return counter;
-}
+    for (i = left; i <= right; i++)
+        arr[i] = temp[i];
 
-
-int partition(std::vector<int> &arr, int &lo, int &hi, long &counter) {
-    int i = lo;
-    int j = hi + 1;
-    int v = arr[lo];
-    while (true) {
-        while (arr[++i] < v) {
-            if (j == hi) {
-                break;
-            }
-        }
-        while (v < arr[--j]) {
-            if (j == lo) {
-                break;
-            }
-        }
-        if (i >= j) {
-            break;
-        }
-        if (arr[i] != arr[j]) {
-            swap(arr, i, j, counter);
-        }
-    }
-    if (arr[lo] != arr[j]) {
-        swap(arr, lo, j, counter);
-    }
-    return j;
-}
-
-void quickSort(std::vector<int> &arr, int lo, int hi, long &counter) {
-    if (hi <= lo) {
-        return;
-    }
-    int j = partition(arr, lo, hi, counter);
-    quickSort(arr, lo, j - 1, counter);
-    quickSort(arr, j + 1, hi, counter);
-}
-
-long merge(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int &mid, const int &hi) {
-    long counter = 0;
-    for (int i = lo; i <= hi; ++i) {
-        supArr[i] = arr[i];
-    }
-    int left = lo;
-    int right = mid + 1;
-    for (int i = lo; i <= hi; ++i) {
-        if (left > mid) {
-            arr[i] = supArr[right++];
-        } else if (right > hi) {
-            arr[i] = supArr[left++];
-        } else if (supArr[right] < supArr[left]) {
-            counter = counter + mid - 1;
-            arr[i] = supArr[right++];
-        } else {
-            arr[i] = supArr[left++];
-        }
-    }
-    return counter;
-}
-
-long sort(std::vector<int> &arr, std::vector<int> &supArr, const int &lo, const int &hi) {
-    long counter = 0;
-    if (hi <= lo) {
-        return counter;
-    }
-    int mid = lo + (hi - lo) / 2;
-    counter += sort(arr, supArr, lo, mid);
-    counter += sort(arr, supArr, mid + 1, hi);
-    counter += merge(arr, supArr, lo, mid, hi);
-    return counter;
+    return inv_count;
 }
 
 long countInversions(std::vector<int> arr) {
-    std::vector<int> tmp(arr.size());
-    return sort(arr, tmp, 0, arr.size() - 1);
+    return mergeSort(arr);
 }
 
 int main() {
