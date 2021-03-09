@@ -37,6 +37,7 @@ add_library(
         Ds/Sorting/Merge.cpp
         Ds/Sorting/Quick.cpp
         Source/19_making_anagrams/MakingAnagrams.cpp
+        Source/20_alternating_characters/AlternatingCharacters.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -75,6 +76,7 @@ add_executable(21 Ds/Sorting/Shell.cpp)
 add_executable(22 Ds/Sorting/Merge.cpp)
 add_executable(23 Ds/Sorting/Quick.cpp)
 add_executable(24 Source/19_making_anagrams/MakingAnagrams.cpp)
+add_executable(25 Source/20_alternating_characters/AlternatingCharacters.cpp)
 
 target_link_libraries(
         algo
