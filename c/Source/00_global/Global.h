@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 namespace global {
     template<typename T>
@@ -17,5 +19,14 @@ namespace global {
         int tmp = a;
         a = b;
         b = tmp;
+    }
+
+    std::string file_to_string(std::string path) {
+        std::ifstream inFile;
+        inFile.open(path); //open the input file
+
+        std::stringstream strStream;
+        strStream << inFile.rdbuf(); //read the file
+        return strStream.str(); //str holds the content of the file
     }
 }
