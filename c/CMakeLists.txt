@@ -40,6 +40,7 @@ add_library(
         Source/20_alternating_characters/AlternatingCharacters.cpp
         Source/21_valid_string/ValidString.cpp
         Source/22_special_string/SpecialString.cpp
+        Source/23_common_child/CommonChild.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -81,6 +82,7 @@ add_executable(24 Source/19_making_anagrams/MakingAnagrams.cpp)
 add_executable(25 Source/20_alternating_characters/AlternatingCharacters.cpp)
 add_executable(26 Source/21_valid_string/ValidString.cpp)
 add_executable(27 Source/22_special_string/SpecialString.cpp)
+add_executable(28 Source/23_common_child/CommonChild.cpp)
 
 target_link_libraries(
         algo

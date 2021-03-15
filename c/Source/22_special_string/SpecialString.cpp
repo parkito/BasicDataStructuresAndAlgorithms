@@ -1,7 +1,6 @@
 #include <iostream>
 #include "../00_global/Global.h"
 
-
 long combinations(const int num) {
     long com = 0;
     for (int i = 1; i <= num - 1; ++i) {
