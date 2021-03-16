@@ -10,40 +10,53 @@ std::unordered_set<char> to_set(std::string &str) {
     return set;
 }
 
-bool contains(std::string &str, std::vector<char> &sub, int &from) {
-    for (int i = 0; i < str.length(); ++i) {
-        int orig = i;
-        for (int j = from; j < sub.size(); ++j) {
-            if (str[orig] == sub[j]) {
-                orig++;
-            } else {
-                break;
-            }
-            if (j == sub.size() - 1) {
-                return true;
-            }
+std::vector<char> to_substr(std::string &str, std::unordered_set<char> set) {
+    std::vector<char> substr = std::vector<char>();
+    for (auto &ch:str) {
+        if (set.find(ch) != set.end()) {
+            substr.push_back(ch);
         }
     }
+    return substr;
+}
+
+bool contains(std::string &str, std::vector<char> &sub, int &from) {
+    for (int i = 0, j = from; i < str.length(); ++i) {
+        if (str[i] == sub[j] && i != j) {
+            j++;
+        }
+        if (j == sub.size() - 1) {
+            return true;
+        }
+    }
+
     return false;
 }
 
 int commonChild(std::string s1, std::string s2) {
-    std::unordered_set<char> set2 = to_set(s2);
-    std::vector<char> substr = std::vector<char>();
-    for (auto &ch:s1) {
-        if (set2.find(ch) != set2.end()) {
-            substr.push_back(ch);
-        }
+    int matrix[s1.length() + 1][s2.length() + 1];
+    for (int i = 0; i <= s1.length(); ++i) {
+        matrix[i][0] = 0;
     }
-    for (int i = 0; i < substr.size(); ++i) {
-        if (contains(s1, substr, i) && contains(s2, substr, i)) {
-            return substr.size() - i;
-        }
+    for (int i = 0; i <= s2.length(); ++i) {
+        matrix[0][i] = 0;
     }
+    for (int i = 1; i <= s1.length(); ++i) {
+        for (int j = 1; j <= s2.length(); ++j) {
+            if (s1[i - 1] == s2[j - 1]) {
+                matrix[i][j] = matrix[i - j][j - 1] + 1;
+            } else {
+                matrix[i][j] = std::max(matrix[i][j - 1], matrix[i - 1][j]);
+            }
+        }
 
-    return 0;
+    }
+    int a= matrix[s1.length()][s1.length()];
+    return a;
 }
 
 int main() {
     std::cout << commonChild("HARRY", "SALLY") << std::endl;//2
+    std::cout << commonChild("SHINCHAN", "NOHARAAA") << std::endl;//3
+    std::cout << commonChild("AA", "BB") << std::endl;//3
 }
