@@ -3,24 +3,33 @@
 #include <vector>
 
 int commonChild(std::string s1, std::string s2) {
-    int matrix[s1.length() + 1][s2.length() + 1];
-    for (int i = 0; i <= s1.length(); i++) {
-        for (int j = 0; j <= s2.length(); j++) {
-            if (i == 0 || j == 0) {
-                matrix[i][j] = 0;
-            } else if (s1[i - 1] == s2[j - 1]) {
-                matrix[i][j] = matrix[i - 1][j - 1] + 1;
+    int line1[s1.length() + 1];
+    int line2[s1.length() + 1];
+    line2[0] = 0;
+    for (int i = 0; i <= s1.length(); ++i) {
+        line1[i] = 0;
+    }
+    for (int i = 1; i <= s1.length(); i++) {
+        if (i != 1) {
+            for (int j = 0; j <= s1.length(); ++j) {
+                line1[j] = line2[j];
+            }
+        }
+        for (int j = 1; j <= s1.length(); j++) {
+            if (s1[j - 1] == s2[i - 1]) {
+                line2[j] = line1[j - 1] + 1;
             } else {
-                matrix[i][j] = std::max(matrix[i - 1][j], matrix[i][j - 1]);
+                line2[j] = std::max(line1[j], line2[j - 1]);
             }
         }
     }
 
-    return matrix[s1.length()][s2.length()];
+    return line2[s2.length()];
 }
 
 int main() {
     std::cout << commonChild("HARRY", "SALLY") << std::endl;//2
+    std::cout << commonChild("OUDFRMYMAW", "AWHYFCCMQX") << std::endl;//2
     std::cout << commonChild("SHINCHAN", "NOHARAAA") << std::endl;//3
     std::cout << commonChild("AA", "BB") << std::endl;//0
 }
