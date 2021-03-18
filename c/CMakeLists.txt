@@ -41,6 +41,7 @@ add_library(
         Source/21_valid_string/ValidString.cpp
         Source/22_special_string/SpecialString.cpp
         Source/23_common_child/CommonChild.cpp
+        Source/24_cream_parlor/CreamParlor.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -83,6 +84,7 @@ add_executable(25 Source/20_alternating_characters/AlternatingCharacters.cpp)
 add_executable(26 Source/21_valid_string/ValidString.cpp)
 add_executable(27 Source/22_special_string/SpecialString.cpp)
 add_executable(28 Source/23_common_child/CommonChild.cpp)
+add_executable(29 Source/24_cream_parlor/CreamParlor.cpp)
 
 target_link_libraries(
         algo
