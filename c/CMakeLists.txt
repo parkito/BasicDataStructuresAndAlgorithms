@@ -43,6 +43,7 @@ add_library(
         Source/23_common_child/CommonChild.cpp
         Source/24_cream_parlor/CreamParlor.cpp
         Source/25_greedy_point_cover/GreedyPointCover.cpp
+        Source/26_max_backpack/MaxBackPack.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -87,6 +88,7 @@ add_executable(27 Source/22_special_string/SpecialString.cpp)
 add_executable(28 Source/23_common_child/CommonChild.cpp)
 add_executable(29 Source/24_cream_parlor/CreamParlor.cpp)
 add_executable(30 Source/25_greedy_point_cover/GreedyPointCover.cpp)
+add_executable(31 Source/26_max_backpack/MaxBackPack.cpp)
 
 target_link_libraries(
         algo
