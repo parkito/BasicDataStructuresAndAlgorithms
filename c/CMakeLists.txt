@@ -47,6 +47,7 @@ add_library(
         Source/27_term_sum/TermSum.cpp
         Source/28_absolute_minimum_diff/AbsoluteMinimumDiff.cpp
         Source/29_lucky_balance/LuckyBalance.cpp
+        Source/30_greedy_florist/GreedyFlorist.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -95,6 +96,7 @@ add_executable(31 Source/26_max_backpack/MaxBackPack.cpp)
 add_executable(32 Source/27_term_sum/TermSum.cpp)
 add_executable(33 Source/28_absolute_minimum_diff/AbsoluteMinimumDiff.cpp)
 add_executable(34 Source/29_lucky_balance/LuckyBalance.cpp)
+add_executable(35 Source/30_greedy_florist/GreedyFlorist.cpp)
 
 target_link_libraries(
         algo
