@@ -49,6 +49,7 @@ add_library(
         Source/29_lucky_balance/LuckyBalance.cpp
         Source/30_greedy_florist/GreedyFlorist.cpp
         Source/31_max_min/MaxMin.cpp
+        Source/32_specific_linked_list/SpecificLinkedList.cpp
         Test/Cases/01_string_length/StringLengthTest.cpp
         Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
         Test/Tester/Tester.cpp
@@ -99,6 +100,7 @@ add_executable(33 Source/28_absolute_minimum_diff/AbsoluteMinimumDiff.cpp)
 add_executable(34 Source/29_lucky_balance/LuckyBalance.cpp)
 add_executable(35 Source/30_greedy_florist/GreedyFlorist.cpp)
 add_executable(36 Source/31_max_min/MaxMin.cpp)
+add_executable(37 Source/32_specific_linked_list/SpecificLinkedList.cpp)
 
 target_link_libraries(
         algo
