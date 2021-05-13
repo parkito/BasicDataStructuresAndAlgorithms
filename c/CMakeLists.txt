@@ -11,6 +11,12 @@ add_compile_options(-std=c++2a)
 configure_file(Test/Tester/SourceDirLocation.h.in ${PROJECT_SOURCE_DIR}/Test/Tester/SourceDirLocation.h)
 
 add_library(
+        ds_lib
+        Ds/Bag/Bag.cpp
+        Ds/Bag/BagIterator.cpp
+)
+
+add_library(
         algo_lib
         SHARED
         Source/01_string_length/StringLength.cpp
@@ -104,10 +110,14 @@ add_executable(36 Source/31_max_min/MaxMin.cpp)
 add_executable(37 Source/32_specific_linked_list/SpecificLinkedList.cpp)
 add_executable(38 Source/33_flipping_bits/FlippingBits.cpp)
 
+
+add_executable(Bag Ds/Bag/BagTest.cpp)
+
 target_link_libraries(
         algo
         PRIVATE
         algo_lib
+        ds_lib
 )
 
 #cmake -H. -Bcmake-build-debug && cd cmake-build-debug && make all
