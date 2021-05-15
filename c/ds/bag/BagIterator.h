@@ -11,21 +11,32 @@ public:
     using pointer = T *;  // or also value_type*
     using reference = T &;  // or also value_type&
 
-    BagIterator(pointer ptr_) : ptr(ptr_) {};
+    explicit BagIterator(pointer ptr_) : ptr(ptr_) {};
 
-    reference operator*() const;
+    reference operator*() const {
+        return *ptr;
+    }
 
-    pointer operator->();
+    pointer operator->() {
+        return this;
+    }
 
     //prefix inc
-    BagIterator<T> &operator++();
+    BagIterator<T> &operator++() {
+        ptr++;
+        return *this;
+    }
 
     //postfix inc
-    BagIterator<T> &operator++(int);
+    BagIterator<T> &operator++(int) {
+        auto tmp = *this;
+        ++(*this);
+        return tmp;
+    }
 
-    friend bool operator==(const BagIterator<T> &a, const BagIterator<T> &b) { return a.m_ptr == b.m_ptr; };
+    friend bool operator==(const BagIterator<T> &a, const BagIterator<T> &b) { return a.ptr == b.ptr; };
 
-    friend bool operator!=(const BagIterator<T> &a, const BagIterator<T> &b) { return a.m_ptr != b.m_ptr; };
+    friend bool operator!=(const BagIterator<T> &a, const BagIterator<T> &b) { return a.ptr != b.ptr; };
 
 private:
     pointer ptr;
