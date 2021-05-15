@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
-project(algo VERSION 0.0.1)
+project(ds_and_algo_project VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -8,113 +8,117 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-std=c++2a)
 
-configure_file(Test/Tester/SourceDirLocation.h.in ${PROJECT_SOURCE_DIR}/Test/Tester/SourceDirLocation.h)
+configure_file(test/Tester/SourceDirLocation.h.in ${PROJECT_SOURCE_DIR}/test/Tester/SourceDirLocation.h)
 
 add_library(
         ds_lib
-        Ds/Bag/Bag.cpp
-        Ds/Bag/BagIterator.cpp
+        ds/bag/Bag.cpp
+        ds/bag/BagIterator.cpp
 )
 
 add_library(
         algo_lib
-        SHARED
-        Source/01_string_length/StringLength.cpp
-        Source/02_hk_dynamic_array/DynamicArray.cpp
-        Source/03_reverse_array/ReverseArray.cpp
-        Source/04_left_shift/LeftShift.cpp
-        Source/05_matching_strings/MatchingStrings.cpp
-        Source/06_plus_minus/PlusMinus.cpp
-        Source/07_sales_by_match/SalesByMatch.cpp
-        Source/08_counting_valley/CountingValley.cpp
-        Source/09_jumping_on_cloud/JumpingOnCloud.cpp
-        Source/10_repeated_string/RepeatedString.cpp
-        Source/11_new_year_chaos/NewYearChaos.cpp
-        Source/12_ransom_note/RansomNote.cpp
-        Source/13_frequency_query/FrequencyQuery.cpp
-        Source/14_bubble_sort/BubbleSort.cpp
-        Source/15_mark_and_toys/MarkAndToys.cpp
-        Source/16_comparator/Comparator.cpp
-        Source/17_fraudulent_activity_notifications/FraudulentActivityNotifications.cpp
-        Source/18_merge_sort_counting/MergeSortCounting.cpp
-        Ds/Sorting/Selection.cpp
-        Ds/Sorting/Insertion.cpp
-        Ds/Sorting/Shell.cpp
-        Ds/Sorting/Merge.cpp
-        Ds/Sorting/Quick.cpp
-        Source/19_making_anagrams/MakingAnagrams.cpp
-        Source/20_alternating_characters/AlternatingCharacters.cpp
-        Source/21_valid_string/ValidString.cpp
-        Source/22_special_string/SpecialString.cpp
-        Source/23_common_child/CommonChild.cpp
-        Source/24_cream_parlor/CreamParlor.cpp
-        Source/25_greedy_point_cover/GreedyPointCover.cpp
-        Source/26_max_backpack/MaxBackPack.cpp
-        Source/27_term_sum/TermSum.cpp
-        Source/28_absolute_minimum_diff/AbsoluteMinimumDiff.cpp
-        Source/29_lucky_balance/LuckyBalance.cpp
-        Source/30_greedy_florist/GreedyFlorist.cpp
-        Source/31_max_min/MaxMin.cpp
-        Source/32_specific_linked_list/SpecificLinkedList.cpp
-        Source/33_flipping_bits/FlippingBits.cpp
-        Test/Cases/01_string_length/StringLengthTest.cpp
-        Test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
-        Test/Tester/Tester.cpp
+        algo/exers/01_string_length/StringLength.cpp
+        algo/exers/02_hk_dynamic_array/DynamicArray.cpp
+        algo/exers/03_reverse_array/ReverseArray.cpp
+        algo/exers/04_left_shift/LeftShift.cpp
+        algo/exers/05_matching_strings/MatchingStrings.cpp
+        algo/exers/06_plus_minus/PlusMinus.cpp
+        algo/exers/07_sales_by_match/SalesByMatch.cpp
+        algo/exers/08_counting_valley/CountingValley.cpp
+        algo/exers/09_jumping_on_cloud/JumpingOnCloud.cpp
+        algo/exers/10_repeated_string/RepeatedString.cpp
+        algo/exers/11_new_year_chaos/NewYearChaos.cpp
+        algo/exers/12_ransom_note/RansomNote.cpp
+        algo/exers/13_frequency_query/FrequencyQuery.cpp
+        algo/exers/14_bubble_sort/BubbleSort.cpp
+        algo/exers/15_mark_and_toys/MarkAndToys.cpp
+        algo/exers/16_comparator/Comparator.cpp
+        algo/exers/17_fraudulent_activity_notifications/FraudulentActivityNotifications.cpp
+        algo/exers/18_merge_sort_counting/MergeSortCounting.cpp
+        algo/sorting/Selection.cpp
+        algo/sorting/Insertion.cpp
+        algo/sorting/Shell.cpp
+        algo/sorting/Merge.cpp
+        algo/sorting/Quick.cpp
+        algo/exers/19_making_anagrams/MakingAnagrams.cpp
+        algo/exers/20_alternating_characters/AlternatingCharacters.cpp
+        algo/exers/21_valid_string/ValidString.cpp
+        algo/exers/22_special_string/SpecialString.cpp
+        algo/exers/23_common_child/CommonChild.cpp
+        algo/exers/24_cream_parlor/CreamParlor.cpp
+        algo/exers/25_greedy_point_cover/GreedyPointCover.cpp
+        algo/exers/26_max_backpack/MaxBackPack.cpp
+        algo/exers/27_term_sum/TermSum.cpp
+        algo/exers/28_absolute_minimum_diff/AbsoluteMinimumDiff.cpp
+        algo/exers/29_lucky_balance/LuckyBalance.cpp
+        algo/exers/30_greedy_florist/GreedyFlorist.cpp
+        algo/exers/31_max_min/MaxMin.cpp
+        algo/exers/32_specific_linked_list/SpecificLinkedList.cpp
+        algo/exers/33_flipping_bits/FlippingBits.cpp
+        test/Cases/01_string_length/StringLengthTest.cpp
+        test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
+        test/Tester/Tester.cpp
 )
 target_include_directories(
         algo_lib
         PUBLIC
-        Source/00_global
-        Source/01_string_length
-        Source/02_hk_dynamic_array
-        Test/Cases/01_string_length
-        Test/Cases/02_hk_dynamic_array
-        Test/Tester
+        algo/exers/00_global
+        algo/exers/01_string_length
+        algo/exers/02_hk_dynamic_array
+        test/Cases/01_string_length
+        test/Cases/02_hk_dynamic_array
+        test/Tester
 )
 
-add_executable(algo Test/TestRunner.cpp)
-add_executable(03 Source/03_reverse_array/ReverseArray.cpp)
-add_executable(04 Source/04_left_shift/LeftShift.cpp)
-add_executable(05 Source/05_matching_strings/MatchingStrings.cpp)
-add_executable(06 Source/06_plus_minus/PlusMinus.cpp)
-add_executable(07 Source/07_sales_by_match/SalesByMatch.cpp)
-add_executable(08 Source/08_counting_valley/CountingValley.cpp)
-add_executable(09 Source/09_jumping_on_cloud/JumpingOnCloud.cpp)
-add_executable(10 Source/10_repeated_string/RepeatedString.cpp)
-add_executable(11 Source/11_new_year_chaos/NewYearChaos.cpp)
-add_executable(12 Source/12_ransom_note/RansomNote.cpp)
-add_executable(13 Source/13_frequency_query/FrequencyQuery.cpp)
-add_executable(14 Source/14_bubble_sort/BubbleSort.cpp)
-add_executable(15 Source/15_mark_and_toys/MarkAndToys.cpp)
-add_executable(16 Source/16_comparator/Comparator.cpp)
-add_executable(17 Source/17_fraudulent_activity_notifications/FraudulentActivityNotifications.cpp)
-add_executable(18 Source/18_merge_sort_counting/MergeSortCounting.cpp)
-add_executable(19 Ds/Sorting/Selection.cpp)
-add_executable(20 Ds/Sorting/Insertion.cpp)
-add_executable(21 Ds/Sorting/Shell.cpp)
-add_executable(22 Ds/Sorting/Merge.cpp)
-add_executable(23 Ds/Sorting/Quick.cpp)
-add_executable(24 Source/19_making_anagrams/MakingAnagrams.cpp)
-add_executable(25 Source/20_alternating_characters/AlternatingCharacters.cpp)
-add_executable(26 Source/21_valid_string/ValidString.cpp)
-add_executable(27 Source/22_special_string/SpecialString.cpp)
-add_executable(28 Source/23_common_child/CommonChild.cpp)
-add_executable(29 Source/24_cream_parlor/CreamParlor.cpp)
-add_executable(30 Source/25_greedy_point_cover/GreedyPointCover.cpp)
-add_executable(31 Source/26_max_backpack/MaxBackPack.cpp)
-add_executable(32 Source/27_term_sum/TermSum.cpp)
-add_executable(33 Source/28_absolute_minimum_diff/AbsoluteMinimumDiff.cpp)
-add_executable(34 Source/29_lucky_balance/LuckyBalance.cpp)
-add_executable(35 Source/30_greedy_florist/GreedyFlorist.cpp)
-add_executable(36 Source/31_max_min/MaxMin.cpp)
-add_executable(37 Source/32_specific_linked_list/SpecificLinkedList.cpp)
-add_executable(38 Source/33_flipping_bits/FlippingBits.cpp)
+target_include_directories(
+        ds_lib
+        PUBLIC
+        ds/bag
+)
 
+add_executable(algo test/TestRunner.cpp)
+add_executable(03 algo/exers/03_reverse_array/ReverseArray.cpp)
+add_executable(04 algo/exers/04_left_shift/LeftShift.cpp)
+add_executable(05 algo/exers/05_matching_strings/MatchingStrings.cpp)
+add_executable(06 algo/exers/06_plus_minus/PlusMinus.cpp)
+add_executable(07 algo/exers/07_sales_by_match/SalesByMatch.cpp)
+add_executable(08 algo/exers/08_counting_valley/CountingValley.cpp)
+add_executable(09 algo/exers/09_jumping_on_cloud/JumpingOnCloud.cpp)
+add_executable(10 algo/exers/10_repeated_string/RepeatedString.cpp)
+add_executable(11 algo/exers/11_new_year_chaos/NewYearChaos.cpp)
+add_executable(12 algo/exers/12_ransom_note/RansomNote.cpp)
+add_executable(13 algo/exers/13_frequency_query/FrequencyQuery.cpp)
+add_executable(14 algo/exers/14_bubble_sort/BubbleSort.cpp)
+add_executable(15 algo/exers/15_mark_and_toys/MarkAndToys.cpp)
+add_executable(16 algo/exers/16_comparator/Comparator.cpp)
+add_executable(17 algo/exers/17_fraudulent_activity_notifications/FraudulentActivityNotifications.cpp)
+add_executable(18 algo/exers/18_merge_sort_counting/MergeSortCounting.cpp)
+add_executable(19 algo/sorting/Selection.cpp)
+add_executable(20 algo/sorting/Insertion.cpp)
+add_executable(21 algo/sorting/Shell.cpp)
+add_executable(22 algo/sorting/Merge.cpp)
+add_executable(23 algo/sorting/Quick.cpp)
+add_executable(24 algo/exers/19_making_anagrams/MakingAnagrams.cpp)
+add_executable(25 algo/exers/20_alternating_characters/AlternatingCharacters.cpp)
+add_executable(26 algo/exers/21_valid_string/ValidString.cpp)
+add_executable(27 algo/exers/22_special_string/SpecialString.cpp)
+add_executable(28 algo/exers/23_common_child/CommonChild.cpp)
+add_executable(29 algo/exers/24_cream_parlor/CreamParlor.cpp)
+add_executable(30 algo/exers/25_greedy_point_cover/GreedyPointCover.cpp)
+add_executable(31 algo/exers/26_max_backpack/MaxBackPack.cpp)
+add_executable(32 algo/exers/27_term_sum/TermSum.cpp)
+add_executable(33 algo/exers/28_absolute_minimum_diff/AbsoluteMinimumDiff.cpp)
+add_executable(34 algo/exers/29_lucky_balance/LuckyBalance.cpp)
+add_executable(35 algo/exers/30_greedy_florist/GreedyFlorist.cpp)
+add_executable(36 algo/exers/31_max_min/MaxMin.cpp)
+add_executable(37 algo/exers/32_specific_linked_list/SpecificLinkedList.cpp)
+add_executable(38 algo/exers/33_flipping_bits/FlippingBits.cpp)
 
-add_executable(Bag Ds/Bag/BagTest.cpp)
+add_executable(Bag ds/bag/BagTest.cpp)
 
 target_link_libraries(
-        algo
+        ds_and_algo_project
         PRIVATE
         algo_lib
         ds_lib

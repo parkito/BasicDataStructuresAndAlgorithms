@@ -23,9 +23,9 @@ public:
     //postfix inc
     BagIterator<T> &operator++(int);
 
-    friend bool operator==(const BagIterator<T> &a, const BagIterator<T> &b);
+    friend bool operator==(const BagIterator<T> &a, const BagIterator<T> &b) { return a.m_ptr == b.m_ptr; };
 
-    friend bool operator!=(const BagIterator<T> &a, const BagIterator<T> &b);
+    friend bool operator!=(const BagIterator<T> &a, const BagIterator<T> &b) { return a.m_ptr != b.m_ptr; };
 
 private:
     pointer ptr;
