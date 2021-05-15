@@ -8,12 +8,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_compile_options(-std=c++2a)
 
-configure_file(test/Tester/SourceDirLocation.h.in ${PROJECT_SOURCE_DIR}/test/Tester/SourceDirLocation.h)
+configure_file(test/tester/SourceDirLocation.h.in ${PROJECT_SOURCE_DIR}/test/tester/SourceDirLocation.h)
 
 add_library(
         ds_lib
         ds/bag/Bag.cpp
         ds/bag/BagIterator.cpp
+#        ds/bag/BagTest.cpp
 )
 
 add_library(
@@ -56,28 +57,19 @@ add_library(
         algo/exers/31_max_min/MaxMin.cpp
         algo/exers/32_specific_linked_list/SpecificLinkedList.cpp
         algo/exers/33_flipping_bits/FlippingBits.cpp
-        test/Cases/01_string_length/StringLengthTest.cpp
-        test/Cases/02_hk_dynamic_array/DynamicArrayTest.cpp
-        test/Tester/Tester.cpp
-)
-target_include_directories(
-        algo_lib
-        PUBLIC
-        algo/exers/00_global
-        algo/exers/01_string_length
-        algo/exers/02_hk_dynamic_array
-        test/Cases/01_string_length
-        test/Cases/02_hk_dynamic_array
-        test/Tester
 )
 
-target_include_directories(
-        ds_lib
-        PUBLIC
-        ds/bag
+add_library(
+        test_lib
+        test/tester/Tester.cpp
+        test/cases/01_string_length/StringLengthTest.cpp
+        test/cases/02_hk_dynamic_array/DynamicArrayTest.cpp
+        algo/exers/01_string_length/StringLength.cpp
+        algo/exers/02_hk_dynamic_array/DynamicArray.cpp
+        test/TestRunner.cpp
 )
 
-add_executable(algo test/TestRunner.cpp)
+add_executable(testRunner test/TestRunner.cpp)
 add_executable(03 algo/exers/03_reverse_array/ReverseArray.cpp)
 add_executable(04 algo/exers/04_left_shift/LeftShift.cpp)
 add_executable(05 algo/exers/05_matching_strings/MatchingStrings.cpp)
@@ -115,11 +107,42 @@ add_executable(36 algo/exers/31_max_min/MaxMin.cpp)
 add_executable(37 algo/exers/32_specific_linked_list/SpecificLinkedList.cpp)
 add_executable(38 algo/exers/33_flipping_bits/FlippingBits.cpp)
 
-add_executable(Bag ds/bag/BagTest.cpp)
+add_executable(bag ds/bag/BagTest.cpp)
+
+target_include_directories(
+        algo_lib
+        PUBLIC
+        algo/exers/00_global
+        algo/exers/01_string_length
+        algo/exers/02_hk_dynamic_array
+        test/cases/01_string_length
+        test/cases/02_hk_dynamic_array
+        test/tester
+)
+
+target_include_directories(
+        ds_lib
+        PUBLIC
+        ds/bag
+)
+
+target_include_directories(
+        test_lib
+        PUBLIC
+        test/cases/01_string_length
+        test/cases/02_hk_dynamic_array
+        algo/exers/01_string_length
+        algo/exers/02_hk_dynamic_array
+        test/tester
+)
 
 target_link_libraries(
-        ds_and_algo_project
-        PRIVATE
+        bag
+        ds_lib
+)
+
+target_link_libraries(
+        testRunner
         algo_lib
         ds_lib
 )

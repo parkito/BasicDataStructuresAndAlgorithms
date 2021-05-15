@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../../Source/00_global/Global.h"
+#include "Global.h"
 
 
 int partition(std::vector<int> &arr, int &lo, int &hi) {

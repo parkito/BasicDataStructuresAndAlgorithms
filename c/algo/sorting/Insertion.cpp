@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../../Source/00_global/Global.h"
+#include "Global.h"
 
 void sort(std::vector<int> &arr) {
     if (arr.size() <= 1) {
