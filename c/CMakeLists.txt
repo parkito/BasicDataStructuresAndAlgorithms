@@ -143,6 +143,7 @@ target_link_libraries(
         testRunner
         algo_lib
         ds_lib
+        test_lib
 )
 
 #cmake -H. -Bcmake-build-debug && cd cmake-build-debug && make all

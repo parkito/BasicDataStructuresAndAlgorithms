@@ -1,7 +1,7 @@
 #include "DynamicArrayTest.h"
 
 std::string DynamicArrayTest::test_dir() {
-    return std::string(SOURCE_DIR_LOCATION) + "/Resource/02_hk_dynamic_array/";
+    return std::string(SOURCE_DIR_LOCATION) + "/resource/02_hk_dynamic_array/";
 }
 
 std::vector<std::string> DynamicArrayTest::test_case(std::vector<std::string> &vector) {
