@@ -11,13 +11,6 @@ add_compile_options(-std=c++2a)
 configure_file(test/tester/SourceDirLocation.h.in ${PROJECT_SOURCE_DIR}/test/tester/SourceDirLocation.h)
 
 add_library(
-        ds_lib
-        ds/bag/Bag.cpp
-        ds/bag/BagIterator.cpp
-#        ds/bag/BagTest.cpp
-)
-
-add_library(
         algo_lib
         algo/exers/01_string_length/StringLength.cpp
         algo/exers/02_hk_dynamic_array/DynamicArray.cpp
@@ -57,6 +50,11 @@ add_library(
         algo/exers/31_max_min/MaxMin.cpp
         algo/exers/32_specific_linked_list/SpecificLinkedList.cpp
         algo/exers/33_flipping_bits/FlippingBits.cpp
+)
+
+add_library(
+        ds_lib
+        ds/bag/Bag.cpp
 )
 
 add_library(
