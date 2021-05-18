@@ -50,6 +50,7 @@ add_library(
         algo/exers/31_max_min/MaxMin.cpp
         algo/exers/32_specific_linked_list/SpecificLinkedList.cpp
         algo/exers/33_flipping_bits/FlippingBits.cpp
+        algo/exers/34_special_division/SpecialDivision.cpp
 )
 
 add_library(
@@ -104,6 +105,7 @@ add_executable(35 algo/exers/30_greedy_florist/GreedyFlorist.cpp)
 add_executable(36 algo/exers/31_max_min/MaxMin.cpp)
 add_executable(37 algo/exers/32_specific_linked_list/SpecificLinkedList.cpp)
 add_executable(38 algo/exers/33_flipping_bits/FlippingBits.cpp)
+add_executable(39 algo/exers/34_special_division/SpecialDivision.cpp)
 
 add_executable(bag ds/bag/BagTest.cpp)
 

@@ -46,3 +46,9 @@ template void Bag<int>::add(int item);
 template BagIterator<int> Bag<int>::begin();
 
 template BagIterator<int> Bag<int>::end();
+
+template void Bag<double>::add(double item);
+
+template BagIterator<double> Bag<double>::begin();
+
+template BagIterator<double> Bag<double>::end();
