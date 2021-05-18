@@ -109,6 +109,7 @@ add_executable(38 algo/exers/33_flipping_bits/FlippingBits.cpp)
 add_executable(39 algo/exers/34_special_division/SpecialDivision.cpp)
 
 add_executable(bag ds/bag/BagTest.cpp)
+add_executable(queue ds/queue/QueueTest.cpp)
 
 target_include_directories(
         algo_lib
@@ -141,6 +142,11 @@ target_include_directories(
 
 target_link_libraries(
         bag
+        ds_lib
+)
+
+target_link_libraries(
+        queue
         ds_lib
 )
 

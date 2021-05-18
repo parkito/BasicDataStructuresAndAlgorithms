@@ -1,13 +1,6 @@
 #include "Bag.h"
 
 template<typename T>
-void Bag<T>::extend_store(std::size_t to, T *arrFrom, T *arrTo) {
-    for (std::size_t i = 0; i < to; ++i) {
-        arrTo[i] = arrFrom[i];
-    }
-}
-
-template<typename T>
 bool Bag<T>::isEmpty() {
     return items == 0;
 }
@@ -18,19 +11,19 @@ std::size_t Bag<T>::size() {
 }
 
 template<typename T>
-BagIterator<T> Bag<T>::begin() {
-    return BagIterator<T>(&store[0]);
+ForwardIterator<T> Bag<T>::begin() {
+    return ForwardIterator<T>(&store[0]);
 }
 
 template<typename T>
-BagIterator<T> Bag<T>::end() {
-    return BagIterator<T>(&store[items]);
+ForwardIterator<T> Bag<T>::end() {
+    return ForwardIterator<T>(&store[items]);
 }
 
 template<typename T>
 void Bag<T>::add(T item) {
     if (items >= allocated) {
-        size_t newAllocated = allocated * REP_INC_CONST;
+        size_t newAllocated = allocated * ds_utils::BAG_DEFAULT_REPLICATION_NUMBER;
         auto newStore = ds_utils::extend_store(allocated, store, newAllocated);
         allocated = newAllocated;
         delete[] store;
@@ -42,12 +35,12 @@ void Bag<T>::add(T item) {
 
 template void Bag<int>::add(int item);
 
-template BagIterator<int> Bag<int>::begin();
+template ForwardIterator<int> Bag<int>::begin();
 
-template BagIterator<int> Bag<int>::end();
+template ForwardIterator<int> Bag<int>::end();
 
 template void Bag<double>::add(double item);
 
-template BagIterator<double> Bag<double>::begin();
+template ForwardIterator<double> Bag<double>::begin();
 
-template BagIterator<double> Bag<double>::end();
+template ForwardIterator<double> Bag<double>::end();
