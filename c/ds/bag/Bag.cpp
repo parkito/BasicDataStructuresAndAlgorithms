@@ -31,8 +31,7 @@ template<typename T>
 void Bag<T>::add(T item) {
     if (items >= allocated) {
         size_t newAllocated = allocated * REP_INC_CONST;
-        T *newStore = new T[newAllocated];
-        extend_store(allocated, store, newStore);
+        auto newStore = ds_utils::extend_store(allocated, store, newAllocated);
         allocated = newAllocated;
         delete[] store;
         store = newStore;

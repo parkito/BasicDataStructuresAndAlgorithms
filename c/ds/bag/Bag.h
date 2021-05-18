@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include "DsUtils.h"
 #include "BagIterator.h"
 
 template<typename T>

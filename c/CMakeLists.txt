@@ -56,6 +56,7 @@ add_library(
 add_library(
         ds_lib
         ds/bag/Bag.cpp
+        ds/queue/Queue.cpp
 )
 
 add_library(
@@ -124,6 +125,8 @@ target_include_directories(
         ds_lib
         PUBLIC
         ds/bag
+        ds/utils
+        ds/queue
 )
 
 target_include_directories(
