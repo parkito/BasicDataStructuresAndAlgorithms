@@ -6,11 +6,11 @@
 template<typename T>
 class Queue {
 public:
-    Queue() : items{0}, allocated{ds_utils::QUEUE_DEFAULT_SIZE},
-              store{new T[ds_utils::QUEUE_DEFAULT_REPLICATION_NUMBER]} {}
+    Queue() : items{0},
+              root{nullptr} {}
 
     ~Queue() {
-        delete[] store;
+        delete root;
     }
 
     void enqueue(T item);
@@ -21,15 +21,20 @@ public:
 
     std::size_t size();
 
-    ForwardIterator <T> begin();
+    ForwardIterator<T> begin();
 
-    ForwardIterator <T> end();
+    ForwardIterator<T> end();
 
 private:
-    T *store;
-    std::size_t items;
-    std::size_t allocated;
+    struct QueueNode {
+        T item;
+        QueueNode *next = nullptr;
 
+        QueueNode(T item, Queue::QueueNode *next) : item(item), next(next) {};
+    };
+
+    QueueNode *root;
+    std::size_t items;
 };
 
 

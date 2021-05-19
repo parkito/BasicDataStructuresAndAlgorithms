@@ -2,15 +2,16 @@
 
 template<typename T>
 void Queue<T>::enqueue(T item) {
-    if (items >= allocated) {
-        size_t newAllocated = allocated * ds_utils::QUEUE_DEFAULT_REPLICATION_NUMBER;
-        auto newStore = ds_utils::extend_store(allocated, store, newAllocated);
-        allocated = newAllocated;
-        delete[] store;
-        store = newStore;
+    if (items == 0) {
+        root = new QueueNode{item, nullptr};
+    } else {
+        auto node = root;
+        while (node->next != nullptr) {
+            node = node->next;
+        }
+        node->next = new QueueNode{item, nullptr};
     }
-
-    store[items++] = item; //to do fix
+    items++;
 }
 
 template<typename T>
@@ -18,7 +19,17 @@ T Queue<T>::dequeue() {
     if (isEmpty()) {
         throw std::runtime_error("Queue is empty");
     }
-    return store[--items];
+    auto item = root->item;
+    if (size() > 1) {
+        auto oldRoot = root;
+        root = root->next;
+        delete oldRoot;
+    } else {
+        delete root;
+        root = nullptr;
+    }
+    items--;
+    return item;
 }
 
 template<typename T>
@@ -33,12 +44,12 @@ std::size_t Queue<T>::size() {
 
 template<typename T>
 ForwardIterator<T> Queue<T>::begin() {
-    return ForwardIterator<T>(&store[0]);
+    return ForwardIterator<T>(&root->item);
 }
 
 template<typename T>
 ForwardIterator<T> Queue<T>::end() {
-    return ForwardIterator<T>(&store[items]);
+    return ForwardIterator<T>(nullptr);
 }
 
 template void Queue<int>::enqueue(int item);
