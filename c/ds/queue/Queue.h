@@ -4,6 +4,54 @@
 #include "ForwardIterator.h"
 
 template<typename T>
+struct QueueNode {
+    T item;
+    QueueNode *next = nullptr;
+
+    QueueNode(T item, QueueNode *next) : item(item), next(next) {};
+};
+
+template<typename T>
+class NodeIterator {
+public:
+    using iterator_category = std::forward_iterator_tag;
+    using difference_type = std::ptrdiff_t;
+    using value_type = T;
+    using pointer = T *;  // or also value_type*
+    using reference = T &;  // or also value_type&
+
+    explicit NodeIterator(QueueNode<T> *ptr_) : ptr(ptr_) {};
+
+    reference operator*() const {
+        return ptr->item;
+    }
+
+    pointer operator->() {
+        return this;
+    }
+
+    //prefix inc
+    NodeIterator<T> &operator++() {
+        ptr = ptr->next;
+        return *this;
+    }
+
+    //postfix inc
+    NodeIterator<T> &operator++(int) {
+        auto tmp = ptr;
+        ptr = ptr->next;
+        return tmp;
+    }
+
+    friend bool operator==(const NodeIterator<T> &a, const NodeIterator<T> &b) { return a.ptr == b.ptr; };
+
+    friend bool operator!=(const NodeIterator<T> &a, const NodeIterator<T> &b) { return a.ptr != b.ptr; };
+
+private:
+    QueueNode<T> *ptr;
+};
+
+template<typename T>
 class Queue {
 public:
     Queue() : items{0},
@@ -21,19 +69,12 @@ public:
 
     std::size_t size();
 
-    ForwardIterator<T> begin();
+    NodeIterator<T> begin();
 
-    ForwardIterator<T> end();
+    NodeIterator<T> end();
 
 private:
-    struct QueueNode {
-        T item;
-        QueueNode *next = nullptr;
-
-        QueueNode(T item, Queue::QueueNode *next) : item(item), next(next) {};
-    };
-
-    QueueNode *root;
+    QueueNode<T> *root;
     std::size_t items;
 };
 
