@@ -44,6 +44,8 @@ template ForwardIterator<int> Bag<int>::begin();
 
 template ForwardIterator<int> Bag<int>::end();
 
+template Bag<double>::Bag();
+
 template void Bag<double>::add(double item);
 
 template ForwardIterator<double> Bag<double>::begin();

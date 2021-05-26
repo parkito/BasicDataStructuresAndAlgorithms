@@ -1,7 +1,7 @@
 #include "Stack.h"
 
 template<typename T>
-Stack<T>::Stack() : store(new T[ds_utils::STACK_DEFAULT_SIZE]), items(0), allocated(ds_utils::STACK_DEFAULT_SIZE) {}
+Stack<T>::Stack() : store{new T[ds_utils::STACK_DEFAULT_SIZE]}, items{0}, allocated{ds_utils::STACK_DEFAULT_SIZE} {}
 
 template<typename T>
 std::size_t Stack<T>::size() {
@@ -35,13 +35,13 @@ void Stack<T>::push(T item) {
 }
 
 template<typename T>
-ForwardIterator<T> Stack<T>::begin() {
-    return ForwardIterator<T>(&store[items]);
+ForwardStackIterator<T> Stack<T>::begin() {
+    return ForwardStackIterator<T>(&store[items - 1]);
 }
 
 template<typename T>
-ForwardIterator<T> Stack<T>::end() {
-    return ForwardIterator<T>(&store[0]);
+ForwardStackIterator<T> Stack<T>::end() {
+    return ForwardStackIterator<T>(&store[0 - 1]);
 }
 
 template Stack<int>::Stack();
@@ -50,6 +50,6 @@ template void Stack<int>::push(int item);
 
 template int Stack<int>::pop();
 
-template ForwardIterator<int> Stack<int>::begin();
+template ForwardStackIterator<int> Stack<int>::begin();
 
-template ForwardIterator<int> Stack<int>::end();
+template ForwardStackIterator<int> Stack<int>::end();

@@ -4,10 +4,11 @@
 int main() {
     auto stack = Stack<int>{};
 
+    std::cout << stack.isEmpty() << std::endl;
+
     stack.push(1);
     stack.push(2);
     stack.push(3);
-
 
     for (auto &el:stack) {
         std::cout << el << " ";
