@@ -50,8 +50,24 @@ bool sumUpLog(std::vector<int> vec, int num) {
     return false;
 }
 
+//space no additional
+//time O*log(n)
+bool sumUp1(const std::vector<int>& vec, int num) {
+    std::unordered_set<int> set{};
+
+    for (const auto &item : vec) {
+        auto currentSum = num - item;
+        if (set.contains(item)) {
+            return true;
+        } else {
+            set.insert(currentSum);
+        }
+    }
+    return false;
+}
+
 int main() {
-    std::cout << sumUp({5 , 5}, 10) << std::endl; //1
+    std::cout << sumUp({5, 5}, 10) << std::endl; //1
     std::cout << sumUp({11, -1}, 10) << std::endl; //1
     std::cout << sumUp({-1, -11}, 10) << std::endl; //0
     std::cout << sumUp({-1, 11}, 10) << std::endl; //1
@@ -62,7 +78,18 @@ int main() {
 
     std::cout << std::endl;
 
-    std::cout << sumUpLog({5 , 5}, 10) << std::endl; //1
+    std::cout << sumUp1({5, 5}, 10) << std::endl; //1
+    std::cout << sumUp1({11, -1}, 10) << std::endl; //1
+    std::cout << sumUp1({-1, -11}, 10) << std::endl; //0
+    std::cout << sumUp1({-1, 11}, 10) << std::endl; //1
+    std::cout << sumUp1({1, -11}, -10) << std::endl; //1
+    std::cout << sumUp1({3, 5, -4, 8, 11, 1, -1, 6}, 10) << std::endl; //1
+    std::cout << sumUp1({3, 5, -4, 8, 11, 1, -1, 6}, 15) << std::endl; //0
+    std::cout << sumUp1({3, 5, -4, 8, 11, 0, 6}, 10) << std::endl; //0
+
+    std::cout << std::endl;
+
+    std::cout << sumUpLog({5, 5}, 10) << std::endl; //1
     std::cout << sumUpLog({11, -1}, 10) << std::endl; //1
     std::cout << sumUpLog({-1, -11}, 10) << std::endl; //0
     std::cout << sumUpLog({-1, 11}, 10) << std::endl; //1
