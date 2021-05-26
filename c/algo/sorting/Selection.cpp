@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "Global.h"
+#include "../exers/00_global/Global.h"
 
 void sort(std::vector<int> &arr) {
     for (int i = 0; i < arr.size(); ++i) {

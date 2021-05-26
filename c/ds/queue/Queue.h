@@ -4,7 +4,8 @@
 #include "ForwardIterator.h"
 
 template<typename T>
-struct QueueNode {
+class QueueNode {
+public:
     T item;
     QueueNode *next = nullptr;
 
@@ -14,9 +15,6 @@ struct QueueNode {
 template<typename T>
 class NodeIterator {
 public:
-    using iterator_category = std::forward_iterator_tag;
-    using difference_type = std::ptrdiff_t;
-    using value_type = T;
     using pointer = T *;  // or also value_type*
     using reference = T &;  // or also value_type&
 

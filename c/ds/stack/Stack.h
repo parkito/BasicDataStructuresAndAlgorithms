@@ -1,18 +1,17 @@
 #pragma once
 
+#include <cstddef>
 #include "DsUtils.h"
 #include "ForwardIterator.h"
 
 template<typename T>
-class Bag {
+class Stack {
 public:
-    Bag();
+    Stack();
 
-    ~Bag() {
-        delete[] store;
-    }
+    void push(T item);
 
-    void add(T item);
+    T pop();
 
     bool isEmpty();
 

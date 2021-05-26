@@ -1,6 +1,9 @@
 #include "Bag.h"
 
 template<typename T>
+Bag<T>::Bag() : items{0}, allocated{ds_utils::BAG_DEFAULT_SIZE}, store{new T[ds_utils::BAG_DEFAULT_SIZE]} {}
+
+template<typename T>
 bool Bag<T>::isEmpty() {
     return items == 0;
 }
@@ -32,6 +35,8 @@ void Bag<T>::add(T item) {
 
     store[items++] = item;
 }
+
+template Bag<int>::Bag();
 
 template void Bag<int>::add(int item);
 

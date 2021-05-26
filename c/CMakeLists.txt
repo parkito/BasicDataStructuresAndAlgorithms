@@ -57,6 +57,7 @@ add_library(
         ds_lib
         ds/bag/Bag.cpp
         ds/queue/Queue.cpp
+        ds/stack/Stack.cpp
 )
 
 add_library(
@@ -110,6 +111,7 @@ add_executable(39 algo/exers/34_special_division/SpecialDivision.cpp)
 
 add_executable(bag ds/bag/BagTest.cpp)
 add_executable(queue ds/queue/QueueTest.cpp)
+add_executable(stack ds/stack/StackTest.cpp)
 
 target_include_directories(
         algo_lib
@@ -128,6 +130,7 @@ target_include_directories(
         ds/bag
         ds/utils
         ds/queue
+        ds/stack
 )
 
 target_include_directories(
@@ -147,6 +150,11 @@ target_link_libraries(
 
 target_link_libraries(
         queue
+        ds_lib
+)
+
+target_link_libraries(
+        stack
         ds_lib
 )
 
