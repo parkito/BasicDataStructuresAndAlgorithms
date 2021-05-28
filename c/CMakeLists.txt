@@ -109,6 +109,7 @@ add_executable(37 algo/exers/32_specific_linked_list/SpecificLinkedList.cpp)
 add_executable(38 algo/exers/33_flipping_bits/FlippingBits.cpp)
 add_executable(39 algo/exers/34_special_division/SpecialDivision.cpp)
 add_executable(40 algo/exers/35_two_sum_number/TwoSumNumber.cpp)
+add_executable(41 algo/exers/36_subsequence/Subsequence.cpp)
 
 add_executable(bag ds/bag/BagTest.cpp)
 add_executable(queue ds/queue/QueueTest.cpp)
