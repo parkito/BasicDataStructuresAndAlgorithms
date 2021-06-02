@@ -34,6 +34,8 @@ public:
 
     std::size_t size();
 
+    bool isEmpty();
+
     bool contains(T item);
 
     std::vector<T> toVector();
@@ -44,5 +46,7 @@ private:
     std::size_t items;
 
     Node<T> *root;
+
+    void addToVec(const Node<T> &node, std::vector<T> &vector);
 };
 
