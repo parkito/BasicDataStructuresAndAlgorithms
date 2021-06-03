@@ -3,9 +3,11 @@
 template<typename T>
 void Bst<T>::add(T item) {
     if (isEmpty()) {
-        root = new Node<T>(item);
+        root = new Node<T>{item};
+        items++;
         return;
     }
+    items++;
     auto current = root;
     while (true) {
         if (item >= current->value) {
@@ -18,12 +20,11 @@ void Bst<T>::add(T item) {
         } else if (item < current->value) {
             auto left = current->left;
             if (left == nullptr) {
-                current->left = new Node<T>(item);
+                current->left = new Node<T>{item};
                 return;
             }
             current = current->left;
         }
-        items++;
     }
 }
 
@@ -32,6 +33,15 @@ void Bst<T>::remove(T item) {
     if (isEmpty()) {
         return;
     }
+}
+
+template<typename T>
+std::size_t Bst<T>::depth() {
+    if (isEmpty()) {
+        return 0;
+    }
+
+    return recDepth(*root, 0);
 }
 
 template<typename T>
@@ -58,7 +68,7 @@ bool Bst<T>::contains(T item) {
         } else if (item > current->value) {
             current = current->right;
         } else {
-            current->left;
+           current= current->left;
         }
     }
 }
@@ -82,3 +92,25 @@ void Bst<T>::addToVec(const Node<T> &node, std::vector<T> &vector) {
         addToVec(node.right, vector);
     }
 }
+
+template<typename T>
+std::size_t Bst<T>::recDepth(const Node<T> &node, std::size_t level) {
+    size_t nextLevel = level + 1;
+    if (node.left != nullptr && node.right != nullptr) {
+        return std::max(recDepth(*node.right, nextLevel), recDepth(*node.left, nextLevel));
+    } else if (node.left == nullptr && node.right == nullptr) {
+        return level;
+    } else if (node.left != nullptr) {
+        return recDepth(*node.left, nextLevel);
+    } else {
+        return recDepth(*node.right, nextLevel);
+    }
+}
+
+template void Bst<int>::add(int item);
+
+template std::size_t Bst<int>::depth();
+
+template void Bst<int>::remove(int item);
+
+template bool Bst<int>::contains(int item);

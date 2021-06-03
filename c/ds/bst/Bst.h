@@ -6,7 +6,7 @@
 template<typename T>
 class Node {
 public:
-    Node(T value) : value(value), left(nullptr), right(nullptr) {}
+    explicit Node(T value) : value(value), left(nullptr), right(nullptr) {}
 
     ~Node() {
         delete left;
@@ -32,13 +32,15 @@ public:
 
     void remove(T item);
 
+    std::size_t depth();
+
     std::size_t size();
 
     bool isEmpty();
 
     bool contains(T item);
 
-    std::vector<T> toVector();
+    std::vector <T> toVector();
 
     void print();
 
@@ -47,6 +49,8 @@ private:
 
     Node<T> *root;
 
-    void addToVec(const Node<T> &node, std::vector<T> &vector);
+    void addToVec(const Node<T> &node, std::vector <T> &vector);
+
+    std::size_t recDepth(const Node<T> &node, std::size_t level);
 };
 
