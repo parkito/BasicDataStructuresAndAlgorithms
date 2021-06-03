@@ -13,4 +13,8 @@ int main() {
     std::cout << bst.depth() << std::endl;
     std::cout << bst.contains(3) << std::endl;
     std::cout << bst.contains(5) << std::endl;
+
+    for (const auto &item : bst.toLines()) {
+        std::cout << item << std::endl;
+    }
 }

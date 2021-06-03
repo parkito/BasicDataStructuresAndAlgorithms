@@ -1,3 +1,5 @@
+#include <string>
+#include <optional>
 #include "Bst.h"
 
 template<typename T>
@@ -68,7 +70,7 @@ bool Bst<T>::contains(T item) {
         } else if (item > current->value) {
             current = current->right;
         } else {
-           current= current->left;
+            current = current->left;
         }
     }
 }
@@ -107,6 +109,44 @@ std::size_t Bst<T>::recDepth(const Node<T> &node, std::size_t level) {
     }
 }
 
+template<typename T>
+void Bst<T>::addChildren(const NodeLevel<T> &parentLevel, NodeLevels<T> &allLevels) {
+    NodeLevel<T> childrenLevel{};
+    for (const std::optional<Node<T>> &item : parentLevel) {
+        if (!item.has_value()) {
+            childrenLevel.push_back(std::nullopt);
+            childrenLevel.push_back(std::nullopt);
+        } else {
+            childrenLevel.push_back(*item.value().left);
+            childrenLevel.push_back(*item.value().right);
+        }
+        allLevels.push_back(childrenLevel);
+    }
+}
+
+template<typename T>
+std::vector<std::string> Bst<T>::toLines() {
+    NodeLevels<T> allLevels{};
+    NodeLevel<T> nv{};
+    nv.push_back(root);
+    addChildren(nv, allLevels);
+    std::vector<std::string> lines{allLevels.size()};
+    for (const NodeLevel<T> &level : allLevels) {
+        std::string line;
+        for (const std::optional<Node<T>> &node : level) {
+            if (node.has_value()) {
+                line += std::to_string(node.value().value);
+            } else {
+                line += "NULL";
+            }
+            line += "  ";
+        }
+        lines.push_back(line);
+    }
+    return lines;
+}
+
+
 template void Bst<int>::add(int item);
 
 template std::size_t Bst<int>::depth();
@@ -114,3 +154,6 @@ template std::size_t Bst<int>::depth();
 template void Bst<int>::remove(int item);
 
 template bool Bst<int>::contains(int item);
+
+template std::vector<std::string> Bst<int>::toLines();
+

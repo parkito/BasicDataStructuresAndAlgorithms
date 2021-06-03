@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <vector>
+#include <optional>
 
 template<typename T>
 class Node {
@@ -17,6 +18,12 @@ public:
     Node<T> *left;
     Node<T> *right;
 };
+
+template<typename T>
+using NodeLevels = std::vector<std::vector<std::optional<Node<T>>>>;
+
+template<typename T>
+using NodeLevel = std::vector<std::optional<Node<T>>>;
 
 template<typename T>
 class Bst {
@@ -40,16 +47,22 @@ public:
 
     bool contains(T item);
 
-    std::vector <T> toVector();
+    std::vector<T> toVector();
 
     void print();
+
+    std::vector<std::string> toLines();
+
 
 private:
     std::size_t items;
 
     Node<T> *root;
 
-    void addToVec(const Node<T> &node, std::vector <T> &vector);
+
+    void addChildren(const NodeLevel<T> &parentLevel, NodeLevels<T> &allLevels);
+
+    void addToVec(const Node<T> &node, std::vector<T> &vector);
 
     std::size_t recDepth(const Node<T> &node, std::size_t level);
 };
