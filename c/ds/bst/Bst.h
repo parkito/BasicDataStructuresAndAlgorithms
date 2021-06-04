@@ -20,10 +20,10 @@ public:
 };
 
 template<typename T>
-using NodeLevels = std::vector<std::vector<std::optional<Node<T>>>>;
+using NodeLevels = std::vector<std::vector<Node<T> *>>;
 
 template<typename T>
-using NodeLevel = std::vector<std::optional<Node<T>>>;
+using NodeLevel = std::vector<Node<T> *>;
 
 template<typename T>
 class Bst {
@@ -60,7 +60,7 @@ private:
     Node<T> *root;
 
 
-    void addChildren(const NodeLevel<T> &parentLevel, NodeLevels<T> &allLevels);
+    void addChildren(const NodeLevel<T> &parentLevel, NodeLevels<T> &allLevels, size_t depth);
 
     void addToVec(const Node<T> &node, std::vector<T> &vector);
 

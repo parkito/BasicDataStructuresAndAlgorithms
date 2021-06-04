@@ -110,18 +110,22 @@ std::size_t Bst<T>::recDepth(const Node<T> &node, std::size_t level) {
 }
 
 template<typename T>
-void Bst<T>::addChildren(const NodeLevel<T> &parentLevel, NodeLevels<T> &allLevels) {
-    NodeLevel<T> childrenLevel{};
-    for (const std::optional<Node<T>> &item : parentLevel) {
-        if (!item.has_value()) {
-            childrenLevel.push_back(std::nullopt);
-            childrenLevel.push_back(std::nullopt);
-        } else {
-            childrenLevel.push_back(*item.value().left);
-            childrenLevel.push_back(*item.value().right);
-        }
-        allLevels.push_back(childrenLevel);
+void Bst<T>::addChildren(const NodeLevel<T> &parentLevel, NodeLevels<T> &allLevels, const std::size_t depth) {
+    if (allLevels.size() > depth) {
+        return;
     }
+    NodeLevel<T> childrenLevel{};
+    for (const Node<int> *item : parentLevel) {
+        if (item == nullptr) {
+            childrenLevel.push_back(nullptr);
+            childrenLevel.push_back(nullptr);
+        } else {
+            childrenLevel.push_back(item->left);
+            childrenLevel.push_back(item->right);
+        }
+    }
+    allLevels.push_back(childrenLevel);
+    addChildren(childrenLevel, allLevels, depth);
 }
 
 template<typename T>
@@ -129,13 +133,14 @@ std::vector<std::string> Bst<T>::toLines() {
     NodeLevels<T> allLevels{};
     NodeLevel<T> nv{};
     nv.push_back(root);
-    addChildren(nv, allLevels);
+    allLevels.push_back(nv);
+    addChildren(nv, allLevels, depth());
     std::vector<std::string> lines{allLevels.size()};
     for (const NodeLevel<T> &level : allLevels) {
         std::string line;
-        for (const std::optional<Node<T>> &node : level) {
-            if (node.has_value()) {
-                line += std::to_string(node.value().value);
+        for (const Node<T> *node : level) {
+            if (node != nullptr) {
+                line += std::to_string(node->value);
             } else {
                 line += "NULL";
             }
